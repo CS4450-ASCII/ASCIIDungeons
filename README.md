@@ -1,2 +1,2 @@
 # ASCIIDungeons
-Make then Dun-geons.
+Make them Dun-geons.
