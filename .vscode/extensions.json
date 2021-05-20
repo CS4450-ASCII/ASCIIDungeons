@@ -1,0 +1,15 @@
+{
+    "recommendations": [
+        "ckolkman.vscode-postgres",
+        "github.vscode-pull-request-github",
+        "msjsdiag.debugger-for-chrome",
+        "bierner.folder-source-actions",
+        "dsznajder.es7-react-js-snippets",
+        "hediet.vscode-drawio",
+        "eamodio.gitlens",
+        "ms-vsliveshare.vsliveshare-pack",
+        "esbenp.prettier-vscode",
+        "humao.rest-client",
+        "gruntfuggly.todo-tree"
+    ]
+}
