@@ -1,6 +1,25 @@
 {
+  "name": "ASCIIDungeons",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/CS4450-ASCII/ASCIIDungeons.git",
+  "author": "kkartchner <46807501+kkartchner@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ./index.js --exec babel-node"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.2",
+    "nodemon": "^2.0.7"
+  },
   "dependencies": {
-    "dotenv": "^9.0.2",
+    "@graphql-tools/schema": "^7.1.5",
+    "apollo-server-express": "^2.24.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.6.2",
