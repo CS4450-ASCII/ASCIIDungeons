@@ -8,5 +8,11 @@
         }
       }
     ]
-  ]
+  ],
+  "env": {
+    "development": {
+      "sourceMaps": "inline",
+      "retainLines": true
+    }
+  }
 }
