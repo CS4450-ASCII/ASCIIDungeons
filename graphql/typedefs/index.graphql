@@ -1,0 +1,18 @@
+# Custom Scalars
+scalar Date
+
+type Query {
+  # Query signatures go here
+
+  # # (Example) Author
+  authors: [Author]!
+  author(id: ID!): Author
+}
+
+type Mutation {
+  # Mutation signatures go here
+
+  # (Example) Authors
+  createAuthor(author: AuthorCreateInput!): Author!
+  updateAuthor(id: ID!, author: AuthorUpdateInput!): Author!
+}

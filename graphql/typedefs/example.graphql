@@ -1,0 +1,30 @@
+# https://www.apollographql.com/docs/apollo-server/schema/schema/#documentation-strings
+# This is an example for creating a GraphQL Type
+# Types
+
+# type Author implements Timestamps {
+type Author {
+  """
+  The id of the author.
+  """
+  id: ID!
+
+  """
+  The name of the author.
+  """
+  name: String!
+  #   publishers: [Publisher]
+
+  #   # Interface required
+  #   createdAt: Date!
+  #   updatedAt: Date!
+}
+
+# # Inputs
+input AuthorCreateInput {
+  name: String!
+}
+
+input AuthorUpdateInput {
+  name: String
+}
