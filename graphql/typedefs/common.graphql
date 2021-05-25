@@ -1,7 +1,7 @@
 # This is where we can put attributes that are shared between GraphQL types
 
 # Example Interface
-# interface Timestamps {
-#   createdAt: Date!
-#   updatedAt: Date!
-# }
+interface Timestamps {
+  createdAt: Date!
+  updatedAt: Date!
+}

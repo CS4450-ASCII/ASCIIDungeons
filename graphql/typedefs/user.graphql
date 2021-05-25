@@ -1,0 +1,43 @@
+# Types
+type User implements Timestamps {
+  """
+  The id of the user.
+  """
+  id: ID!
+
+  """
+  The display name of the user. Can return nullable.
+  """
+  displayName: String
+
+  """
+  The email of the user.
+  """
+  email: String!
+
+  # Interface required
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+# # Inputs
+input UserCreateInput {
+  """
+  (Optional) The display name of the user.
+  """
+  displayName: String
+
+  """
+  The email of the user.
+  """
+  email: String!
+
+  """
+  Password for user.
+  """
+  password: String!
+}
+
+input UserUpdateInput {
+  displayName: String!
+}

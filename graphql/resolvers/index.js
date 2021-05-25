@@ -1,11 +1,11 @@
-import { authorQueries, authorMutations } from './example';
+import { userMutations, userQueries } from './user';
 
 const resolvers = {
   Query: {
-    ...authorQueries
+    ...userQueries
   },
   Mutation: {
-    ...authorMutations
+    ...userMutations
   }
 };
 

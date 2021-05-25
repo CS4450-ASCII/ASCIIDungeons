@@ -3,16 +3,12 @@ scalar Date
 
 type Query {
   # Query signatures go here
-
-  # # (Example) Author
-  authors: [Author]!
-  author(id: ID!): Author
+  users: [User]!
+  user(id: ID!): User
 }
 
 type Mutation {
   # Mutation signatures go here
-
-  # (Example) Authors
-  createAuthor(author: AuthorCreateInput!): Author!
-  updateAuthor(id: ID!, author: AuthorUpdateInput!): Author!
+  createUser(user: UserCreateInput!): User!
+  updateUser(id: ID!, user: UserUpdateInput!): User!
 }
