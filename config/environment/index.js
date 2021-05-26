@@ -12,4 +12,6 @@ const env = {
   production: process.env.NODE_ENV === 'production'
 };
 
-export { port, env };
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+
+export { port, env, accessTokenSecret };

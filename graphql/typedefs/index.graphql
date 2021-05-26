@@ -9,6 +9,7 @@ type Query {
 
 type Mutation {
   # Mutation signatures go here
-  createUser(user: UserCreateInput!): User!
+  loginUser(user: UserLoginInput!): AuthPayload
+  createUser(user: UserCreateInput!): AuthPayload
   updateUser(id: ID!, user: UserUpdateInput!): User!
 }

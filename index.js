@@ -4,10 +4,6 @@ import { sequelize, User } from './database/models';
 
 const start = async () => {
   try {
-    console.log('Connecting to database...');
-    await sequelize.authenticate();
-    console.log('Database connected');
-
     console.log('Synchronizing Sequelize with database...');
     await sequelize.sync();
     console.log('Sequelize is synchronized');

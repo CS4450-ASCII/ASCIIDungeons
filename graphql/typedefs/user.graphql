@@ -20,6 +20,11 @@ type User implements Timestamps {
   updatedAt: Date!
 }
 
+type AuthPayload {
+  token: String
+  user: User
+}
+
 # # Inputs
 input UserCreateInput {
   """
@@ -27,6 +32,18 @@ input UserCreateInput {
   """
   displayName: String
 
+  """
+  The email of the user.
+  """
+  email: String!
+
+  """
+  Password for user.
+  """
+  password: String!
+}
+
+input UserLoginInput {
   """
   The email of the user.
   """
