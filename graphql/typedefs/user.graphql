@@ -16,7 +16,14 @@ type User implements Timestamps {
   email: String!
 
   # Interface required
+
+  """
+  Datetime the user was created at.
+  """
   createdAt: Date!
+  """
+  Datetime the user was last updated.
+  """
   updatedAt: Date!
 }
 

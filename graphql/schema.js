@@ -1,7 +1,13 @@
-import { join } from 'path';
-import { readdirSync, readFileSync } from 'fs';
 import { makeExecutableSchema } from '@graphql-tools/schema';
+import { readdirSync, readFileSync } from 'fs';
+import { join } from 'path';
 import resolvers from './resolvers';
+
+/**************************************************************************
+ * References:
+ * - https://gist.github.com/ernestognw/65a19570665bafbc86b1ca9184eb76a6#file-graphql-schema-js
+ *
+ **************************************************************************/
 
 const gqlFiles = readdirSync(join(__dirname, './typedefs'));
 

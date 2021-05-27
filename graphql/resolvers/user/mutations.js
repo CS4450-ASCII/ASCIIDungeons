@@ -1,9 +1,14 @@
-import { User } from '../../../database/models';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { accessTokenSecret } from '../../../config/environment';
+import { User } from '../../../database/models';
 
-// Reference: https://www.howtographql.com/graphql-js/6-authentication/
+/**************************************************************
+ * References:
+ * -https://www.howtographql.com/graphql-js/6-authentication/
+ *
+ **************************************************************/
+
 const userMutations = {
   loginUser: async (_, { user: { email, password } }) => {
     // find email/password combination
