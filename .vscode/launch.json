@@ -5,9 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Client",
+      "request": "launch",
+      "type": "pwa-chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/client/src",
+    },
+    {
       "type": "node",
       "request": "launch",
-      "name": "Debug",
+      "name": "Server",
       "skipFiles": [
         "<node_internals>/**"
       ],
@@ -18,7 +25,17 @@
       ],
       "env": {
         "BABEL_ENV": "development"
-      }
+      },
+      "preLaunchTask": "Run client"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Server/Client",
+      "configurations": [
+        "Server",
+        "Client",
+      ]
     }
   ]
 }
