@@ -5,6 +5,9 @@
   "repository": "https://github.com/CS4450-ASCII/ASCIIDungeons.git",
   "author": "kkartchner <46807501+kkartchner@users.noreply.github.com>",
   "license": "MIT",
+  "engines": {
+    "yarn": "1.x"
+  },
   "scripts": {
     "start": "babel-node ./index.js",
     "heroku-postbuild": "cd client && yarn && yarn run build",
