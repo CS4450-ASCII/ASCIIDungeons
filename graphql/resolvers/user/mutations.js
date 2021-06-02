@@ -10,7 +10,7 @@ import { User } from '../../../database/models';
  **************************************************************/
 
 const userMutations = {
-  loginUser: async (_, { user: { email, password } }) => {
+  loginUser: async (obj, { user: { email, password } }, context, info) => {
     // find email/password combination
     const user = await User.findOne({ where: { email } });
 
@@ -29,7 +29,12 @@ const userMutations = {
     return { user, token };
   },
 
-  createUser: async (_, { user: { displayName, email, password } }) => {
+  createUser: async (
+    obj,
+    { user: { email, password, displayName } },
+    context,
+    info
+  ) => {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
     const user = await User.create({

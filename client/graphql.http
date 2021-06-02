@@ -1,0 +1,62 @@
+POST https://ascii-dungeons.herokuapp.com/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation ($user: UserCreateInput!) {
+  createUser(user: $user) {
+    user {
+      id
+      email
+      displayName
+    }
+    token
+  }
+}
+
+{
+  "user": {
+    "displayName":"Ky2",
+    "email":"ky2@ascii.com",
+    "password":"pass123"
+  }
+}
+
+### Login
+POST https://ascii-dungeons.herokuapp.com/graphql
+Content-Type: application/json
+X-REQUEST-TYPE: GraphQL
+
+mutation($user: UserLoginInput!) {
+  loginUser(user: $user) {
+    user {
+      id
+      email
+      displayName
+    }
+    token
+  }
+}
+
+{
+  "user": {
+    "email":"ky@ascii.com",
+    "password":"pass123"
+  }
+}
+
+# POST https://ascii-dungeons.herokuapp.com/graphql
+# Content-Type: application/json
+# # Authorization: Bearer xxx
+# X-REQUEST-TYPE: GraphQL
+
+# query {
+#   users {
+#     id
+#     displayName
+#   }
+# }
+
+# # {
+# #     "name": "vscode-restclient",
+# #     "owner": "Huachao"
+# # }
