@@ -1,3 +1,4 @@
+### Sign Up
 POST https://ascii-dungeons.herokuapp.com/graphql
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
@@ -44,19 +45,16 @@ mutation($user: UserLoginInput!) {
   }
 }
 
-# POST https://ascii-dungeons.herokuapp.com/graphql
-# Content-Type: application/json
-# # Authorization: Bearer xxx
-# X-REQUEST-TYPE: GraphQL
+### Users List
+POST https://ascii-dungeons.herokuapp.com/graphql
+Content-Type: application/json
+Authorization: Bearer <token>
+X-REQUEST-TYPE: GraphQL
 
-# query {
-#   users {
-#     id
-#     displayName
-#   }
-# }
-
-# # {
-# #     "name": "vscode-restclient",
-# #     "owner": "Huachao"
-# # }
+query {
+  users {
+    id
+    displayName
+    email
+  }
+}
