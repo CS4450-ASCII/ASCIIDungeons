@@ -6,7 +6,7 @@ import { setAccessToken } from '../../helpers/authentication';
 import { userRequests } from '../../requests/user';
 
 function LoginForm(props) {
-  const [loginUser, { data }] = useMutation(userRequests.LOGIN_USER, {
+  const [loginUser] = useMutation(userRequests.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
       setAccessToken(loginUser.token);
     }

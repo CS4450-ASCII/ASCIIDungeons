@@ -18,6 +18,10 @@ const userQueries = {
     authenticateUser(context);
     // find user with id from args
     return await User.findOne({ where: { id: args.id } });
+  },
+
+  currentUser: async (obj, args, context, info) => {
+    return context.currentUser;
   }
 };
 

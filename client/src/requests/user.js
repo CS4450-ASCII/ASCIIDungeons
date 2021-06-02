@@ -22,6 +22,16 @@ const LOGIN_USER = gql`
   ${COMPLETE_USER_FRAGMENT}
 `;
 
+const CURRENT_USER = gql`
+  query CurrentUser {
+    currentUser {
+      ...CompleteUser
+    }
+  }
+  ${COMPLETE_USER_FRAGMENT}
+`;
+
 export const userRequests = {
-  LOGIN_USER
+  LOGIN_USER,
+  CURRENT_USER
 };

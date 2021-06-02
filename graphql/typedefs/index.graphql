@@ -5,6 +5,7 @@ type Query {
   # Query signatures go here
   users: [User]!
   user(id: ID!): User
+  currentUser: User
 }
 
 type Mutation {

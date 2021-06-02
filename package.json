@@ -1,5 +1,5 @@
 {
-  "name": "ASCIIDungeons",
+  "name": "ascii-dungeons",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/CS4450-ASCII/ASCIIDungeons.git",
