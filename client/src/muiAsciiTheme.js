@@ -2,10 +2,10 @@ import { createMuiTheme } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
-    primary: {
+    default: {
       main: '#ffffff'
     },
-    secondary: {
+    primary: {
       main: '#73A9C2'
     }
   },
@@ -18,6 +18,9 @@ const theme = createMuiTheme({
       root: {
         fontSize: '1.5em',
         textTransform: 'none'
+      },
+      text: {
+        padding: 0
       }
     },
     MuiTextField: {
@@ -28,7 +31,7 @@ const theme = createMuiTheme({
     },
     MuiGrid: {
       root: {
-        // border: '1px solid red'
+        // // : '1px solid red',
       }
     }
   }

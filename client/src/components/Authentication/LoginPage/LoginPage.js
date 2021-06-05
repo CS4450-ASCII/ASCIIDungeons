@@ -1,25 +1,19 @@
 import { useMutation } from '@apollo/client';
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import PageHeader from '../../Common/PageHeader';
-import { setAccessToken } from '../../../helpers/authentication';
+import authHelper from '../../../helpers/authentication';
 import { userRequests } from '../../../requests/user';
-import { Box, Grid, makeStyles } from '@material-ui/core';
 import LoginForm from './LoginForm';
-import PageFooter from '../../Common/PageFooter';
 
 const useStyles = makeStyles({
-  root: {
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    justifyItems: 'stretch'
-  }
+  root: {}
 });
 
 function LoginPage(props) {
   const classes = useStyles();
   const [loginUser] = useMutation(userRequests.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
-      setAccessToken(loginUser.token);
+      authHelper.setAccessToken(loginUser.token);
     }
   });
 
@@ -31,11 +25,7 @@ function LoginPage(props) {
 
   return (
     <div className={classes.root}>
-      <Grid item>
-        <PageHeader text='ASCII Dungeons' />
-      </Grid>
       <LoginForm onSubmit={onSubmit} />
-      <PageFooter />
     </div>
   );
 }

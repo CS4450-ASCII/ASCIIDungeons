@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import figlet from 'figlet';
+import React, { useEffect, useState } from 'react';
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
     textAlign: 'center',
-    marginBottom: '10em'
+    marginBottom: '8em'
   }
 });
 

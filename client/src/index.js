@@ -1,9 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App/App';
-import { BrowserRouter } from 'react-router-dom';
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import {
   ApolloClient,
   ApolloProvider,
@@ -11,7 +5,13 @@ import {
   InMemoryCache
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './components/App/App';
 import { AUTH_TOKEN } from './constants';
+import './index.css';
 import theme from './muiAsciiTheme';
 
 /******************************************************************************

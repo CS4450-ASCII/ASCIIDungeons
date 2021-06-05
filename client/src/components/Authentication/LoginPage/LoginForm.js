@@ -1,7 +1,6 @@
 import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { Field, Form as FForm } from 'react-final-form';
-import { TextField } from 'mui-rff';
+import { Form as FForm } from 'react-final-form';
 import { Link } from 'react-router-dom';
 import InputFieldItem from '../../Common/InputFieldItem';
 
@@ -27,16 +26,18 @@ function LoginForm(props) {
           <Grid
             item
             container
-            spacing={2}
+            spacing={4}
             className={classes.root}
             direction='column'
             alignItems='flex-end'
             {...gridItemProps}
           >
             <InputFieldItem name='email' />
-            <InputFieldItem name='password' />
+            <InputFieldItem name='password' type='password' />
             <Grid item>
-              <Button color='secondary'>Login</Button>
+              <Button type='submit' color='primary'>
+                Login
+              </Button>
             </Grid>
             <Grid item xs={12}>
               <Typography variant='h2'>

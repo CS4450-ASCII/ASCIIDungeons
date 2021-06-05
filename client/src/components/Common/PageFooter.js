@@ -1,11 +1,17 @@
+import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import { useCurrentUser } from '../../helpers/hooks';
 
 const useStyles = makeStyles({
   root: {
     position: 'absolute',
     bottom: '0',
-    padding: '0.5em 1em'
+    width: '100%',
+    // border: '1px solid red',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start-end',
+    padding: '0.5em 1em 0.5em 1em'
   }
 });
 
@@ -13,10 +19,26 @@ function PageFooter(props) {
   const classes = useStyles();
   const {} = props;
 
+  const { currentUser, logout } = useCurrentUser();
+
+  const { displayName, email } = currentUser || {};
+
   return (
-    <div className={classes.root}>
-      <Typography variant='h2'>Welcome, Adventurer! </Typography>
-    </div>
+    <Box className={classes.root}>
+      <Box>
+        <Typography variant='h2'>
+          Welcome, {displayName || email || 'Adventurer'}!
+        </Typography>
+      </Box>
+      <Box flexGrow={1} />
+      <Box>
+        {currentUser && (
+          <Button color='primary' onClick={logout}>
+            Logout
+          </Button>
+        )}
+      </Box>
+    </Box>
   );
 }
 
