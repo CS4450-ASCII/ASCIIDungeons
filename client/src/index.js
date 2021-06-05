@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App';
 import { BrowserRouter } from 'react-router-dom';
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
 import {
   ApolloClient,
   ApolloProvider,
@@ -12,6 +12,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { AUTH_TOKEN } from './constants';
+import theme from './muiAsciiTheme';
 
 /******************************************************************************
  * Source: https://www.apollographql.com/docs/react/networking/authentication/
@@ -43,7 +44,9 @@ ReactDOM.render(
     <ApolloProvider client={client}>
       <BrowserRouter>
         <CssBaseline />
-        <App />
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
       </BrowserRouter>
     </ApolloProvider>
   </React.StrictMode>,

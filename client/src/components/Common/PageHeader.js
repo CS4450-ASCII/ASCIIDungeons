@@ -5,7 +5,8 @@ import figlet from 'figlet';
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginBottom: '10em'
   }
 });
 

@@ -14,10 +14,14 @@ figlet.parseFont('SmSlant', SmSlant);
 
 const useStyles = makeStyles({
   root: {
-    backgroundColor: 'black',
+    backgroundColor: 'black'
+  },
+  container: {
     color: 'white',
     fontFamily: 'IBMBios',
     width: '100vw',
+    maxWidth: '1200px',
+    margin: 'auto',
     height: '100vh'
   }
 });
@@ -30,14 +34,16 @@ function App() {
 
   return (
     <div className={classes.root}>
-      <Switch>
-        <Route exact path='/signup'>
-          Sign up page
-        </Route>
-        <Route path='/'>
-          {_.get(data, 'currentUser') ? <AppContainer /> : <LoginPage />}
-        </Route>
-      </Switch>
+      <div className={classes.container}>
+        <Switch>
+          <Route exact path='/signup'>
+            Sign up page
+          </Route>
+          <Route path='/'>
+            {_.get(data, 'currentUser') ? <AppContainer /> : <LoginPage />}
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 }

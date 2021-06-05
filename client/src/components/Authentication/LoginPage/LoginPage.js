@@ -3,8 +3,9 @@ import React from 'react';
 import PageHeader from '../../Common/PageHeader';
 import { setAccessToken } from '../../../helpers/authentication';
 import { userRequests } from '../../../requests/user';
-import { makeStyles } from '@material-ui/core';
+import { Box, Grid, makeStyles } from '@material-ui/core';
 import LoginForm from './LoginForm';
+import PageFooter from '../../Common/PageFooter';
 
 const useStyles = makeStyles({
   root: {
@@ -30,8 +31,11 @@ function LoginPage(props) {
 
   return (
     <div className={classes.root}>
-      <PageHeader text='ASCII Dungeons' />
+      <Grid item>
+        <PageHeader text='ASCII Dungeons' />
+      </Grid>
       <LoginForm onSubmit={onSubmit} />
+      <PageFooter />
     </div>
   );
 }

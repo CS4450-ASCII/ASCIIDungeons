@@ -1,44 +1,52 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { Button, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { Field, Form as FForm } from 'react-final-form';
-import InputField from '../../Common/TextField';
+import { TextField } from 'mui-rff';
+import { Link } from 'react-router-dom';
+import InputFieldItem from '../../Common/InputFieldItem';
 
 const useStyles = makeStyles({
   root: {
-    backgroundColor: '#C4C4C4',
-    height: '3em',
-    width: '20em',
-    marginLeft: '1em'
+    maxWidth: '550px',
+    margin: 'auto'
   },
   label: {
     fontSize: '1.5em',
-    height: '3em',
-    verticalAlign: 'center'
+    height: '3em'
   }
 });
 
 function LoginForm(props) {
   const classes = useStyles();
-  const { onSubmit } = props;
+  const { onSubmit, gridItemProps } = props;
 
   return (
-    <div>
-      <Grid container justify='flex-end'>
-        <FForm onSubmit={onSubmit}>
-          {({ handleSubmit, values }) => (
-            <form onSubmit={handleSubmit}>
-              <Grid item xs={12}>
-                <InputField name='email' label='Email:' />
-              </Grid>
-              <Grid item xs={12}>
-                <InputField name='email' type='password' label='Password:' />
-              </Grid>
-              <button type='submit'>Login</button>
-            </form>
-          )}
-        </FForm>
-      </Grid>
-    </div>
+    <FForm onSubmit={onSubmit}>
+      {({ handleSubmit, values }) => (
+        <form onSubmit={handleSubmit}>
+          <Grid
+            item
+            container
+            spacing={2}
+            className={classes.root}
+            direction='column'
+            alignItems='flex-end'
+            {...gridItemProps}
+          >
+            <InputFieldItem name='email' />
+            <InputFieldItem name='password' />
+            <Grid item>
+              <Button color='secondary'>Login</Button>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='h2'>
+                Need an account? <Link to='/signup'>Sign Up</Link>
+              </Typography>
+            </Grid>
+          </Grid>
+        </form>
+      )}
+    </FForm>
   );
 }
 
