@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     position: 'absolute',
     bottom: '0',
     width: '100%',
-    // border: '1px solid red',
+    maxWidth: '1536px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'start-end',
@@ -25,12 +25,11 @@ function PageFooter(props) {
 
   return (
     <Box className={classes.root}>
-      <Box>
+      <Box flexGrow={1}>
         <Typography variant='h2'>
           Welcome, {displayName || email || 'Adventurer'}!
         </Typography>
       </Box>
-      <Box flexGrow={1} />
       <Box>
         {currentUser && (
           <Button color='primary' onClick={logout}>

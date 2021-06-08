@@ -44,6 +44,8 @@ const userMutations = {
       salt
     });
 
+    // TODO: Handle custom error message for 'User already exists' when email already exists
+
     const token = jwt.sign({ userId: user.id }, accessTokenSecret);
 
     return { user, token };

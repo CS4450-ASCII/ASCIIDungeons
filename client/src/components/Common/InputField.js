@@ -7,20 +7,11 @@ const useStyles = makeStyles({
   root: {}
 });
 
-function InputFieldItem(props) {
-  const { label, xs, sm, md, lg, name, ...rest } = props;
+function InputField(props) {
+  const { label, name, ...rest } = props;
 
   return (
-    <Grid
-      item
-      container
-      justify='flex-end'
-      alignItems='center'
-      xs={xs}
-      sm={sm}
-      md={md}
-      lg={lg}
-    >
+    <Grid container justify='flex-end' alignItems='center'>
       <Grid item style={{ marginRight: '0.5em' }}>
         <Typography variant='h2'>{label || _.startCase(name)}:</Typography>
       </Grid>
@@ -31,4 +22,4 @@ function InputFieldItem(props) {
   );
 }
 
-export default InputFieldItem;
+export default InputField;

@@ -1,6 +1,5 @@
 import { useMutation } from '@apollo/client';
 import { makeStyles, Typography } from '@material-ui/core';
-import _ from 'lodash';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import authHelper from '../../helpers/authentication';
@@ -12,11 +11,11 @@ const useStyles = makeStyles({
   root: {}
 });
 
-function SignUpPage(props) {
+function LoginPage(props) {
   const classes = useStyles();
-  const [createUser] = useMutation(userRequests.CREATE_USER, {
-    onCompleted: ({ createUser }) => {
-      authHelper.setAccessToken(createUser.token);
+  const [loginUser] = useMutation(userRequests.LOGIN_USER, {
+    onCompleted: ({ loginUser }) => {
+      authHelper.setAccessToken(loginUser.token);
     }
   });
 
@@ -28,18 +27,7 @@ function SignUpPage(props) {
         required: true
       },
       {
-        name: 'displayName',
-        component: InputField,
-        required: false
-      },
-      {
         name: 'password',
-        component: InputField,
-        type: 'password',
-        required: true
-      },
-      {
-        name: 'confirmPassword',
         component: InputField,
         type: 'password',
         required: true
@@ -48,11 +36,9 @@ function SignUpPage(props) {
     []
   );
 
-  // TODO: Add validation to ensure password and confirm password are the same
-
   const onSubmit = values => {
-    createUser({
-      variables: { user: _.omit(values, 'confirmPassword') }
+    loginUser({
+      variables: { user: values }
     });
   };
 
@@ -61,18 +47,15 @@ function SignUpPage(props) {
       <FormComponent
         onSubmit={onSubmit}
         formFields={formFields}
-        submitButtonText='Sign Up'
+        submitButtonText='Login'
         footer={
           <Typography variant='h2'>
-            Have an account? <Link to='/login'>Login</Link>
+            Need an account? <Link to='/signup'>Sign Up</Link>
           </Typography>
         }
-        gridProps={{
-          style: { paddingRight: 85 }
-        }}
       />
     </div>
   );
 }
 
-export default SignUpPage;
+export default LoginPage;

@@ -5,7 +5,8 @@ import SmSlant from 'figlet/importable-fonts/Small Slant';
 import { Route, Switch } from 'react-router-dom';
 import { useCurrentUser } from '../../helpers/hooks';
 import AppContainer from '../AppContainer/MainMenu';
-import LoginPage from '../Authentication/LoginPage/LoginPage';
+import LoginPage from '../Authentication/LoginPage';
+import SignUpForm from '../Authentication/SignUpPage';
 import PageFooter from '../Common/PageFooter';
 import PageHeader from '../Common/PageHeader';
 
@@ -17,15 +18,16 @@ const useStyles = makeStyles({
     backgroundColor: 'black',
     display: 'grid',
     gridTemplateColumns: '1fr',
-    justifyItems: 'stretch'
+    justifyItems: 'center',
+    width: '100vw'
   },
   container: {
     color: 'white',
     fontFamily: 'IBMBios',
-    width: '100vw',
     maxWidth: '1536px',
     margin: 'auto',
-    height: '100vh'
+    height: '100vh',
+    width: '100%'
   }
 });
 
@@ -43,7 +45,7 @@ function App() {
           <PageHeader text='ASCII Dungeons' />
           <Switch>
             <Route exact path='/signup'>
-              Sign up page
+              <SignUpForm />
             </Route>
             <Route path='/'>
               {currentUser ? <AppContainer /> : <LoginPage />}

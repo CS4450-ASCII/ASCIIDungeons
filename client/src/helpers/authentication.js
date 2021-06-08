@@ -1,8 +1,10 @@
 import { AUTH_TOKEN } from '../constants';
 
 function setAccessToken(token) {
-  localStorage.setItem(AUTH_TOKEN, token);
-  window.location = '/';
+  if (token) {
+    localStorage.setItem(AUTH_TOKEN, token);
+    window.location = '/';
+  }
 }
 
 function logout() {
