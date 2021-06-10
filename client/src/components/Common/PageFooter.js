@@ -1,5 +1,6 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
+import { useHistory, useLocation } from 'react-router';
 import { useCurrentUser } from '../../helpers/hooks';
 
 const useStyles = makeStyles({
@@ -23,12 +24,23 @@ function PageFooter(props) {
 
   const { displayName, email } = currentUser || {};
 
+  const location = useLocation();
+  const history = useHistory();
+
+  const showWelcome = ['/', '/main'].includes(location.pathname);
+
   return (
     <Box className={classes.root}>
       <Box flexGrow={1}>
-        <Typography variant='h2'>
-          Welcome, {displayName || email || 'Adventurer'}!
-        </Typography>
+        {showWelcome ? (
+          <Typography variant='h2'>
+            Welcome, {displayName || email || 'Adventurer'}!
+          </Typography>
+        ) : (
+          <Button variant='h2' onClick={() => history.push('/main')}>
+            Main Menu
+          </Button>
+        )}
       </Box>
       <Box>
         {currentUser && (

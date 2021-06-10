@@ -1,12 +1,17 @@
-import { makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
 import figlet from 'figlet';
+import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 
 const useStyles = makeStyles({
   root: {
-    width: '100%',
-    textAlign: 'center',
-    marginBottom: '8em'
+    width: 'max-content',
+    marginBottom: '8em',
+    margin: 'auto',
+    '& h2': {
+      marginTop: '-0.8em'
+    }
   }
 });
 
@@ -14,6 +19,10 @@ function PageHeader(props) {
   const classes = useStyles();
   const { text, small } = props;
   const [output, setOutput] = useState('');
+
+  const location = _.get(useLocation(), 'pathname').slice(1);
+  const titleOverrides = { main: ' ' };
+  const pageName = titleOverrides[location] || _.startCase(location);
 
   useEffect(() => {
     figlet.text(
@@ -31,7 +40,21 @@ function PageHeader(props) {
     );
   }, [text, small]);
 
-  return <pre className={classes.root}>{output}</pre>;
+  return (
+    <Grid
+      container
+      direction='column'
+      alignItems='flex-end'
+      className={classes.root}
+    >
+      <Grid item>
+        <pre>{output}</pre>
+      </Grid>
+      <Grid item>
+        <Typography variant='h2'>{pageName}</Typography>
+      </Grid>
+    </Grid>
+  );
 }
 
 export default PageHeader;
