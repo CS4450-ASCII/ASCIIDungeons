@@ -20,7 +20,7 @@ const userMutations = {
 
     const passwordValid = await bcrypt.compare(password, user.hashedPassword);
     if (!passwordValid) {
-      throw new Error('Password incorrect');
+      throw new Error('Incorrect password.');
     }
 
     const token = jwt.sign({ userId: user.id }, accessTokenSecret);

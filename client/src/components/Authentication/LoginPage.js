@@ -1,7 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { makeStyles, Typography } from '@material-ui/core';
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../../context/ContextProvider';
 import authHelper from '../../helpers/authentication';
 import { userRequests } from '../../requests/user';
 import FormComponent from '../Common/FormComponent';
@@ -13,9 +14,14 @@ const useStyles = makeStyles({
 
 function LoginPage(props) {
   const classes = useStyles();
+  const { setErrors } = useContext(AppContext);
+
   const [loginUser] = useMutation(userRequests.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
       authHelper.setAccessToken(loginUser.token);
+    },
+    onError: error => {
+      setErrors([error.message]);
     }
   });
 

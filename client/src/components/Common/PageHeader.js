@@ -1,24 +1,16 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import figlet from 'figlet';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-
-const useStyles = makeStyles({
-  root: {
-    width: 'max-content',
-    marginBottom: '8em',
-    margin: 'auto',
-    '& h2': {
-      marginTop: '-0.8em'
-    }
-  }
-});
+import { AppContext } from '../../context/ContextProvider';
 
 function PageHeader(props) {
   const classes = useStyles();
   const { text, small } = props;
   const [output, setOutput] = useState('');
+
+  const { errors } = useContext(AppContext);
 
   const location = _.get(useLocation(), 'pathname').slice(1);
   const titleOverrides = { main: ' ' };
@@ -53,8 +45,35 @@ function PageHeader(props) {
       <Grid item>
         <Typography variant='h2'>{pageName}</Typography>
       </Grid>
+      {_.get(errors, 'length') > 0 && (
+        <Grid item xs={12} className={classes.errorMessage}>
+          {errors.map(error => (
+            <Typography key={`error-${error}`} variant='h3' color='error'>
+              {error}
+            </Typography>
+          ))}
+        </Grid>
+      )}
     </Grid>
   );
 }
 
+const useStyles = makeStyles({
+  root: {
+    width: 'max-content',
+    marginBottom: '8em',
+    margin: 'auto',
+    '& h2': {
+      marginTop: '-0.8em'
+    }
+  },
+  errorMessage: {
+    textAlign: 'center',
+    width: '100%',
+    height: '100%',
+    marginTop: '2em',
+    marginBottom: '-3em',
+    wordWrap: 'break-word'
+  }
+});
 export default PageHeader;

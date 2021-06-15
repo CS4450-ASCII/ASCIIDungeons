@@ -10,7 +10,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App/App';
+import ErrorBoundary from './components/Common/ErrorBoundary';
 import { AUTH_TOKEN } from './constants';
+import ContextProvider from './context/ContextProvider';
 import './index.css';
 import theme from './muiAsciiTheme';
 
@@ -41,14 +43,18 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <BrowserRouter>
-        <CssBaseline />
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </BrowserRouter>
-    </ApolloProvider>
+    <ErrorBoundary>
+      <ApolloProvider client={client}>
+        <BrowserRouter>
+          <CssBaseline />
+          <ContextProvider>
+            <ThemeProvider theme={theme}>
+              <App />
+            </ThemeProvider>
+          </ContextProvider>
+        </BrowserRouter>
+      </ApolloProvider>
+    </ErrorBoundary>
   </React.StrictMode>,
   document.getElementById('root')
 );

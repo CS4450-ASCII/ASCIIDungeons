@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import figlet from 'figlet';
 import Slant from 'figlet/importable-fonts/Slant';
 import SmSlant from 'figlet/importable-fonts/Small Slant';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { useCurrentUser } from '../../helpers/hooks';
 import AppContainer from '../AppContainer/AppContainer';
 import LoginPage from '../Authentication/LoginPage';
