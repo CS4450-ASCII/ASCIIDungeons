@@ -1,4 +1,5 @@
 import { Button, Grid, makeStyles } from '@material-ui/core';
+import { makeValidate } from 'mui-rff';
 import React from 'react';
 import { Form as FForm } from 'react-final-form';
 
@@ -19,11 +20,19 @@ function FormComponent(props) {
     gridProps,
     formFields,
     submitButtonText = 'Submit',
-    footer
+    footer,
+    validationSchema,
+    initialValues
   } = props;
 
+  const validate = makeValidate(validationSchema);
+
   return (
-    <FForm onSubmit={onSubmit}>
+    <FForm
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      validate={validate}
+    >
       {({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit}>
           <Grid

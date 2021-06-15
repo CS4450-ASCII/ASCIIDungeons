@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import { makeStyles, Typography } from '@material-ui/core';
 import React, { useContext, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
 import { AppContext } from '../../context/ContextProvider';
 import authHelper from '../../helpers/authentication';
 import { userRequests } from '../../requests/user';
@@ -29,14 +30,12 @@ function LoginPage(props) {
     () => [
       {
         name: 'email',
-        component: InputField,
-        required: true
+        component: InputField
       },
       {
         name: 'password',
         component: InputField,
-        type: 'password',
-        required: true
+        type: 'password'
       }
     ],
     []
@@ -47,6 +46,11 @@ function LoginPage(props) {
       variables: { user: values }
     });
   };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required('Email required.'),
+    password: Yup.string().required('Password required.')
+  });
 
   return (
     <div className={classes.root}>
@@ -59,6 +63,7 @@ function LoginPage(props) {
             Need an account? <Link to='/signup'>Sign Up</Link>
           </Typography>
         }
+        validationSchema={validationSchema}
       />
     </div>
   );

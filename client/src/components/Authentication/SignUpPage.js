@@ -3,6 +3,7 @@ import { makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useContext, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import * as Yup from 'yup';
 import { AppContext } from '../../context/ContextProvider';
 import authHelper from '../../helpers/authentication';
 import { userRequests } from '../../requests/user';
@@ -29,37 +30,41 @@ function SignUpPage(props) {
     () => [
       {
         name: 'email',
-        component: InputField,
-        required: true
+        component: InputField
       },
       {
         name: 'displayName',
-        component: InputField,
-        required: false
+        component: InputField
       },
       {
         name: 'password',
         component: InputField,
-        type: 'password',
-        required: true
+        type: 'password'
       },
       {
         name: 'confirmPassword',
         component: InputField,
-        type: 'password',
-        required: true
+        type: 'password'
       }
     ],
     []
   );
-
-  // TODO: Add validation to ensure password and confirm password are the same
 
   const onSubmit = values => {
     createUser({
       variables: { user: _.omit(values, 'confirmPassword') }
     });
   };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string().email().required('Email required.'),
+    password: Yup.string().required('Password required.'),
+
+    // ensure password and confirm password are the same
+    confirmPassword: Yup.string()
+      .required('Confirm required.')
+      .oneOf([Yup.ref('password')], 'Passwords must match.')
+  });
 
   return (
     <div className={classes.root}>
@@ -75,6 +80,7 @@ function SignUpPage(props) {
         gridProps={{
           style: { paddingRight: 85 }
         }}
+        validationSchema={validationSchema}
       />
     </div>
   );
