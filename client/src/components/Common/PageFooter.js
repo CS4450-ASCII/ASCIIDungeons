@@ -37,9 +37,7 @@ function PageFooter(props) {
             Welcome, {displayName || email || 'Adventurer'}!
           </Typography>
         ) : (
-          <Button variant='h2' onClick={() => history.push('/main')}>
-            Main Menu
-          </Button>
+          <Button onClick={() => history.push('/main')}>Main Menu</Button>
         )}
       </Box>
       <Box>

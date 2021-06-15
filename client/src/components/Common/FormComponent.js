@@ -47,7 +47,7 @@ function FormComponent(props) {
             {formFields.map(field => {
               const { component: FieldComponent, ...fieldProps } = field;
               return (
-                <Grid item xs={12}>
+                <Grid key={`field-${field.name}`} item xs={12}>
                   {FieldComponent ? <FieldComponent {...fieldProps} /> : field}
                 </Grid>
               );
@@ -57,7 +57,7 @@ function FormComponent(props) {
                 {submitButtonText}
               </Button>
             </Grid>
-            <Grid item={12} className={classes.footer}>
+            <Grid item xs={12} className={classes.footer}>
               {footer}
             </Grid>
           </Grid>

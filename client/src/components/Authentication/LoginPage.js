@@ -1,11 +1,11 @@
 import { useMutation } from '@apollo/client';
 import { makeStyles, Typography } from '@material-ui/core';
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import { AppContext } from '../../context/ContextProvider';
 import authHelper from '../../helpers/authentication';
 import { userRequests } from '../../requests/user';
+import useErrorHandler from '../AppContainer/ErrorMessageHandler';
 import FormComponent from '../Common/FormComponent';
 import InputField from '../Common/InputField';
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 
 function LoginPage(props) {
   const classes = useStyles();
-  const { setErrors } = useContext(AppContext);
+  const { setErrors } = useErrorHandler();
 
   const [loginUser] = useMutation(userRequests.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
