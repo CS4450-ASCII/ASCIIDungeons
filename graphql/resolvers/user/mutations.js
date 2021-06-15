@@ -37,14 +37,18 @@ const userMutations = {
   ) => {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
+
+    const foundUser = await User.findOne({ where: { email } });
+    if (foundUser) {
+      throw new Error('User with email already exists.');
+    }
+
     const user = await User.create({
       displayName,
       email,
       hashedPassword,
       salt
     });
-
-    // TODO: Handle custom error message for 'User already exists' when email already exists
 
     const token = jwt.sign({ userId: user.id }, accessTokenSecret);
 

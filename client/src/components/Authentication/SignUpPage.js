@@ -1,8 +1,9 @@
 import { useMutation } from '@apollo/client';
 import { makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../../context/ContextProvider';
 import authHelper from '../../helpers/authentication';
 import { userRequests } from '../../requests/user';
 import FormComponent from '../Common/FormComponent';
@@ -14,9 +15,13 @@ const useStyles = makeStyles({
 
 function SignUpPage(props) {
   const classes = useStyles();
+  const { setErrors } = useContext(AppContext);
   const [createUser] = useMutation(userRequests.CREATE_USER, {
     onCompleted: ({ createUser }) => {
       authHelper.setAccessToken(createUser.token);
+    },
+    onError: error => {
+      setErrors([error.message]);
     }
   });
 

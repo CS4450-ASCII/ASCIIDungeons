@@ -1,41 +1,42 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Client",
-      "request": "launch",
-      "type": "pwa-chrome",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/client/src",
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Server",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}/index.js",
-      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/babel-node",
-      "runtimeArgs": [
-        "--nolazy"
-      ],
-      "env": {
-        "BABEL_ENV": "development"
-      },
-      "preLaunchTask": "Run client"
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Server/Client",
-      "configurations": [
-        "Server",
-        "Client",
-      ]
-    }
-  ]
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Client",
+			"request": "launch",
+			"type": "pwa-chrome",
+			"url": "http://localhost:3000",
+			"webRoot": "${workspaceFolder}/client/src",
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Server",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/index.js",
+			"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/babel-node",
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"stopOnEntry": true,
+			"env": {
+				"BABEL_ENV": "development"
+			},
+			"preLaunchTask": "Run client"
+		}
+	],
+	"compounds": [
+		{
+			"name": "Server/Client",
+			"configurations": [
+				"Server",
+				"Client",
+			]
+		}
+	]
 }
