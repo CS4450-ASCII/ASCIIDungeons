@@ -7,7 +7,6 @@ import { useCurrentUser } from '../../helpers/custom_hooks';
 import AppContainer from '../AppContainer/AppContainer';
 import LoginPage from '../Authentication/LoginPage';
 import SignUpPage from '../Authentication/SignUpPage';
-import SignUpForm from '../Authentication/SignUpPage';
 import PageFooter from '../Common/PageFooter';
 import PageHeader from '../Common/PageHeader';
 

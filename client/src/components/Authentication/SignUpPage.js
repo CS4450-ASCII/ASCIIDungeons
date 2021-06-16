@@ -4,7 +4,8 @@ import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import authHelper from '../../helpers/authentication';
-import { useMutationWithError } from '../../helpers/custom_hooks';
+import { useMutationWithError } from '../../helpers/customHooks';
+import formValidations from '../../helpers/formValidations';
 import { userRequests } from '../../requests/user';
 import FormComponent from '../Common/FormComponent';
 import InputField from '../Common/InputField';
@@ -53,8 +54,8 @@ function SignUpPage(props) {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email().required('Email required.'),
-    password: Yup.string().required('Password required.'),
+    email: formValidations.VALID_EMAIL,
+    password: formValidations.PASSWORD_REQUIRED,
 
     // ensure password and confirm password are the same
     confirmPassword: Yup.string()
