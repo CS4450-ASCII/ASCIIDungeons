@@ -13,7 +13,7 @@ function PageHeader(props) {
   const { errors } = useContext(AppContext);
 
   const location = _.get(useLocation(), 'pathname').slice(1);
-  const titleOverrides = { main: ' ' };
+  const titleOverrides = { main: ' ', signup: ' ', login: ' ' };
   const pageName = titleOverrides[location] || _.startCase(location);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ function PageHeader(props) {
 const useStyles = makeStyles({
   root: {
     width: 'max-content',
-    marginBottom: '8em',
+    marginBottom: '5em',
     margin: 'auto',
     '& h2': {
       marginTop: '-0.8em'

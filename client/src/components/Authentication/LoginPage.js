@@ -1,11 +1,10 @@
-import { useMutation } from '@apollo/client';
 import { makeStyles, Typography } from '@material-ui/core';
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import authHelper from '../../helpers/authentication';
+import { useMutationWithError } from '../../helpers/custom_hooks';
 import { userRequests } from '../../requests/user';
-import useErrorHandler from '../AppContainer/ErrorMessageHandler';
 import FormComponent from '../Common/FormComponent';
 import InputField from '../Common/InputField';
 
@@ -15,14 +14,10 @@ const useStyles = makeStyles({
 
 function LoginPage(props) {
   const classes = useStyles();
-  const { setErrors } = useErrorHandler();
 
-  const [loginUser] = useMutation(userRequests.LOGIN_USER, {
+  const [loginUser] = useMutationWithError(userRequests.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
       authHelper.setAccessToken(loginUser.token);
-    },
-    onError: error => {
-      setErrors([error.message]);
     }
   });
 
@@ -30,11 +25,11 @@ function LoginPage(props) {
     () => [
       {
         name: 'email',
-        component: InputField
+        Component: InputField
       },
       {
         name: 'password',
-        component: InputField,
+        Component: InputField,
         type: 'password'
       }
     ],
@@ -48,7 +43,9 @@ function LoginPage(props) {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().email().required('Email required.'),
+    email: Yup.string()
+      .email('Email must be valid.')
+      .required('Email required.'),
     password: Yup.string().required('Password required.')
   });
 

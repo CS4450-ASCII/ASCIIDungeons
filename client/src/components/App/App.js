@@ -2,10 +2,11 @@ import { makeStyles } from '@material-ui/core';
 import figlet from 'figlet';
 import Slant from 'figlet/importable-fonts/Slant';
 import SmSlant from 'figlet/importable-fonts/Small Slant';
-import { Route, Switch } from 'react-router-dom';
-import { useCurrentUser } from '../../helpers/hooks';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { useCurrentUser } from '../../helpers/custom_hooks';
 import AppContainer from '../AppContainer/AppContainer';
 import LoginPage from '../Authentication/LoginPage';
+import SignUpPage from '../Authentication/SignUpPage';
 import SignUpForm from '../Authentication/SignUpPage';
 import PageFooter from '../Common/PageFooter';
 import PageHeader from '../Common/PageHeader';
@@ -45,10 +46,13 @@ function App() {
           <PageHeader text='ASCII Dungeons' />
           <Switch>
             <Route exact path='/signup'>
-              <SignUpForm />
+              {currentUser ? <Redirect to='/main' /> : <SignUpPage />}
+            </Route>
+            <Route exact path='/login'>
+              {currentUser ? <Redirect to='/main' /> : <LoginPage />}
             </Route>
             <Route path='/'>
-              {currentUser ? <AppContainer /> : <LoginPage />}
+              {currentUser ? <AppContainer /> : <Redirect to='/login' />}
             </Route>
           </Switch>
           <PageFooter />

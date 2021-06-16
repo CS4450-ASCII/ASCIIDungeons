@@ -1,5 +1,5 @@
 import { Button, Grid, makeStyles } from '@material-ui/core';
-import { makeValidate } from 'mui-rff';
+import { makeValidate, showErrorOnBlur } from 'mui-rff';
 import React from 'react';
 import { Form as FForm } from 'react-final-form';
 
@@ -45,10 +45,14 @@ function FormComponent(props) {
             {...gridProps}
           >
             {formFields.map(field => {
-              const { component: FieldComponent, ...fieldProps } = field;
+              const { Component, ...fieldProps } = field;
               return (
                 <Grid key={`field-${field.name}`} item xs={12}>
-                  {FieldComponent ? <FieldComponent {...fieldProps} /> : field}
+                  {Component ? (
+                    <Component showError={showErrorOnBlur} {...fieldProps} />
+                  ) : (
+                    field
+                  )}
                 </Grid>
               );
             })}
