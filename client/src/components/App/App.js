@@ -3,7 +3,7 @@ import figlet from 'figlet';
 import Slant from 'figlet/importable-fonts/Slant';
 import SmSlant from 'figlet/importable-fonts/Small Slant';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { useCurrentUser } from '../../helpers/custom_hooks';
+import { useCurrentUser } from '../../helpers/customHooks';
 import AppContainer from '../AppContainer/AppContainer';
 import LoginPage from '../Authentication/LoginPage';
 import SignUpPage from '../Authentication/SignUpPage';

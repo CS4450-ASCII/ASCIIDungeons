@@ -1,7 +1,7 @@
 import { Box, Button, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { useCurrentUser } from '../../helpers/custom_hooks';
+import { useCurrentUser } from '../../helpers/customHooks';
 
 const useStyles = makeStyles({
   root: {
