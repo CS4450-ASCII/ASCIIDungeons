@@ -1,0 +1,22 @@
+type Level implements Timestamps {
+
+  id: ID!
+  width: Int!
+  height: Int!
+
+  createdAt: Date!
+  updatedAt: Date!
+  }
+
+
+  input LevelCreateInput {
+    id: ID!
+    width: Int!
+    height: Int!
+  }
+
+  input LevelUpdateInput {
+    id: ID!
+    width: Int!
+    height: Int!
+  }

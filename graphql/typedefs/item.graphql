@@ -1,0 +1,24 @@
+type Item implements Timestamps {
+
+  id: ID!
+  itemTypeID: ID!
+  primaryColorID: Int!
+  secondaryColorID: Int!
+
+  createdAt: Date!
+  updatedAt: Date!
+  }
+
+  input ItemCreateInput {
+    id: ID!
+    itemTypeID: ID!
+    primaryColorID: Int!
+    secondaryColorID: Int!
+  }
+
+  input ItemUpdateInput {
+    id: ID!
+    itemTypeID: ID!
+    primaryColorID: Int!
+    secondaryColorID: Int!
+  }

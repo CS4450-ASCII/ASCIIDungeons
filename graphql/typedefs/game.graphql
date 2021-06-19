@@ -1,0 +1,19 @@
+type Game implements Timestamps {
+
+  id: ID!
+  title: String!
+  description: String!
+
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+  input GameCreateInput {
+    title: String!
+    description: String!
+  }
+
+  input GameUpdateInput {
+    title: String!
+    description: String!
+  }

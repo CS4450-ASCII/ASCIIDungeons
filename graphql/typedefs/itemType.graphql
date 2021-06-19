@@ -1,0 +1,18 @@
+type ItemType implements Timestamps {
+
+  id: ID!
+  name: String!
+
+  createdAt: Date!
+  updatedAt: Date!
+  }
+
+  input ItemTypeCreateInput {
+    itemTypeID: ID!
+    name: String!
+  }
+
+  input ItemTypeUpdateInput {
+    itemTypeID: ID!
+    name: String!
+  }

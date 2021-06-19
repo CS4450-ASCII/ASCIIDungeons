@@ -1,0 +1,18 @@
+type GameLevel implements Timestamps {
+
+  id: ID!
+  levelIndex: Int!
+
+  createdAt: Date!
+  updatedAt: Date!
+  }
+
+  input GameLevelCreateInput {
+    id: ID!
+    levelIndex: Int!
+  }
+
+  input GameLevelUpdateInput {
+    id: ID!
+    levelIndex: Int!
+  }
