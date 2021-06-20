@@ -14,7 +14,7 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Server",
+			"name": "Servers",
 			"skipFiles": [
 				"<node_internals>/**"
 			],
@@ -28,13 +28,30 @@
 				"BABEL_ENV": "development"
 			},
 			"preLaunchTask": "Run client"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Node Server",
+			"skipFiles": [
+				"<node_internals>/**"
+			],
+			"program": "${workspaceFolder}/index.js",
+			"runtimeExecutable": "${workspaceFolder}/node_modules/.bin/babel-node",
+			"runtimeArgs": [
+				"--nolazy"
+			],
+			"stopOnEntry": true,
+			"env": {
+				"BABEL_ENV": "development"
+			}
 		}
 	],
 	"compounds": [
 		{
-			"name": "Server/Client",
+			"name": "Servers/Client",
 			"configurations": [
-				"Server",
+				"Servers",
 				"Client",
 			]
 		}

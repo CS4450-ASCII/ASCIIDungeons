@@ -1,8 +1,8 @@
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, AuthenticationError } from 'apollo-server-express';
 import _ from 'lodash';
 import { env } from '../config/environment';
 import schema from './schema';
-import { getUser } from './utils/jwt-utils';
+import { getCurrentUser } from './utils/jwt-utils';
 
 /**************************************************************
  * References:
@@ -14,11 +14,22 @@ import { getUser } from './utils/jwt-utils';
 const apolloServer = new ApolloServer({
   schema,
   playground: env.development,
-  context: ({ req }) => {
-    return {
-      ...req,
-      currentUser: _.get(req, 'headers.authorization') ? getUser({ req }) : null
-    };
+  context: async ({ req }) => {
+    const currentUser = await getCurrentUser(req);
+
+    const requestName = _.get(req, 'body.query')
+      .match(/\{\n*(.*)[({]/)[1]
+      .trim();
+
+    const publicRequests = new Set(['loginUser']);
+    if (currentUser || publicRequests.has(requestName)) {
+      return {
+        ...req,
+        currentUser
+      };
+    }
+
+    throw new AuthenticationError('Not authorized.');
   }
 });
 

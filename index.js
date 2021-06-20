@@ -1,6 +1,6 @@
 import { port } from './config/environment';
 import app from './app';
-import { sequelize, User } from './database/models';
+import { sequelize } from './database/models';
 
 const start = async () => {
   try {

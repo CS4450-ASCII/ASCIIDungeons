@@ -1,5 +1,6 @@
 ### Sign Up
-POST https://ascii-dungeons.herokuapp.com/graphql
+# POST https://ascii-dungeons.herokuapp.com/graphql
+POST http://localhost:5000/graphql
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
@@ -16,14 +17,15 @@ mutation ($user: UserCreateInput!) {
 
 {
   "user": {
-    "displayName":"Ky2",
-    "email":"ky2@ascii.com",
+    "displayName":"Test User",
+    "email":"test@ascii.com",
     "password":"pass123"
   }
 }
 
 ### Login
-POST https://ascii-dungeons.herokuapp.com/graphql
+# POST https://ascii-dungeons.herokuapp.com/graphql
+POST http://localhost:5000/graphql
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
@@ -40,21 +42,7 @@ mutation($user: UserLoginInput!) {
 
 {
   "user": {
-    "email":"ky@ascii.com",
+    "email":"test@ascii.com",
     "password":"pass123"
-  }
-}
-
-### Users List
-POST https://ascii-dungeons.herokuapp.com/graphql
-Content-Type: application/json
-Authorization: Bearer <token>
-X-REQUEST-TYPE: GraphQL
-
-query {
-  users {
-    id
-    displayName
-    email
   }
 }
