@@ -17,12 +17,15 @@ const apolloServer = new ApolloServer({
   context: async ({ req }) => {
     const currentUser = await getCurrentUser(req);
 
-    const requestName = _.get(req, 'body.query')
-      .match(/\{\n*(.*)[({]/)[1]
-      .trim();
+    let requestMatch = _.get(req, 'body.query').match(
+      /\{(\r\n|\r|\n)*([^(){}]*)[({]/
+    );
+    if (requestMatch) {
+      requestMatch = requestMatch[2].trim();
+    }
 
-    const publicRequests = new Set(['loginUser']);
-    if (currentUser || publicRequests.has(requestName)) {
+    const publicRequests = new Set(['loginUser', 'createUser', 'currentUser']);
+    if (currentUser || publicRequests.has(requestMatch)) {
       return {
         ...req,
         currentUser
