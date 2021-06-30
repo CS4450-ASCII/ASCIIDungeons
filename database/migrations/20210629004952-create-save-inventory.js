@@ -10,11 +10,25 @@ module.exports = {
       },
       saveID: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'user_saves',
+            schema: 'schema'
+          },
+          key: 'save_id'
+        }
       },
       itemID: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'items',
+            schema: 'schema'
+          },
+          key: 'item_id'
+        }
       },
       data: {
         type: Sequelize.JSON,
