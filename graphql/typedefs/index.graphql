@@ -9,6 +9,13 @@ type Query {
 
   saveInventories: [SaveInventory]!
   saveInventory(id: ID!): SaveInventory
+
+  levelEntities: [LevelEntity]!
+  levelEntity(id: ID!): LevelEntity
+
+  levelItems: [LevelItem]!
+  levelItem(id: ID!): LevelItem
+
 }
 
 type Mutation {
@@ -18,5 +25,12 @@ type Mutation {
   updateUser(id: ID!, user: UserUpdateInput!): User!
 
   createSaveInventory(saveInventory: SaveInventoryCreateInput!): SaveInventory!
-  updateSaveInventory(id: ID!, saveInventory: SaveInventoryUpdateInput!): SaveInventory! 
+  updateSaveInventory(id: ID!, saveInventory: SaveInventoryUpdateInput!): SaveInventory!
+
+  createLevelEntity(levelEntity: LevelEntityCreateInput!): LevelEntity!
+  updateLevelEntity(id: ID!, levelEntity: LevelEntityUpdateInput!): LevelEntity!
+
+  createLevelItem(levelItem: LevelItemCreateInput!): LevelItem!
+  updateLevelItem(id: ID!, levelItem: LevelItemUpdateInput!): LevelItem!
+
 }
