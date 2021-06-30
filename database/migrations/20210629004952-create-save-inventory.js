@@ -16,7 +16,7 @@ module.exports = {
             tableName: 'user_saves',
             schema: 'schema'
           },
-          key: 'save_id'
+          key: 'id'
         }
       },
       itemID: {
@@ -27,7 +27,7 @@ module.exports = {
             tableName: 'items',
             schema: 'schema'
           },
-          key: 'item_id'
+          key: 'id'
         }
       },
       data: {
