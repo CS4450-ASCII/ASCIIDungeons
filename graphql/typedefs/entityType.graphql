@@ -1,0 +1,35 @@
+# Types
+type EntityType implements Timestamps {
+  """
+  The id of the entityType.
+  """
+  id: ID!
+
+  """
+  The display name of the entityType.
+  """
+  name: String!
+
+  # Interface required
+
+  """
+  Datetime the entityType was created at.
+  """
+  createdAt: Date!
+  """
+  Datetime the entityType was last updated.
+  """
+  updatedAt: Date!
+}
+
+# # Inputs
+input EntityTypeCreateInput {
+  """
+  The display name of the entitytype.
+  """
+  name: String!
+}
+
+input EntityTypeUpdateInput {
+  name: String!
+}

@@ -1,0 +1,45 @@
+# Types
+type Color implements Timestamps {
+  """
+  The id of the color.
+  """
+  id: ID!
+
+  """
+  The display name of the color.
+  """
+  currentColor: String
+
+  """
+  The display name of the hexValue.
+  """
+  hexValue: String!
+
+  # Interface required
+
+  """
+  Datetime the color was created at.
+  """
+  createdAt: Date!
+  """
+  Datetime the color was last updated.
+  """
+  updatedAt: Date!
+}
+
+# # Inputs
+input ColorCreateInput {
+  """
+  (Optional) The display name of the color.
+  """
+  currentColor: String
+
+  """
+  The hexValue of the color.
+  """
+  hexValue: String!
+}
+
+input ColorUpdateInput {
+  currentColor: String!
+}

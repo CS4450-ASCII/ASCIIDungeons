@@ -6,6 +6,16 @@ type Query {
   users: [User]!
   user(id: ID!): User
   currentUser: User
+
+  colors: [Color]!
+  color(id: ID!): Color
+
+  entitys: [Entity]!
+  entity(id: ID!): Entity
+  symbol: Entity
+
+  entitysTypes: [EntityType]!
+  entityType(id: ID!): EntityType
 }
 
 type Mutation {
@@ -13,4 +23,13 @@ type Mutation {
   loginUser(user: UserLoginInput!): AuthPayload
   createUser(user: UserCreateInput!): AuthPayload
   updateUser(id: ID!, user: UserUpdateInput!): User!
+
+  createColor(color: ColorCreateInput!): Color!
+  updateColor(id: ID!, color: ColorUpdateInput): Color!
+
+  createEntity(entity: EntityCreateInput!): Entity!
+  updateEntity(id: ID!, entity: EntityUpdateInput): Entity!
+
+  createEntityType(entityType: EntityTypeCreateInput!): EntityType!
+  updateEntityType(id: ID!, entityType: EntityTypeUpdateInput): EntityType!
 }
