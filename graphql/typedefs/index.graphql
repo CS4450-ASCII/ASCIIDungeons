@@ -6,6 +6,9 @@ type Query {
   users: [User]!
   user(id: ID!): User
   currentUser: User
+
+  saveInventories: [SaveInventory]!
+  saveInventory(id: ID!): SaveInventory
 }
 
 type Mutation {
@@ -13,4 +16,7 @@ type Mutation {
   loginUser(user: UserLoginInput!): AuthPayload
   createUser(user: UserCreateInput!): AuthPayload
   updateUser(id: ID!, user: UserUpdateInput!): User!
+
+  createSaveInventory(saveInventory: SaveInventoryCreateInput!): SaveInventory!
+  updateSaveInventory(id: ID!, saveInventory: SaveInventoryUpdateInput!): SaveInventory! 
 }
