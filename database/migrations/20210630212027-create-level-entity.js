@@ -9,10 +9,26 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       levelID: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'levels',
+            schema: 'schema'
+          },
+          key: 'id'
+        }
       },
       entityID: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'entities',
+            schema: 'schema'
+          },
+          key: 'id'
+        }
       },
       x: {
         type: Sequelize.INTEGER

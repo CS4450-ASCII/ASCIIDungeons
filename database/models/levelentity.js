@@ -10,14 +10,27 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Level);
+      this.hasOne(models.Entity);
     }
   };
   LevelEntity.init({
-    levelID: DataTypes.INTEGER,
-    entityID: DataTypes.INTEGER,
-    x: DataTypes.INTEGER,
-    y: DataTypes.INTEGER
+    levelID: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    entityID: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    x: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    y:{
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'LevelEntity',
