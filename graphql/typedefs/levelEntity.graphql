@@ -1,0 +1,27 @@
+# Types
+type LevelEntity implements Timestamps {
+  id: ID!
+  levelID: Int!
+  entityID: Int!
+  x: Int!
+  y: Int!
+
+  # Interface required
+
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input LevelEntityCreateInput {
+  levelID: Int!
+  entityID: Int!
+  x: Int!
+  y: Int!
+}
+
+input LevelEntityUpdateInput {
+  levelID: Int!
+  entityID: Int!
+  x: Int!
+  y: Int!
+}
