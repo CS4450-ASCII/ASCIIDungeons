@@ -21,4 +21,4 @@ const saveInventoryMutations = {
   }
 };
 
-export default userMutations;
+export default saveInventoryMutations;
