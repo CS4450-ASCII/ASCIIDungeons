@@ -1,0 +1,33 @@
+# Types
+type SaveInventory implements Timestamps {
+  """
+  The id of the SaveInventory.
+  """
+  inventorySlotID: ID!
+
+  """
+  The save ID.
+  """
+  saveID: Int!
+
+  """
+  The item ID.
+  """
+  itemID: Int!
+
+  """
+  The saved inventory data.
+  """
+  data: JSON!
+
+  # Interface required
+
+  """
+  Datetime the SaveInventory was created at.
+  """
+  createdAt: Date!
+  """
+  Datetime the SaveInventory was last updated.
+  """
+  updatedAt: Date!
+}
