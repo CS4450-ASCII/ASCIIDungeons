@@ -8,9 +8,9 @@ import { Entity } from '../../../../ASCIIDungeons1/database/models';
 
 const entityQueries = {
   symbol: async (_, args) => {
-    const entitys = await Entity.findAll();
+    const entities = await Entity.findAll();
 
-    return entitys;
+    return entities;
   }
 };
 
