@@ -1,54 +1,33 @@
-import {Renderer} from './Components/Renderer'
+import {Renderer} from './Modules/Renderer'
+import {Map} from './Components/Map'
+import { Scroller } from './Components/Scroller';
 
+/** Runs all game based logic. */
 export class GameEngine {
+  /** Builds the game engine. */
   constructor() {
+    /** List of current game objects. */
     this.objects = [
-      {
-        rMap: [
+      new Map([
           [{clear:true}],
           [{clear:true}],
           [{color:"#FFFFFF", text:"   @  "},{color:"#0000FF", text:"@"},{clear:true}],
           [{clear:true}],
           [{color:"#FFFFFF", text:"  @@@@@@"}]
-        ],
-        x: 0,
-        y: 0,
-        layer: "world",
-        draw: function(rend) {
-          rend.drawMap(this);
-        }
-      },
-      {
-        character: "&",
-        background: false,
-        x: 0,
-        y: 0,
-        layer: "object",
-        cColor: "#00FF00",
-        bColor: "#000000",
-        shouldMove: 0,
-        draw: function(rend) {
-          rend.drawChar(this);
-
-          this.shouldMove++;
-          if(this.shouldMove % 100 === 0) {
-            this.x++;
-            this.y++;
-
-            if(this.x >= rend.gridX) this.x = 0;
-            if(this.y >= rend.gridY) this.y = 0;
-          }
-        }
-      }
+        ]),
+      new Scroller("&", "#00FF00", true, "#000000")
     ];
 
+    /** Refernce to the current renderer module. */
     this.renderer = new Renderer();
 
+    /** List of modules to be executed. */
     this.pipeline = [
       this.renderer
     ];
   }
 
+  /** On every animation frame, run the pipeline. */
   runPipeline() {
     for(let component of this.pipeline){
       component.exec();
@@ -57,12 +36,14 @@ export class GameEngine {
     requestAnimationFrame(this.runPipeline.bind(this));
   }
 
+  /** Starts the game engine. */
   start() {
     this.buildLevel();
 
     requestAnimationFrame(this.runPipeline.bind(this));
   }
 
+  /** Builds the current level. */
   buildLevel() {
     for (const object of this.objects) {
 
