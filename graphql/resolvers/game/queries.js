@@ -14,8 +14,8 @@ const gameQueries = {
     return games;
   },
 
-  game: async (_, {id}) => {
-    const game = await Game.findById(id);
+  game: async (obj, args, context, info) => {
+    const game = await Game.findOne({ where: { id: args.id } });
 
     return game;
   }

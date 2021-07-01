@@ -9,13 +9,13 @@ import { Item } from '../../../database/models';
 
 const itemQueries = {
   items: async (_, args) => {
-    const items = await Item.find();
+    const items = await Item.findAll();
 
     return items;
   },
 
-  item: async (_, {id}) => {
-    const item = await Item.findById(id);
+  item: async (obj, args, context, info) => {
+    const item = await Item.findOne({ where: { id: args.id } });
 
     return item;
   }

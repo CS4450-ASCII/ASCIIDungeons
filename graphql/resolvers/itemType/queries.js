@@ -9,13 +9,13 @@ import { ItemType } from '../../../database/models';
 
 const itemTypeQueries = {
   itemTypes: async (_, args) => {
-    const itemTypes = await ItemType.find();
+    const itemTypes = await ItemType.findAll();
 
     return itemTypes;
   },
 
-  itemType: async (_, {id}) => {
-    const itemType = await ItemType.findById(id);
+  itemType: async (obj, args, context, info) => {
+    const itemType = await ItemType.findOne({ where: { id: args.id } });
 
     return itemType;
   }

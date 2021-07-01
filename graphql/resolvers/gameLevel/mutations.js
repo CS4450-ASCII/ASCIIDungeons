@@ -3,7 +3,7 @@ const gameLevelMutations = {
   createGameLevel: async (_, { gameLevel }) => {
     const newGameLevel = new GameLevel(gameLevel);
 
-    return gameLevel.save();
+    return newGameLevel.save();
   },
   updateGameLevel: async (_, args) => {},
 };

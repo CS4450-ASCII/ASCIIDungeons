@@ -9,13 +9,13 @@ import { GameLevel } from '../../../database/models';
 
 const gameLevelQueries = {
   gameLevels: async (_, args) => {
-    const gameLevels = await GameLevel.find();
+    const gameLevels = await GameLevel.findAll();
 
     return gameLevels;
   },
 
-  gameLevel: async (_, {id}) => {
-    const gameLevel = await GameLevel.findById(id);
+  gameLevel: async (obj, args, context, info) => {
+    const gameLevel = await GameLevel.findOne({ where: { id: args.id } });
 
     return gameLevel;
   }

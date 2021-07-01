@@ -9,13 +9,13 @@ import { Level } from '../../../database/models';
 
 const levelQueries = {
   levels: async (_, args) => {
-    const levels = await Level.find();
+    const levels = await Level.findAll();
 
     return levels;
   },
 
-  level: async (_, {id}) => {
-    const level = await Level.findById(id);
+  level: async (obj, args, context, info) => {
+    const level = await Level.findOne({ where: { id: args.id } });
 
     return level;
   }

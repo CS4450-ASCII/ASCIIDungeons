@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     levelIndex: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'GameLevels',
+    modelName: 'GameLevel',
   });
   return GameLevel;
 };
