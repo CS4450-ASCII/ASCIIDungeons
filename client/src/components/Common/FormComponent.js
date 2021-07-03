@@ -1,7 +1,8 @@
 import { Button, Grid, makeStyles } from '@material-ui/core';
-import { makeValidate, showErrorOnBlur } from 'mui-rff';
+import { makeValidate } from 'mui-rff';
 import React from 'react';
 import { Form as FForm } from 'react-final-form';
+import FormFields from './FormFields';
 
 const useStyles = makeStyles({
   root: {
@@ -19,13 +20,14 @@ function FormComponent(props) {
     onSubmit,
     gridProps,
     formFields,
-    submitButtonText = 'Submit',
     footer,
+    submitButtonText = 'Submit',
     validationSchema,
-    initialValues
+    initialValues,
+    children
   } = props;
 
-  const validate = makeValidate(validationSchema);
+  const validate = validationSchema && makeValidate(validationSchema);
 
   return (
     <FForm
@@ -35,36 +37,25 @@ function FormComponent(props) {
     >
       {({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit}>
-          <Grid
-            item
-            container
-            spacing={4}
-            className={classes.root}
-            direction='column'
-            alignItems='flex-end'
-            {...gridProps}
-          >
-            {formFields.map(field => {
-              const { Component, ...fieldProps } = field;
-              return (
-                <Grid key={`field-${field.name}`} item xs={12}>
-                  {Component ? (
-                    <Component showError={showErrorOnBlur} {...fieldProps} />
-                  ) : (
-                    field
-                  )}
+          {!children && (
+            <FormFields
+              {...gridProps}
+              {...{ formFields }}
+              className={classes.root}
+            >
+              <Grid item>
+                <Button type='submit' color='primary'>
+                  {submitButtonText}
+                </Button>
+              </Grid>
+              {footer && (
+                <Grid item xs={12} className={classes.footer}>
+                  {footer}
                 </Grid>
-              );
-            })}
-            <Grid item>
-              <Button type='submit' color='primary'>
-                {submitButtonText}
-              </Button>
-            </Grid>
-            <Grid item xs={12} className={classes.footer}>
-              {footer}
-            </Grid>
-          </Grid>
+              )}
+            </FormFields>
+          )}
+          {children}
         </form>
       )}
     </FForm>

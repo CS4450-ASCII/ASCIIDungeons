@@ -1,6 +1,6 @@
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
@@ -15,11 +15,7 @@ function MainMenu(props) {
 
   const history = useHistory(); // https://reactrouter.com/web/api/Hooks
 
-  const navLinks = useMemo(
-    // https://reactjs.org/docs/hooks-reference.html#usememo
-    () => ['create', 'play', 'profile', 'about'],
-    []
-  );
+  const navLinks = ['create', 'play', 'profile', 'about'];
 
   return (
     <Grid container alignItems='center' direction='column'>
