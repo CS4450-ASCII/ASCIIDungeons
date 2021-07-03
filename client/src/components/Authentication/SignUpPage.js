@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import authHelper from '../../helpers/authentication';
@@ -23,29 +23,26 @@ function SignUpPage(props) {
     }
   });
 
-  const formFields = useMemo(
-    () => [
-      {
-        name: 'email',
-        Component: InputField
-      },
-      {
-        name: 'displayName',
-        Component: InputField
-      },
-      {
-        name: 'password',
-        Component: InputField,
-        type: 'password'
-      },
-      {
-        name: 'confirmPassword',
-        Component: InputField,
-        type: 'password'
-      }
-    ],
-    []
-  );
+  const formFields = [
+    {
+      name: 'email',
+      Component: InputField
+    },
+    {
+      name: 'displayName',
+      Component: InputField
+    },
+    {
+      name: 'password',
+      Component: InputField,
+      type: 'password'
+    },
+    {
+      name: 'confirmPassword',
+      Component: InputField,
+      type: 'password'
+    }
+  ];
 
   const onSubmit = values => {
     createUser({

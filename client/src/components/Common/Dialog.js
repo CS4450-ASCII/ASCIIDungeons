@@ -32,7 +32,6 @@ function Dialog(props) {
         open={open}
         scroll='body'
         {...dialogProps}
-        classes={{ paper: classes.dialogPaper }}
       >
         <MuiDialogTitle disableTypography style={{ position: 'relative' }}>
           <Typography variant='h2'>{title}</Typography>
@@ -53,9 +52,6 @@ const useStyles = makeStyles({
     position: 'absolute',
     right: 20,
     top: 18
-  },
-  dialogPaper: {
-    maxHeight: 800
   }
 });
 

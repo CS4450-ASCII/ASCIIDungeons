@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useMemo } from 'react';
+import React from 'react';
 import FormDialog from '../../../Common/FormDialog';
 import InputField from '../../../Common/InputField';
 
@@ -7,22 +7,19 @@ function NewGameDialog(props) {
   const classes = useStyles();
   const { children, openButton } = props;
 
-  const formFields = useMemo(
-    () => [
-      {
-        name: 'title',
-        Component: InputField,
-        noWrap: true
-      },
-      {
-        name: 'description',
-        Component: InputField,
-        multiline: true,
-        rows: 8
-      }
-    ],
-    []
-  );
+  const formFields = [
+    {
+      name: 'title',
+      Component: InputField,
+      noWrap: true
+    },
+    {
+      name: 'description',
+      Component: InputField,
+      multiline: true,
+      rows: 8
+    }
+  ];
 
   return (
     <FormDialog
