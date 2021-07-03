@@ -12,7 +12,7 @@ import FormFields from './FormFields';
 function FormDialog(props) {
   const classes = useStyles();
   const {
-    onSubmit,
+    onSubmit = values => alert(JSON.stringify(values)),
     formFields,
     submitButtonText = 'Submit',
     validationSchema,
