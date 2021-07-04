@@ -1,14 +1,14 @@
-import { Button, makeStyles } from '@material-ui/core';
-import React from 'react';
+import { Button, Grid, makeStyles } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import NewGameDialog from './Editor/NewGameDialog';
+import OpenGameDialog from './Editor/OpenGameDialog';
 
 const useStyles = makeStyles({
   root: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    height: 400
+    '& .MuiGrid-item': {
+      height: 100
+    }
   }
 });
 
@@ -16,9 +16,21 @@ function Create(props) {
   const classes = useStyles();
   const {} = props;
 
+  const [game, setGame] = useState();
+
   return (
     <div className={classes.root}>
-      <NewGameDialog openButton={<Button>New Game</Button>} />
+      {/* Toolbar */}
+      {!game && (
+        <Grid container direction='column' alignItems='center'>
+          <Grid item>
+            <NewGameDialog openButton={<Button>New Game</Button>} />
+          </Grid>
+          <Grid item>
+            <OpenGameDialog openButton={<Button>Open</Button>} />
+          </Grid>
+        </Grid>
+      )}
     </div>
   );
 }

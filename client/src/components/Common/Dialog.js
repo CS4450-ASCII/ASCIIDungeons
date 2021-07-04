@@ -40,8 +40,8 @@ function Dialog(props) {
           </ButtonBase>
         </MuiDialogTitle>
         {content && <MuiDialogContent>{content}</MuiDialogContent>}
+        {children && children({ handleClose })}
         {actions && <MuiDialogActions>{actions}</MuiDialogActions>}
-        {children({ handleClose })}
       </MuiDialog>
     </div>
   );

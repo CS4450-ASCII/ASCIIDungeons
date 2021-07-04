@@ -4,6 +4,9 @@ const theme = createMuiTheme({
   props: {
     MuiPaper: {
       square: true
+    },
+    MuiButtonBase: {
+      disableRipple: true
     }
   },
   palette: {
