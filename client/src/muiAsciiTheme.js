@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core';
 
-const theme = createMuiTheme({
+export const themeVariables = {
   props: {
     MuiPaper: {
       square: true
@@ -18,6 +18,13 @@ const theme = createMuiTheme({
     },
     error: {
       main: '#B35454'
+    },
+    gray: {
+      dark: '#575555',
+      light: '#C4C4C4'
+    },
+    blue: {
+      header: '#4C5676'
     }
   },
   typography: {
@@ -77,5 +84,6 @@ const theme = createMuiTheme({
       }
     }
   }
-});
-export default theme;
+};
+
+export default createMuiTheme(themeVariables);
