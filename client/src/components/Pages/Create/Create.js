@@ -1,6 +1,5 @@
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
 import NewGameDialog from './Editor/NewGameDialog';
 import OpenGameDialog from './Editor/OpenGameDialog';
 

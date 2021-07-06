@@ -1,4 +1,4 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import Dialog from '../../../Common/Dialog';
@@ -8,51 +8,62 @@ function OpenGameDialog(props) {
   const classes = useStyles();
   const { openButton } = props;
 
-  const [description, setDescription] = useState('Nothing Selected');
+  const [selectedGame, setSelectedGame] = useState(null);
 
   const games = [
     {
+      id: 1,
       title: 'Adventure Game',
       description:
         'Go on an epic adventure to find the epic item of epicness to become a legend.'
     },
     {
+      id: 2,
       title: 'Amazing Game',
       description: 'An amazing game full of wonder and bliss.'
     },
     {
+      id: 3,
       title: 'Amazing Game 2',
       description: 'A second amazing game full of wonder and bliss.'
     },
     {
+      id: 4,
       title: 'Dungeons of Death',
       description: "Death is everywhere. Don't die!"
     },
     {
+      id: 5,
       title: 'Dungeons of Death 2',
       description: "Death is STILL everywhere. Don't die!"
     },
     {
+      id: 6,
       title: 'Great Game',
       description: 'Such a great game'
     }
   ];
 
-  const rows = _.map(games, 'title');
-
   const content = (
     <>
       <ScrollList
-        rows={rows}
-        onSelectionChange={index =>
-          setDescription(_.get(games, `[${index}].description`))
-        }
+        rows={games}
+        onSelectionChange={selection => setSelectedGame(selection)}
       />
-      <div className={classes.descriptionBox}>{description}</div>
+      <div className={classes.descriptionBox}>
+        {_.get(selectedGame, 'description', 'Nothing selected.')}
+      </div>
     </>
   );
 
-  const actions = <Button color='secondary'>Open</Button>;
+  const onSubmit = () => {
+    alert(`selected game id: ${_.get(selectedGame, 'id')}`);
+    // TODO: Navigate to the editor game route with specified id.
+  };
+
+  const onClose = () => {
+    setSelectedGame(null);
+  };
 
   return (
     <div className={classes.root}>
@@ -61,7 +72,12 @@ function OpenGameDialog(props) {
           title: 'Open Game',
           openButton,
           content,
-          actions,
+          submitButtonProps: {
+            text: 'Open',
+            disabled: !selectedGame
+          },
+          onSubmit,
+          onClose,
           fullWidth: true,
           maxWidth: 'sm'
         }}

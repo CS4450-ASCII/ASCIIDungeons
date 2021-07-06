@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
 import { ListItem, ListItemText, makeStyles } from '@material-ui/core';
+import _ from 'lodash';
+import React, { useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import { themeVariables } from '../../../../muiAsciiTheme';
 
@@ -7,16 +8,16 @@ function ScrollList(props) {
   const classes = useStyles();
   const { rows = [], onSelectionChange = () => {}, ...listProps } = props;
 
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null);
 
   function renderRow(props) {
     const { index, style } = props;
 
-    const selected = selectedRow === index;
+    const selected = selectedIndex === index;
 
     const handleChange = index => {
-      onSelectionChange(index);
-      setSelectedRow(index);
+      onSelectionChange(rows[index]);
+      setSelectedIndex(index);
     };
 
     return (
@@ -31,7 +32,7 @@ function ScrollList(props) {
         onClick={() => handleChange(index)}
         selected={selected}
       >
-        <ListItemText primary={rows[index]} />
+        <ListItemText primary={_.get(rows, `[${index}].title`)} />
       </ListItem>
     );
   }
