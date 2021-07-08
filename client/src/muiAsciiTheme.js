@@ -43,6 +43,11 @@ export const themeVariables = {
         padding: 0
       }
     },
+    MuiInputBase: {
+      input: {
+        padding: 6
+      }
+    },
     MuiTextField: {
       root: {
         backgroundColor: '#FFFFFF'
