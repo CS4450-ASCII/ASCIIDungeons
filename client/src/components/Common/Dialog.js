@@ -1,4 +1,5 @@
 import {
+  Button,
   ButtonBase,
   Dialog as MuiDialog,
   DialogActions as MuiDialogActions,
@@ -11,8 +12,18 @@ import React, { useState } from 'react';
 
 function Dialog(props) {
   const classes = useStyles();
-  const { children, title, openButton, actions, content, ...dialogProps } =
-    props;
+  const {
+    children,
+    title,
+    openButton,
+    content,
+    submitButtonProps: buttonProps = {},
+    onSubmit,
+    onClose,
+    ...dialogProps
+  } = props;
+
+  const { text: buttonText, ...submitButtonProps } = buttonProps;
 
   const [open, setOpen] = useState(false);
 
@@ -21,7 +32,17 @@ function Dialog(props) {
   };
 
   const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
     setOpen(false);
+  };
+
+  const handleSubmit = () => {
+    if (onSubmit) {
+      onSubmit();
+    }
+    handleClose();
   };
 
   return (
@@ -40,8 +61,18 @@ function Dialog(props) {
           </ButtonBase>
         </MuiDialogTitle>
         {content && <MuiDialogContent>{content}</MuiDialogContent>}
-        {actions && <MuiDialogActions>{actions}</MuiDialogActions>}
-        {children({ handleClose })}
+        {children && children({ handleClose })}
+        {buttonText && (
+          <MuiDialogActions>
+            <Button
+              onClick={handleSubmit}
+              color='secondary'
+              {...submitButtonProps}
+            >
+              {buttonText}
+            </Button>
+          </MuiDialogActions>
+        )}
       </MuiDialog>
     </div>
   );
