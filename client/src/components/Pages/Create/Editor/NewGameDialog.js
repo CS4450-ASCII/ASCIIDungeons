@@ -4,8 +4,15 @@ import FormDialog from '../../../Common/FormDialog';
 import InputField from '../../../Common/InputField';
 
 function NewGameDialog(props) {
-  const classes = useStyles();
-  const { children, openButton } = props;
+  const { openButton, title = 'New Game', onSubmit, ...rest } = props;
+
+  const handleSubmit = values => {
+    if (onSubmit) {
+      onSubmit(values);
+    } else {
+      alert(JSON.stringify(values));
+    }
+  };
 
   const formFields = [
     {
@@ -21,23 +28,18 @@ function NewGameDialog(props) {
     }
   ];
 
-  // const onSubmit = (values) => {};
-
   return (
     <FormDialog
       {...{
-        title: 'New Game',
+        title,
         openButton,
-        // onSubmit,
         formFields,
+        onSubmit: handleSubmit,
         maxWidth: 'xs'
       }}
+      {...rest}
     />
   );
 }
-
-const useStyles = makeStyles({
-  root: {}
-});
 
 export default NewGameDialog;
