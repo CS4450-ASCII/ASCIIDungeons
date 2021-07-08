@@ -21,12 +21,14 @@ function NewGameDialog(props) {
     }
   ];
 
+  // const onSubmit = (values) => {};
+
   return (
     <FormDialog
       {...{
         title: 'New Game',
         openButton,
-        onSubmit: values => alert(JSON.stringify(values)),
+        // onSubmit,
         formFields,
         maxWidth: 'xs'
       }}

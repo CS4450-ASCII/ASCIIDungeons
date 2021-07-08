@@ -33,6 +33,11 @@ const theme = createMuiTheme({
         padding: 0
       }
     },
+    MuiInputBase: {
+      input: {
+        padding: 6
+      }
+    },
     MuiTextField: {
       root: {
         backgroundColor: '#FFFFFF'
