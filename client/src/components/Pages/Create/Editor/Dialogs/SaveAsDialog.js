@@ -3,7 +3,7 @@ import React from 'react';
 import NewGameDialog from './NewGameDialog';
 
 function SaveAsDialog(props) {
-  const { openButton, game } = props;
+  const { openButton, game, ...dialogProps } = props;
 
   const onSubmit = values => {
     alert(JSON.stringify(values));
@@ -17,8 +17,9 @@ function SaveAsDialog(props) {
         title: 'Save As',
         openButton,
         onSubmit,
-        initialValues: game
+        initialValues
       }}
+      {...dialogProps}
     />
   );
 }

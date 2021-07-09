@@ -1,48 +1,15 @@
 import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
-import Dialog from '../../../Common/Dialog';
-import ScrollList from './ScrollList';
+import { dummyGameData } from '../../../../../stories/dummyData';
+import Dialog from '../../../../Common/Dialog';
+import ScrollList from '../../../../Common/ScrollList';
 
 function OpenGameDialog(props) {
   const classes = useStyles();
-  const { openButton } = props;
+  const { openButton, games = dummyGameData, ...rest } = props;
 
   const [selectedGame, setSelectedGame] = useState(null);
-
-  const games = [
-    {
-      id: 1,
-      title: 'Adventure Game',
-      description:
-        'Go on an epic adventure to find the epic item of epicness to become a legend.'
-    },
-    {
-      id: 2,
-      title: 'Amazing Game',
-      description: 'An amazing game full of wonder and bliss.'
-    },
-    {
-      id: 3,
-      title: 'Amazing Game 2',
-      description: 'A second amazing game full of wonder and bliss.'
-    },
-    {
-      id: 4,
-      title: 'Dungeons of Death',
-      description: "Death is everywhere. Don't die!"
-    },
-    {
-      id: 5,
-      title: 'Dungeons of Death 2',
-      description: "Death is STILL everywhere. Don't die!"
-    },
-    {
-      id: 6,
-      title: 'Great Game',
-      description: 'Such a great game'
-    }
-  ];
 
   const content = (
     <>
@@ -79,7 +46,8 @@ function OpenGameDialog(props) {
           onSubmit,
           onClose,
           fullWidth: true,
-          maxWidth: 'sm'
+          maxWidth: 'sm',
+          ...rest
         }}
       />
     </div>

@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import FormDialog from '../../../Common/FormDialog';
-import InputField from '../../../Common/InputField';
+import FormDialog from '../../../../Common/FormDialog';
+import InputField from '../../../../Common/InputField';
 
 function NewGameDialog(props) {
   const { openButton, title = 'New Game', onSubmit, ...rest } = props;
@@ -35,9 +35,9 @@ function NewGameDialog(props) {
         openButton,
         formFields,
         onSubmit: handleSubmit,
-        maxWidth: 'xs'
+        maxWidth: 'xs',
+        ...rest
       }}
-      {...rest}
     />
   );
 }
