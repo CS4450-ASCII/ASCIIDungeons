@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import FormDialog from '../../../../Common/FormDialog';
-import InputField from '../../../../Common/InputField';
+import FormDialog from '../../../../Common/Forms/FormDialog';
+import InputField from '../../../../Common/Forms/InputField';
 
 function NewGameDialog(props) {
   const { openButton, title = 'New Game', onSubmit, ...rest } = props;

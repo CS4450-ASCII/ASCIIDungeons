@@ -7,7 +7,7 @@ import OpenGameDialog from '../components/Pages/Create/Editor/Dialogs/OpenGameDi
 import { dummyGameData } from './dummyData';
 
 export default {
-  title: 'Dialogs'
+  title: 'Components / Dialogs'
 };
 
 export const NewGame = () => (
