@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import FormDialog from '../../../Common/FormDialog';
-import InputField from '../../../Common/InputField';
+import FormDialog from '../../../../Common/Forms/FormDialog';
+import InputField from '../../../../Common/Forms/InputField';
 import * as Yup from 'yup';
 
 function NewLevelDialog(props) {

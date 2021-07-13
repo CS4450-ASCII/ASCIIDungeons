@@ -5,7 +5,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import React from 'react';
-import Dialog from './Dialog';
+import Dialog from '../Dialog';
 import FormComponent from './FormComponent';
 import FormFields from './FormFields';
 

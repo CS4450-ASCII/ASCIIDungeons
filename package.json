@@ -14,7 +14,8 @@
     "server": "nodemon ./index.js --exec babel-node",
     "client": "cd client && yarn start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "install-deps": "yarn install && cd client && yarn install"
+    "install-deps": "yarn install && cd client && yarn install",
+    "storybook": "cd client && yarn storybook"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",

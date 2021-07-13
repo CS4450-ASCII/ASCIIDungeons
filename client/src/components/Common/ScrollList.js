@@ -2,7 +2,8 @@ import { ListItem, ListItemText, makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { FixedSizeList } from 'react-window';
-import { themeVariables } from '../../../../muiAsciiTheme';
+import { themeVariables } from '../../muiAsciiTheme';
+import PropTypes from 'prop-types';
 
 function ScrollList(props) {
   const classes = useStyles();
@@ -56,5 +57,11 @@ function ScrollList(props) {
 const useStyles = makeStyles({
   root: {}
 });
+
+ScrollList.propTypes = {
+  rows: PropTypes.array,
+
+  onSelectionChange: PropTypes.func
+};
 
 export default ScrollList;

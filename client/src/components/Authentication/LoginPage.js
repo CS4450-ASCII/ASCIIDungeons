@@ -6,8 +6,8 @@ import authHelper from '../../helpers/authentication';
 import { useMutationWithError } from '../../helpers/customHooks';
 import formValidations from '../../helpers/formValidations';
 import { userRequests } from '../../requests/user';
-import FormComponent from '../Common/FormComponent';
-import InputField from '../Common/InputField';
+import FormComponent from '../Common/Forms/FormComponent';
+import InputField from '../Common/Forms/InputField';
 
 const useStyles = makeStyles({
   root: {}

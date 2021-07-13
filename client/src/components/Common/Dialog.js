@@ -7,8 +7,8 @@ import {
   DialogTitle as MuiDialogTitle,
   makeStyles,
   Typography
-} from '@material-ui/core';
-import React, { useState } from 'react';
+} from "@material-ui/core";
+import React, { useState } from "react";
 
 function Dialog(props) {
   const classes = useStyles();
@@ -20,12 +20,13 @@ function Dialog(props) {
     submitButtonProps: buttonProps = {},
     onSubmit,
     onClose,
+    initiallyOpen = false,
     ...dialogProps
   } = props;
 
   const { text: buttonText, ...submitButtonProps } = buttonProps;
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initiallyOpen);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,13 +52,13 @@ function Dialog(props) {
       <MuiDialog
         onClose={handleClose}
         open={open}
-        scroll='body'
+        scroll="body"
         {...dialogProps}
       >
-        <MuiDialogTitle disableTypography style={{ position: 'relative' }}>
-          <Typography variant='h2'>{title}</Typography>
+        <MuiDialogTitle disableTypography style={{ position: "relative" }}>
+          <Typography variant="h2">{title}</Typography>
           <ButtonBase className={classes.closeButton} onClick={handleClose}>
-            <Typography variant='h2'>X</Typography>
+            <Typography variant="h2">X</Typography>
           </ButtonBase>
         </MuiDialogTitle>
         {content && <MuiDialogContent>{content}</MuiDialogContent>}
@@ -66,7 +67,7 @@ function Dialog(props) {
           <MuiDialogActions>
             <Button
               onClick={handleSubmit}
-              color='secondary'
+              color="secondary"
               {...submitButtonProps}
             >
               {buttonText}
@@ -80,7 +81,7 @@ function Dialog(props) {
 
 const useStyles = makeStyles({
   closeButton: {
-    position: 'absolute',
+    position: "absolute",
     right: 20,
     top: 18
   }
