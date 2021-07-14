@@ -2,7 +2,7 @@ import { SaveInventory } from '../../../database/models';
 
 const saveInventoryMutations = {
   createSaveInventory: async (
-    obj,
+    parent,
     { saveInventory: { saveID, itemID, data } },
     context,
     info
@@ -16,8 +16,15 @@ const saveInventoryMutations = {
     return saveInventory;
   },
 
-  updateSaveInventory: async (_, args) => {
-    //TODO
+  updateSaveInventory: async (parent, args, context, info) => {
+    //Get the SaveInventory from the database
+    //let saveInventory = await SaveInventory.find();
+
+    //Modify the retrieved SaveInventory
+    //saveInventory.property = newValue;
+
+    //Save to the database
+    //await saveInventory.save();
   }
 };
 
