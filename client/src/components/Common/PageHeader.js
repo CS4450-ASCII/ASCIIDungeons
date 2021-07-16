@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 function PageHeader(props) {
   const { errors } = useContext(AppContext);
-  const location = _.get(useLocation(), 'pathname').slice(1);
+  const location = _.get(useLocation(), 'pathname').split('/')[1];
 
   return <PageHeaderDisplay {...{ errors, location, ...props }} />;
 }
@@ -76,7 +76,6 @@ export function PageHeaderDisplay(props) {
 const useStyles = makeStyles({
   root: {
     width: 'max-content',
-    marginBottom: '5em',
     margin: 'auto',
     '& h2': {
       marginTop: '-0.8em'

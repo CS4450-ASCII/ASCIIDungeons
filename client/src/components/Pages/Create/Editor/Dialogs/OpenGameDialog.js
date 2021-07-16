@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { dummyGameData } from '../../../../../stories/dummyData';
 import Dialog from '../../../../Common/Dialog';
 import ScrollList from '../../../../Common/ScrollList';
@@ -10,6 +11,9 @@ function OpenGameDialog(props) {
   const { openButton, games = dummyGameData, ...rest } = props;
 
   const [selectedGame, setSelectedGame] = useState(null);
+
+  const { path, url } = useRouteMatch();
+  const history = useHistory();
 
   const content = (
     <>
@@ -24,8 +28,8 @@ function OpenGameDialog(props) {
   );
 
   const onSubmit = () => {
-    alert(`selected game id: ${_.get(selectedGame, 'id')}`);
     // TODO: Navigate to the editor game route with specified id.
+    history.push(`${path}/${_.get(selectedGame, 'id')}`);
   };
 
   const onClose = () => {

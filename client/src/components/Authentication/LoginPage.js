@@ -9,13 +9,7 @@ import { userRequests } from '../../requests/user';
 import FormComponent from '../Common/Forms/FormComponent';
 import InputField from '../Common/Forms/InputField';
 
-const useStyles = makeStyles({
-  root: {}
-});
-
 function LoginPage(props) {
-  const classes = useStyles();
-
   const [loginUser] = useMutationWithError(userRequests.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
       authHelper.setAccessToken(loginUser.token);
@@ -46,7 +40,7 @@ function LoginPage(props) {
   });
 
   return (
-    <div className={classes.root}>
+    <div>
       <FormComponent
         onSubmit={onSubmit}
         formFields={formFields}
