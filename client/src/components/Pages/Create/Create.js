@@ -20,16 +20,24 @@ const useStyles = makeStyles({
     },
     width: '100%',
     height: '100%',
-    maxWidth: 900,
-    maxHeight: 900,
+    maxWidth: 1000,
+    maxHeight: 1000,
     border: '1px solid white'
+  },
+  menuItemContainer: {
+    '& .MuiButton-root': {
+      height: 80
+    }
+  },
+  editorBody: {
+    '& .MuiGrid-item': {
+      border: '1px solid green'
+    }
   }
 });
 
 function Create(props) {
   const classes = useStyles();
-
-  const [game, setGame] = useState();
 
   const { path, url } = useRouteMatch();
 
@@ -41,21 +49,23 @@ function Create(props) {
       justifyContent='space-between'
       className={classes.createRoot}
     >
-      <Grid item> hi</Grid>
-      {/* Toolbar */}
+      <Grid item>{'<Toolbar />'}</Grid>
       <Switch>
         <Route exact path={path}>
-          <Grid item>
+          <Grid
+            item
+            container
+            alignItems='center'
+            direction='column'
+            className={classes.menuItemContainer}
+          >
             <NewGameDialog openButton={<Button>New Game</Button>} />
-          </Grid>
-          <Grid item>
             <OpenGameDialog openButton={<Button>Open</Button>} />
           </Grid>
+          <Grid item />
         </Route>
         <Route path={`${path}/:gameId`}>
-          <Grid item>
-            <BottomToolbar gameTitle={'Game 1'} levelTitle={'Level 1'} />
-          </Grid>
+          <EditorBody />
         </Route>
         <Redirect to={path} />
       </Switch>

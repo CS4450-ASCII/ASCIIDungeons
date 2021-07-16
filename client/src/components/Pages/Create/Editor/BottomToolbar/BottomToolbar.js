@@ -7,7 +7,8 @@ const useStyles = makeStyles({
     display: 'flex',
     width: '100%',
     alignItems: 'center',
-    padding: '1em'
+    padding: '1em',
+    borderTop: '1px solid white'
   },
   title: {
     flexGrow: 1

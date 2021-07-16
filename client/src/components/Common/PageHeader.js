@@ -6,11 +6,20 @@ import { useLocation } from 'react-router';
 import { AppContext } from '../../context/ContextProvider';
 import PropTypes from 'prop-types';
 
+const titleOverrides = { main: ' ', signup: ' ', login: ' ' };
+const isSmall = { create: true };
+
 function PageHeader(props) {
   const { errors } = useContext(AppContext);
   const location = _.get(useLocation(), 'pathname').split('/')[1];
 
-  return <PageHeaderDisplay {...{ errors, location, ...props }} />;
+  const pageName = titleOverrides[location] || _.startCase(location);
+
+  return (
+    <PageHeaderDisplay
+      {...{ errors, location, pageName, small: isSmall[location], ...props }}
+    />
+  );
 }
 
 PageHeaderDisplay.propTypes = {
@@ -25,11 +34,8 @@ PageHeaderDisplay.propTypes = {
 
 export function PageHeaderDisplay(props) {
   const classes = useStyles();
-  const { text, small, errors, location } = props;
+  const { text, small, errors, pageName } = props;
   const [output, setOutput] = useState('');
-
-  const titleOverrides = { main: ' ', signup: ' ', login: ' ' };
-  const pageName = titleOverrides[location] || _.startCase(location);
 
   useEffect(() => {
     figlet.text(

@@ -36,8 +36,8 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyItems: 'center',
     alignItems: 'center',
+    padding: '1em',
     flexDirection: 'column',
-    padding: '5em',
     width: '100%',
     overflow: 'auto'
   }
