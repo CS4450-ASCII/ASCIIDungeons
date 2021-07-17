@@ -6,24 +6,38 @@ import { grey } from '@material-ui/core/colors';
 function EntityIconGroup(props){
   const classes = useStyles();
 
-  
+  //TODO:
+  //Replace with Context? Makes it easier for other parts of the editor to
+  //know which character is currently selected.
+  const { selectedCharacter, setSelectedCharacter } = useState('');
+
   // DUMMY DATA. Replace with destructuring: const { characters } = props;
   // const { characters } = props;
   const characters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '\\', '/'];
 
 
-  const entityIcons = characters.map((character) =>
-    <Grid item xs={3}>
-      <EntityIcon character={character}></EntityIcon>
-    </Grid>
+  const entityIcons = characters.map((character) => {
+      if(selectedCharacter === character) {
+        return (
+          <Grid item xs={3} isHighlighted={true}>
+            <EntityIcon character={character}></EntityIcon>
+          </Grid>
+        )
+      } else {
+        return (
+          <Grid item xs={3} isHighlighted={false}>
+            <EntityIcon character={character}></EntityIcon>
+          </Grid>
+        )
+      }
+    }
   );
 
   return (
     <div className={classes.mainContainer}>
-    <Grid container spacing={2} align="center" justify="center" alignItems="center">
-      <Grid item xs={3}><EntityIcon character='X' isHighlighted={true}></EntityIcon></Grid>
-      {entityIcons}
-    </Grid>
+      <Grid container spacing={2} align="center" justify="center" alignItems="center">
+        {entityIcons}
+      </Grid>
     </div>
   )
 }
