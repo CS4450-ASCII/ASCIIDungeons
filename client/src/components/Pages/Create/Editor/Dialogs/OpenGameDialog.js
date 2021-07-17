@@ -29,7 +29,13 @@ function OpenGameDialog(props) {
 
   const onSubmit = () => {
     // TODO: Navigate to the editor game route with specified id.
-    history.push(`${path}/${_.get(selectedGame, 'id')}`);
+    history.push(
+      `${path}/${_.get(selectedGame, 'id')}/${_.get(
+        selectedGame,
+        'lastViewedLevel.id',
+        '',
+      )}`,
+    );
   };
 
   const onClose = () => {

@@ -1,42 +1,34 @@
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import { makeStyles, Drawer } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import SideDrawerGroup from './SideDrawerGroup';
+import { dummyLevelData } from '../../../../../stories/dummyData';
 import NewLevelDialog from '../Dialogs/NewLevelDialog';
-import ScrollList from '../../../../Common/ScrollList/ScrollList';
 import LevelList from './LevelList/LevelList';
+import SideDrawerGroup from './SideDrawerGroup';
 
 function SideDrawer(props) {
   const classes = useStyles();
-  const {} = props;
+  const { currentGame, currentLevel } = props;
 
   const action = <NewLevelDialog openButton={'+'} />;
 
-  const rows = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5'].map(
-    (title) => ({
-      title,
-    }),
-  );
-
+  const rows = dummyLevelData;
   return (
-    <Drawer
-      classes={{ paper: classes.sideDrawerRoot }}
-      variant={'permanent'}
-      anchor={'right'}
-    >
+    <div className={classes.sideDrawerRoot}>
       <SideDrawerGroup title={'Entities'}></SideDrawerGroup>
       <SideDrawerGroup title={'Levels'} action={action}>
         <LevelList rows={rows} />
       </SideDrawerGroup>
-    </Drawer>
+    </div>
   );
 }
 
 const useStyles = makeStyles({
   sideDrawerRoot: {
-    border: 'none',
     width: '100%',
+    height: '100%',
     maxWidth: 250,
+    display: 'flex',
+    flexDirection: 'column',
   },
 });
 

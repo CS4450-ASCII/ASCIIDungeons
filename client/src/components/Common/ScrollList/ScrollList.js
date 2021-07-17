@@ -1,9 +1,9 @@
 import { ListItem, ListItemText, makeStyles } from '@material-ui/core';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import { themeVariables } from '../../../muiAsciiTheme';
-import PropTypes from 'prop-types';
 
 function ScrollList(props) {
   const classes = useStyles();
@@ -83,7 +83,7 @@ ScrollList.propTypes = {
    * The alignment of the item text.
    * Options: 'left', 'center', 'right'
    */
-  alignItems: PropTypes.oneOf('left', 'center', 'right'),
+  alignItems: PropTypes.oneOf(['left', 'center', 'right']),
 };
 
 ScrollList.defaultProps = {

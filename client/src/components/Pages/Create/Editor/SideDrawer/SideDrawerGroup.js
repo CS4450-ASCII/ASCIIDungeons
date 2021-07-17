@@ -19,7 +19,7 @@ function SideDrawerGroup(props) {
 
 const useStyles = makeStyles({
   sideDrawerGroupRoot: {
-    height: '100%',
+    flex: 1,
     width: '100%',
     display: 'flex',
     flexDirection: 'column',

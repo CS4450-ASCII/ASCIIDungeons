@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ScrollList from './ScrollList';
 
 export default {
@@ -8,7 +7,6 @@ export default {
   argTypes: {
     alignItems: {
       control: { type: 'radio' },
-      options: ['left', 'center', 'right'],
     },
   },
 };

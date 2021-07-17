@@ -1,40 +1,10 @@
-import { Box, Button, Grid, makeStyles } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Button, Grid, makeStyles } from '@material-ui/core';
+import React from 'react';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { themeVariables } from '../../../muiAsciiTheme';
 import NewGameDialog from './Editor/Dialogs/NewGameDialog';
 import OpenGameDialog from './Editor/Dialogs/OpenGameDialog';
-import {
-  Redirect,
-  Switch,
-  Route,
-  useLocation,
-  useRouteMatch
-} from 'react-router-dom';
 import EditorBody from './Editor/EditorBody';
-import BottomToolbar from './Editor/BottomToolbar/BottomToolbar';
-
-const useStyles = makeStyles({
-  createRoot: {
-    '& .MuiGrid-item': {
-      width: '100%',
-      border: '1px solid green'
-    },
-    width: '100%',
-    height: '100%',
-    maxWidth: 1000,
-    maxHeight: 1000,
-    border: '1px solid white'
-  },
-  menuItemContainer: {
-    '& .MuiButton-root': {
-      height: 80
-    }
-  },
-  editorBody: {
-    '& .MuiGrid-item': {
-      border: '1px solid green'
-    }
-  }
-});
 
 function Create(props) {
   const classes = useStyles();
@@ -49,7 +19,17 @@ function Create(props) {
       justifyContent='space-between'
       className={classes.createRoot}
     >
-      <Grid item>{'<Toolbar />'}</Grid>
+      <Grid item>
+        <div
+          style={{
+            height: 30,
+            backgroundColor: themeVariables.palette.gray.light,
+            color: 'black',
+          }}
+        >
+          {'<Toolbar />'}{' '}
+        </div>
+      </Grid>
       <Switch>
         <Route exact path={path}>
           <Grid
@@ -64,7 +44,7 @@ function Create(props) {
           </Grid>
           <Grid item />
         </Route>
-        <Route path={`${path}/:gameId`}>
+        <Route path={`${path}/:gameId/:levelId?`}>
           <EditorBody />
         </Route>
         <Redirect to={path} />
@@ -72,5 +52,23 @@ function Create(props) {
     </Grid>
   );
 }
+
+const useStyles = makeStyles({
+  createRoot: {
+    '& .MuiGrid-item': {
+      width: '100%',
+    },
+    width: '100%',
+    height: '100%',
+    maxWidth: 1000,
+    maxHeight: 1000,
+    border: '1px solid white',
+  },
+  menuItemContainer: {
+    '& .MuiButton-root': {
+      height: 80,
+    },
+  },
+});
 
 export default Create;

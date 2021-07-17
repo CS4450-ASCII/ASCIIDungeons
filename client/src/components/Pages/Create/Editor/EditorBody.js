@@ -1,35 +1,51 @@
-import React from 'react';
 import { Grid, makeStyles } from '@material-ui/core';
+import _ from 'lodash';
+import React from 'react';
 import { useParams } from 'react-router-dom';
+import { dummyGameData, dummyLevelData } from '../../../../stories/dummyData';
 import BottomToolbar from './BottomToolbar/BottomToolbar';
+import SideDrawer from './SideDrawer/SideDrawer';
+
+function EditorBodyContainer(props) {
+  const { gameId, levelId } = useParams();
+
+  const game = _.find(dummyGameData, { id: parseInt(gameId) });
+  const level = _.find(dummyLevelData, { id: parseInt(levelId) });
+
+  return <EditorBody currentGame={game} currentLevel={level} />;
+}
 
 function EditorBody(props) {
   const classes = useStyles();
-  const { gameId, levelId } = useParams();
+  const { currentGame, currentLevel } = props;
 
   return (
     <>
       <Grid item container className={classes.editorBody}>
         <Grid item xs={9}>
-          {'<Grid>'}
+          {'<Grid />'}
         </Grid>
         <Grid item xs={3}>
-          {'<Side Drawer>'}
+          <SideDrawer currentGame={currentGame} currentLevel={currentLevel} />
         </Grid>
       </Grid>
       <Grid item>
-        <BottomToolbar gameTitle={'Game 1'} levelTitle={'Level 1'} />
+        <BottomToolbar
+          gameTitle={_.get(currentGame, 'title')}
+          levelTitle={_.get(currentLevel, 'title')}
+        />
       </Grid>
     </>
   );
 }
 
 const useStyles = makeStyles({
-  editorBodyRoot: {
-    width: '100%',
-    display: 'flex',
-    border: '1px solid red'
-  }
+  editorBody: {
+    flexGrow: 1,
+    // '& .MuiGrid-item': {
+    //   border: '1px solid red',
+    // },
+  },
 });
 
-export default EditorBody;
+export default EditorBodyContainer;

@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 
 export const themeVariables = {
   props: {
@@ -93,4 +93,4 @@ export const themeVariables = {
   },
 };
 
-export default createMuiTheme(themeVariables);
+export default createTheme(themeVariables);

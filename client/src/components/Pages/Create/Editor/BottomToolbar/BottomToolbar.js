@@ -1,5 +1,6 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import _ from 'lodash';
+import React from 'react';
 import HotkeyLabel from './HotkeyLabel';
 
 const useStyles = makeStyles({
@@ -8,18 +9,18 @@ const useStyles = makeStyles({
     width: '100%',
     alignItems: 'center',
     padding: '1em',
-    borderTop: '1px solid white'
+    borderTop: '1px solid white',
   },
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 });
 
 function BottomToolbar(props) {
   const classes = useStyles();
   const { gameTitle, levelTitle } = props;
 
-  const title = [gameTitle, levelTitle].join(' > ');
+  const title = _.compact([gameTitle, levelTitle]).join(' > ');
 
   return (
     <div className={classes.bottomToolbarRoot}>
