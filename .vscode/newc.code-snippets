@@ -25,7 +25,7 @@
 			"",
 			"function $TM_FILENAME_BASE(props){",
 			"  const classes = useStyles();",
-			"  const {} = props;",
+			"  const {$1} = props;",
 			"",
 			"  return <div className={classes.${TM_FILENAME_BASE/(^[A-Z])/${1:/downcase}/g}Root}></div>;",
 			"}",

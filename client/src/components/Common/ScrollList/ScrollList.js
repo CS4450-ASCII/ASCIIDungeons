@@ -2,12 +2,12 @@ import { ListItem, ListItemText, makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { FixedSizeList } from 'react-window';
-import { themeVariables } from '../../muiAsciiTheme';
+import { themeVariables } from '../../../muiAsciiTheme';
 import PropTypes from 'prop-types';
 
 function ScrollList(props) {
   const classes = useStyles();
-  const { rows = [], onSelectionChange = () => {}, ...listProps } = props;
+  const { rows, onSelectionChange, height, itemSize, alignItems } = props;
 
   const [selectedIndex, setSelectedIndex] = useState(null);
 
@@ -16,7 +16,7 @@ function ScrollList(props) {
 
     const selected = selectedIndex === index;
 
-    const handleChange = index => {
+    const handleChange = (index) => {
       onSelectionChange(rows[index]);
       setSelectedIndex(index);
     };
@@ -27,7 +27,7 @@ function ScrollList(props) {
         style={{
           ...style,
           color: selected ? themeVariables.palette.primary.main : 'white',
-          textAlign: 'center'
+          textAlign: alignItems,
         }}
         key={index}
         onClick={() => handleChange(index)}
@@ -40,14 +40,13 @@ function ScrollList(props) {
 
   return (
     <FixedSizeList
-      height={240}
+      height={height}
       width='100%'
       style={{
-        backgroundColor: themeVariables.palette.gray.dark
+        backgroundColor: themeVariables.palette.gray.dark,
       }}
-      itemSize={60}
+      itemSize={itemSize}
       itemCount={rows.length}
-      {...listProps}
     >
       {renderRow}
     </FixedSizeList>
@@ -55,13 +54,44 @@ function ScrollList(props) {
 }
 
 const useStyles = makeStyles({
-  root: {}
+  root: {},
 });
 
 ScrollList.propTypes = {
+  /**
+   * The rows of data to display as options in the scroll list.
+   */
   rows: PropTypes.array,
 
-  onSelectionChange: PropTypes.func
+  /**
+   * The function to call whenever the selected item is changed.
+   * Of format: (selectedItem) => { };
+   */
+  onSelectionChange: PropTypes.func,
+
+  /**
+   * The view height of the scroll list. (Required)
+   */
+  height: PropTypes.number.isRequired,
+
+  /**
+   * The size of the list items. (Required)
+   */
+  itemSize: PropTypes.number.isRequired,
+
+  /**
+   * The alignment of the item text.
+   * Options: 'left', 'center', 'right'
+   */
+  alignItems: PropTypes.oneOf('left', 'center', 'right'),
+};
+
+ScrollList.defaultProps = {
+  rows: [],
+  height: 240,
+  itemSize: 60,
+  alignItems: 'center',
+  onSelectionChange: (selection) => alert(JSON.stringify(selection)),
 };
 
 export default ScrollList;
