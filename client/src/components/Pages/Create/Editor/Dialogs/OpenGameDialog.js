@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { dummyGameData } from '../../../../../stories/dummyData';
 import Dialog from '../../../../Common/Dialog';
-import ScrollList from '../../../../Common/ScrollList';
+import ScrollList from '../../../../Common/ScrollList/ScrollList';
 
 function OpenGameDialog(props) {
   const classes = useStyles();
@@ -19,7 +19,7 @@ function OpenGameDialog(props) {
     <>
       <ScrollList
         rows={games}
-        onSelectionChange={selection => setSelectedGame(selection)}
+        onSelectionChange={(selection) => setSelectedGame(selection)}
       />
       <div className={classes.descriptionBox}>
         {_.get(selectedGame, 'description', 'Nothing selected.')}
@@ -45,13 +45,13 @@ function OpenGameDialog(props) {
           content,
           submitButtonProps: {
             text: 'Open',
-            disabled: !selectedGame
+            disabled: !selectedGame,
           },
           onSubmit,
           onClose,
           fullWidth: true,
           maxWidth: 'sm',
-          ...rest
+          ...rest,
         }}
       />
     </div>
@@ -66,8 +66,8 @@ const useStyles = makeStyles({
     backgroundColor: 'white',
     fontFamily: ['IBMBios'],
     fontSize: '1.5em',
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 export default OpenGameDialog;
