@@ -9,6 +9,7 @@ import LoginPage from '../Authentication/LoginPage';
 import SignUpPage from '../Authentication/SignUpPage';
 import PageFooter from '../Common/PageFooter';
 import PageHeader from '../Common/PageHeader';
+import Toolbar from '../Common/Toolbar';
 
 figlet.parseFont('Slant', Slant);
 figlet.parseFont('SmSlant', SmSlant);
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
     justifyItems: 'center',
     width: '100vw'
   },
-  container: {
+  container: { 
     color: 'white',
     fontFamily: 'IBMBios',
     maxWidth: '1536px',
@@ -43,6 +44,7 @@ function App() {
       {!loading && (
         <div className={classes.container}>
           <PageHeader text='ASCII Dungeons' />
+          <Toolbar />
           <Switch>
             <Route exact path='/signup'>
               {currentUser ? <Redirect to='/main' /> : <SignUpPage />}
