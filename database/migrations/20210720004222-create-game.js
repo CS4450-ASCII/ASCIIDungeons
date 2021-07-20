@@ -9,7 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       createdById: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'user',
+            schema: 'schema'
+          },
+          key: 'id'
+        }
       },
       title: {
         type: Sequelize.STRING

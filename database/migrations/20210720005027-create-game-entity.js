@@ -9,10 +9,27 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       gameId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: {
+            tableName: 'game',
+            schema: 'schema'
+          },
+          key: 'id'
+        }
+
       },
       entityId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'entity',
+            schema: 'schema'
+          },
+          key: 'id'
+        }
+
       },
       createdAt: {
         allowNull: false,
