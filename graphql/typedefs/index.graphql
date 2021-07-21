@@ -7,6 +7,9 @@ type Query {
   user(id: ID!): User
   currentUser: User
 
+  levels: [Levels]!
+  level(id: ID!): Level
+
   saveInventories: [SaveInventory]!
   saveInventory(id: ID!): SaveInventory
 
@@ -24,13 +27,7 @@ type Mutation {
   createUser(user: UserCreateInput!): AuthPayload
   updateUser(id: ID!, user: UserUpdateInput!): User!
 
-  createSaveInventory(saveInventory: SaveInventoryCreateInput!): SaveInventory!
-  updateSaveInventory(id: ID!, saveInventory: SaveInventoryUpdateInput!): SaveInventory!
-
-  createLevelEntity(levelEntity: LevelEntityCreateInput!): LevelEntity!
-  updateLevelEntity(id: ID!, levelEntity: LevelEntityUpdateInput!): LevelEntity!
-
-  createLevelItem(levelItem: LevelItemCreateInput!): LevelItem!
-  updateLevelItem(id: ID!, levelItem: LevelItemUpdateInput!): LevelItem!
+  createLevel(level: LevelCreateInput!): Level!
+  updateLevel(id: ID!, level: LevelUpdateInput!): Level!
 
 }
