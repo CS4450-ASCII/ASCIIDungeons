@@ -1,0 +1,7 @@
+type GameEntity implements Timestamps {
+
+  id: ID!
+  gameID: ID!
+  entityID: ID!
+
+}
