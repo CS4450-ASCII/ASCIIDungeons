@@ -6,6 +6,10 @@ type Query {
   users: [User]!
   user(id: ID!): User
   currentUser: User
+
+  entitys: [Entity]!
+  entity(id: ID!): Entity
+  title: Entity
 }
 
 type Mutation {
@@ -13,4 +17,7 @@ type Mutation {
   loginUser(user: UserLoginInput!): AuthPayload
   createUser(user: UserCreateInput!): AuthPayload
   updateUser(id: ID!, user: UserUpdateInput!): User!
+
+  createEntity(entity: EntityCreateInput!): Entity!
+  updateEntity(id: ID!, entity: EntityUpdateInput): Entity!
 }
