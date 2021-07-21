@@ -14,7 +14,6 @@ module.exports = {
         references: {
           model: {
             tableName: 'game',
-            schema: 'schema'
           },
           key: 'id'
         }
@@ -25,7 +24,6 @@ module.exports = {
         references: {
           model: {
             tableName: 'entity',
-            schema: 'schema'
           },
           key: 'id'
         }

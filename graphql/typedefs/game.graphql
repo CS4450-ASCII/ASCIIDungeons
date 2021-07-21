@@ -1,7 +1,7 @@
 type Game implements Timestamps {
 
   id: ID!
-  createByID: ID!
+  createdByID: Int!
   title: String!
   description: String!
   isPublished: Boolean!
