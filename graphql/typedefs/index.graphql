@@ -7,17 +7,8 @@ type Query {
   user(id: ID!): User
   currentUser: User
 
-  levels: [Levels]!
+  levels: [Level]!
   level(id: ID!): Level
-
-  saveInventories: [SaveInventory]!
-  saveInventory(id: ID!): SaveInventory
-
-  levelEntities: [LevelEntity]!
-  levelEntity(id: ID!): LevelEntity
-
-  levelItems: [LevelItem]!
-  levelItem(id: ID!): LevelItem
 
 }
 
