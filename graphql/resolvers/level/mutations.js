@@ -16,8 +16,16 @@ const levelMutations = {
     return level;
   },
 
-  updateSaveInventory: async (_, args) => {
-    //TODO
+  updateLevel: async (obj, args, context, info) => {
+    let level = await Level.findOne({ where: { id: args.id } })
+
+    level.gameID = args.gameID;
+    level.width = args.width;
+    level.height = args.height;
+
+    level.save();
+
+    return level;
   }
 };
 
