@@ -6,6 +6,9 @@ type Query {
   users: [User]!
   user(id: ID!): User
   currentUser: User
+
+  levelGameEntities: [LevelGameEntity]!
+  levelGameEntity(id: ID!): LevelGameEntity
 }
 
 type Mutation {
@@ -13,4 +16,7 @@ type Mutation {
   loginUser(user: UserLoginInput!): AuthPayload
   createUser(user: UserCreateInput!): AuthPayload
   updateUser(id: ID!, user: UserUpdateInput!): User!
+
+  createLevelGameEntity(levelGameEntity: LevelGameEntityCreateInput!): LevelGameEntity!
+  updateLevelGameEntity(id: ID!, levelGameEntity: LevelGameEntityUpdateInput!): LevelGameEntity!
 }
