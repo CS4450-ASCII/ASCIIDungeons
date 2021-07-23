@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { dummyLevelData } from '../../../../../stories/dummyData';
+import { useHistory } from 'react-router-dom';
 import NewLevelDialog from '../Dialogs/NewLevelDialog';
+import EntityIconGroup from '../EntityIcons/EntityIconGroup';
 import LevelList from './LevelList/LevelList';
 import SideDrawerGroup from './SideDrawerGroup';
 
@@ -9,14 +11,26 @@ function SideDrawer(props) {
   const classes = useStyles();
   const { currentGame, currentLevel } = props;
 
-  const action = <NewLevelDialog openButton={'+'} />;
+  const history = useHistory();
 
-  const rows = dummyLevelData;
+  const onLevelListChange = (selectedLevel) => {
+    history.push(`/create/${currentGame.id}/${selectedLevel.id}`);
+  };
+
+  const action = <NewLevelDialog openButton={'+'} />;
+  const { gameEntities, levels } = currentGame;
+
   return (
     <div className={classes.sideDrawerRoot}>
-      <SideDrawerGroup title={'Entities'}></SideDrawerGroup>
+      <SideDrawerGroup title={'Entities'}>
+        <EntityIconGroup entities={gameEntities} />
+      </SideDrawerGroup>
       <SideDrawerGroup title={'Levels'} action={action}>
-        <LevelList rows={rows} />
+        <LevelList
+          rows={levels}
+          onSelectionChange={onLevelListChange}
+          initialSelectionIndex={currentLevel}
+        />
       </SideDrawerGroup>
     </div>
   );
@@ -32,8 +46,12 @@ const useStyles = makeStyles({
   },
 });
 
-SideDrawer.propTypes = {};
+SideDrawer.propTypes = {
+  currentGame: PropTypes.object,
+};
 
-SideDrawer.defaultProps = {};
+SideDrawer.defaultProps = {
+  currentGame: { entities: [], levels: [] },
+};
 
 export default SideDrawer;

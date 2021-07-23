@@ -1,6 +1,5 @@
 import { dummyLevelData } from '../../../../../../stories/dummyData';
 import LevelList from './LevelList';
-import SideDrawerGroup from '../SideDrawerGroup';
 
 export default {
   title: 'Editor / SideDrawer / LevelList',

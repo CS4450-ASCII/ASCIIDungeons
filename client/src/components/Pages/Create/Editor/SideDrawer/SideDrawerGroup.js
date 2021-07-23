@@ -1,6 +1,6 @@
-import React from 'react';
 import { makeStyles, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import React from 'react';
 
 function SideDrawerGroup(props) {
   const classes = useStyles();
@@ -19,7 +19,7 @@ function SideDrawerGroup(props) {
 
 const useStyles = makeStyles({
   sideDrawerGroupRoot: {
-    flex: 1,
+    flex: '1 1 0',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',

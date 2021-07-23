@@ -1,11 +1,22 @@
 import React from 'react';
-import EntityIcon from '../components/Pages/Create/Editor/EntityIcons/EntityIcon'; 
+import EntityIcon from '../components/Pages/Create/Editor/EntityIcons/EntityIcon';
 
 export default {
-  title: 'Components / EntityIcons',
-  component: EntityIcon
-}
+  title: 'Editor / SideDrawer / EntityIcons',
+  component: EntityIcon,
+};
 
-export const DownStairs = () => <EntityIcon character='<'/>
+const Template = (args) => <EntityIcon {...args} />;
 
-export const Wall  = () => <EntityIcon character='|'/>
+export const Default = Template.bind({});
+Default.args = {
+  entity: {
+    character: '<',
+  },
+};
+
+export const Selected = Template.bind({});
+Selected.args = {
+  ...Default.args,
+  isSelected: true,
+};

@@ -15,7 +15,7 @@ function EditorBodyContainer(props) {
   return <EditorBody currentGame={game} currentLevel={level} />;
 }
 
-function EditorBody(props) {
+export function EditorBody(props) {
   const classes = useStyles();
   const { currentGame, currentLevel } = props;
 
@@ -23,7 +23,8 @@ function EditorBody(props) {
     <>
       <Grid item container className={classes.editorBody}>
         <Grid item xs={9}>
-          {'<Grid />'}
+          {/* will receive current level */}
+          {'<Grid level={currentLevel}/>'}
         </Grid>
         <Grid item xs={3}>
           <SideDrawer currentGame={currentGame} currentLevel={currentLevel} />

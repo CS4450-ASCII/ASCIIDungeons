@@ -1,3 +1,5 @@
+import { BrowserRouter } from 'react-router-dom';
+import { dummyGameData } from '../../../../../stories/dummyData';
 import SideDrawer from './SideDrawer';
 
 export default {
@@ -5,7 +7,11 @@ export default {
   component: SideDrawer,
 };
 
-const Template = (args) => <SideDrawer {...args} />;
+const Template = (args) => (
+  <BrowserRouter>
+    <SideDrawer {...args} currentGame={dummyGameData[0]} />
+  </BrowserRouter>
+);
 
 export const Default = Template.bind({});
 Default.args = {};

@@ -1,28 +1,44 @@
+import { makeStyles, withTheme } from '@material-ui/core';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
 
-function EntityIcon(props){
+function EntityIcon(props) {
   const classes = useStyles();
-  const {character = '', isHighlighted = false, ...rest } = props;
+  const { entity, isSelected } = props;
+  const { character } = entity;
 
-  if(isHighlighted){
-    return (
-      <div className={classes.highlighted}>{character}</div>
-    )
-  }
-  else {
-    return (
-      <div>{character}</div>
-    )
-  }
-  
+  return (
+    <div className={clsx(classes.entityIconRoot, { isSelected })}>
+      {character}
+    </div>
+  );
 }
 
-const useStyles = makeStyles({
-  root: {},
-  highlighted: {
-    background: "#DDDDDD"
-  }
-});
+const useStyles = makeStyles((theme) => ({
+  entityIconRoot: {
+    width: 20,
+    height: 20,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    '&.isSelected': {
+      backgroundColor: theme.palette.gray.light,
+    },
+  },
+}));
 
-export default EntityIcon;
+EntityIcon.propTypes = {
+  entity: PropTypes.object,
+
+  isSelected: PropTypes.bool,
+};
+
+EntityIcon.defaultProps = {
+  entity: {},
+
+  isSelected: false,
+};
+
+export default withTheme(EntityIcon);

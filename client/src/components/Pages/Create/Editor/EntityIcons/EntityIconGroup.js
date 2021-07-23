@@ -1,54 +1,60 @@
-import React, {useState} from 'react';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, withTheme } from '@material-ui/core';
+import _ from 'lodash';
+import PropTypes from 'prop-types';
+import { default as React, useState } from 'react';
 import EntityIcon from './EntityIcon';
-import { grey } from '@material-ui/core/colors';
 
-function EntityIconGroup(props){
+function EntityIconGroup(props) {
   const classes = useStyles();
+  const { entities, onSelectedEntityChange } = props;
+  const [selectedEntity, setSelectedEntity] = useState();
 
-  //TODO:
-  //Replace with Context? Makes it easier for other parts of the editor to
-  //know which character is currently selected.
-  const { selectedCharacter, setSelectedCharacter } = useState('');
+  const handleSelectionChange = (selectedEntity) => {
+    setSelectedEntity(selectedEntity);
+    onSelectedEntityChange(selectedEntity);
+  };
 
-  // DUMMY DATA. Replace with destructuring: const { characters } = props;
-  // const { characters } = props;
-  const characters = ['!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '[', ']', '\\', '/'];
-
-
-  const entityIcons = characters.map((character) => {
-      if(selectedCharacter === character) {
-        return (
-          <Grid item xs={3} isHighlighted={true}>
-            <EntityIcon character={character}></EntityIcon>
-          </Grid>
-        )
-      } else {
-        return (
-          <Grid item xs={3} isHighlighted={false}>
-            <EntityIcon character={character}></EntityIcon>
-          </Grid>
-        )
-      }
-    }
-  );
+  const entityIcons = entities.map((entity) => (
+    <Grid item onClick={() => handleSelectionChange(entity)}>
+      <EntityIcon
+        entity={entity}
+        isSelected={entity.id === _.get(selectedEntity, 'id')}
+      />
+    </Grid>
+  ));
 
   return (
-    <div className={classes.mainContainer}>
-      <Grid container spacing={2} align="center" justify="center" alignItems="center">
+    <div className={classes.entityIconGroupRoot}>
+      <Grid container justifyContent={'left'} alignItems={'center'} spacing={2}>
         {entityIcons}
       </Grid>
     </div>
-  )
+  );
 }
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1
+const useStyles = makeStyles((theme) => ({
+  entityIconGroupRoot: {
+    flexGrow: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: theme.palette.gray.dark,
+    '& .MuiGrid-root.MuiGrid-item': {
+      // border: '1px yellow solid',
+      width: 'min-content',
+    },
   },
-  mainContainer: {
-    background: "grey"
-  }
-});
+}));
 
-export default EntityIconGroup;
+EntityIconGroup.propTypes = {
+  entities: PropTypes.arrayOf(PropTypes.object),
+
+  setSelectedCharacter: PropTypes.func,
+};
+
+EntityIconGroup.defaultProps = {
+  entities: [],
+
+  onSelectedEntityChange: (selection) => alert(JSON.stringify(selection)),
+};
+
+export default withTheme(EntityIconGroup);

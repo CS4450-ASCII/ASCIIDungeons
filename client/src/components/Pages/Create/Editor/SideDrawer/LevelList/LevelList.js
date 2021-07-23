@@ -1,18 +1,10 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
 import ScrollList from '../../../../../Common/ScrollList/ScrollList';
 
 function LevelList(props) {
   const classes = useStyles();
-  const { rows } = props;
-
-  const history = useHistory();
-  const { gameId, levelId } = useParams();
-
-  const onSelectionChange = (selection) => {
-    history.push(`/create/${gameId}/${selection.id}`);
-  };
+  const { rows, onSelectionChange } = props;
 
   return (
     <ScrollList

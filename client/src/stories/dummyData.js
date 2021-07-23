@@ -1,3 +1,54 @@
+export const dummyEntities = [
+  {
+    id: 1,
+    baseType: 0,
+    gameEngineLayer: 0,
+    title: 'Stairs - Up',
+    character: '<',
+    isPassable: true,
+    dataTemplate: {
+      goToLevelId: 1,
+    },
+  },
+  {
+    id: 2,
+    baseType: 0,
+    gameEngineLayer: 0,
+    title: 'Stairs - Down',
+    character: '>',
+    isPassable: true,
+    dataTemplate: {
+      goToLevelId: 2,
+    },
+  },
+];
+
+export const dummyLevelData = [
+  {
+    id: 1,
+    title: 'Level 1',
+  },
+  {
+    id: 2,
+    title: 'Level 2',
+  },
+  {
+    id: 3,
+    title: 'Level 3',
+  },
+  {
+    id: 4,
+    title: 'Level 4',
+  },
+  {
+    id: 5,
+    title: 'Level 5',
+  },
+  {
+    id: 6,
+    title: 'Level 6',
+  },
+];
 export const dummyGameData = [
   {
     id: 1,
@@ -7,6 +58,19 @@ export const dummyGameData = [
     lastViewedLevel: {
       id: 1,
     },
+    gameEntities: [
+      {
+        id: 1,
+        title: 'Stairs - Up',
+        character: '<',
+      },
+      {
+        id: 2,
+        title: 'Stairs - Down',
+        character: '>',
+      },
+    ],
+    levels: [...dummyLevelData],
   },
   {
     id: 2,
@@ -45,32 +109,5 @@ export const dummyGameData = [
     lastViewedLevel: {
       id: 3,
     },
-  },
-];
-
-export const dummyLevelData = [
-  {
-    id: 1,
-    title: 'Level 1',
-  },
-  {
-    id: 2,
-    title: 'Level 2',
-  },
-  {
-    id: 3,
-    title: 'Level 3',
-  },
-  {
-    id: 4,
-    title: 'Level 4',
-  },
-  {
-    id: 5,
-    title: 'Level 5',
-  },
-  {
-    id: 6,
-    title: 'Level 6',
   },
 ];
