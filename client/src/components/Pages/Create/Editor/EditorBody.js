@@ -3,6 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { dummyGameData, dummyLevelData } from '../../../../stories/dummyData';
+import Creator from '../../../Game/Creator';
 import BottomToolbar from './BottomToolbar/BottomToolbar';
 import SideDrawer from './SideDrawer/SideDrawer';
 
@@ -23,8 +24,7 @@ export function EditorBody(props) {
     <>
       <Grid item container className={classes.editorBody}>
         <Grid item xs={9}>
-          {/* will receive current level */}
-          {'<Grid level={currentLevel}/>'}
+          <Creator currentLevel={currentLevel} />
         </Grid>
         <Grid item xs={3}>
           <SideDrawer currentGame={currentGame} currentLevel={currentLevel} />

@@ -1,3 +1,5 @@
+import { getEntitySeeds } from './entities';
+
 export const dummyEntities = [
   {
     id: 1,
@@ -58,18 +60,19 @@ export const dummyGameData = [
     lastViewedLevel: {
       id: 1,
     },
-    gameEntities: [
-      {
-        id: 1,
-        title: 'Stairs - Up',
-        character: '<',
-      },
-      {
-        id: 2,
-        title: 'Stairs - Down',
-        character: '>',
-      },
-    ],
+    gameEntities: getEntitySeeds(),
+    // [
+    // {
+    //   id: 1,
+    //   title: 'Stairs - Up',
+    //   character: '<',
+    // },
+    // {
+    //   id: 2,
+    //   title: 'Stairs - Down',
+    //   character: '>',
+    // },
+    // ],
     levels: [...dummyLevelData],
   },
   {

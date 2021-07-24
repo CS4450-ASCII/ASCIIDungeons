@@ -11,7 +11,7 @@ function EntityIconGroup(props) {
 
   const handleSelectionChange = (selectedEntity) => {
     setSelectedEntity(selectedEntity);
-    onSelectedEntityChange(selectedEntity);
+    onSelectedEntityChange && onSelectedEntityChange(selectedEntity);
   };
 
   const entityIcons = entities.map((entity) => (
@@ -25,7 +25,7 @@ function EntityIconGroup(props) {
 
   return (
     <div className={classes.entityIconGroupRoot}>
-      <Grid container justifyContent={'left'} alignItems={'center'} spacing={2}>
+      <Grid container justifyContent={'left'} alignItems={'center'}>
         {entityIcons}
       </Grid>
     </div>
@@ -54,7 +54,7 @@ EntityIconGroup.propTypes = {
 EntityIconGroup.defaultProps = {
   entities: [],
 
-  onSelectedEntityChange: (selection) => alert(JSON.stringify(selection)),
+  onSelectedEntityChange: () => {},
 };
 
 export default withTheme(EntityIconGroup);

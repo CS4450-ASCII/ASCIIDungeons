@@ -6,10 +6,10 @@ import React from 'react';
 function EntityIcon(props) {
   const classes = useStyles();
   const { entity, isSelected } = props;
-  const { character } = entity;
+  const { character, title } = entity;
 
   return (
-    <div className={clsx(classes.entityIconRoot, { isSelected })}>
+    <div className={clsx(classes.entityIconRoot, { isSelected })} title={title}>
       {character}
     </div>
   );
@@ -17,14 +17,14 @@ function EntityIcon(props) {
 
 const useStyles = makeStyles((theme) => ({
   entityIconRoot: {
-    width: 20,
-    height: 20,
+    width: 30,
+    height: 30,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
-    '&.isSelected': {
-      backgroundColor: theme.palette.gray.light,
+    '&.isSelected, &:hover': {
+      backgroundColor: theme.palette.primary.main,
     },
   },
 }));
