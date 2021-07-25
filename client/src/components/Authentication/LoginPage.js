@@ -1,4 +1,4 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -13,30 +13,30 @@ function LoginPage(props) {
   const [loginUser] = useMutationWithError(userRequests.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
       authHelper.setAccessToken(loginUser.token);
-    }
+    },
   });
 
   const formFields = [
     {
       name: 'email',
-      Component: InputField
+      Component: InputField,
     },
     {
       name: 'password',
       Component: InputField,
-      type: 'password'
-    }
+      type: 'password',
+    },
   ];
 
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     loginUser({
-      variables: { user: values }
+      variables: { user: values },
     });
   };
 
   const validationSchema = Yup.object().shape({
     email: formValidations.VALID_EMAIL,
-    password: formValidations.PASSWORD_REQUIRED
+    password: formValidations.PASSWORD_REQUIRED,
   });
 
   return (

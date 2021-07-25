@@ -14,7 +14,7 @@ const stairAttributes = {
   },
 };
 
-export function getEntitySeeds() {
+export function getObjectSeeds() {
   const thickWalls = [
     ['╔', 'Top Left'],
     ['╦', 'Top Center'],
@@ -71,10 +71,19 @@ export function getEntitySeeds() {
     character,
   }));
 
+  const player = {
+    basetype: 0,
+    gameEngineLayer: 0,
+    title: 'Player Spawn Point',
+    character: '@',
+    isPassable: true,
+  };
+
   return [
     ...thickWalls,
     ...thinWalls,
     ...otherNonPassables,
     ...stairs,
-  ].map((entity, index) => ({ ...entity, id: index }));
+    player,
+  ].map((object, index) => ({ ...object, id: index }));
 }

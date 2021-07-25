@@ -3,20 +3,20 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-function EntityIcon(props) {
+function ObjectIcon(props) {
   const classes = useStyles();
-  const { entity, isSelected } = props;
-  const { character, title } = entity;
+  const { object, isSelected } = props;
+  const { character, title } = object;
 
   return (
-    <div className={clsx(classes.entityIconRoot, { isSelected })} title={title}>
+    <div className={clsx(classes.objectIconRoot, { isSelected })} title={title}>
       {character}
     </div>
   );
 }
 
 const useStyles = makeStyles((theme) => ({
-  entityIconRoot: {
+  objectIconRoot: {
     width: 30,
     height: 30,
     display: 'flex',
@@ -29,16 +29,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-EntityIcon.propTypes = {
-  entity: PropTypes.object,
+ObjectIcon.propTypes = {
+  object: PropTypes.object,
 
   isSelected: PropTypes.bool,
 };
 
-EntityIcon.defaultProps = {
-  entity: {},
+ObjectIcon.defaultProps = {
+  object: {},
 
   isSelected: false,
 };
 
-export default withTheme(EntityIcon);
+export default withTheme(ObjectIcon);

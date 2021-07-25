@@ -1,16 +1,16 @@
 import React from 'react';
-import EntityIcon from '../components/Pages/Create/Editor/EntityIcons/EntityIcon';
+import ObjectIcon from './ObjectIcon';
 
 export default {
-  title: 'Editor / SideDrawer / EntityIcons',
-  component: EntityIcon,
+  title: 'Editor / SideDrawer / ObjectIcons',
+  component: ObjectIcon,
 };
 
-const Template = (args) => <EntityIcon {...args} />;
+const Template = (args) => <ObjectIcon {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  entity: {
+  object: {
     character: '<',
   },
 };

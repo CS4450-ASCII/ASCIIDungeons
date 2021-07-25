@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import NewLevelDialog from '../Dialogs/NewLevelDialog';
-import EntityIconGroup from '../EntityIcons/EntityIconGroup';
+import ObjectIconGroup from '../ObjectIcons/ObjectIconGroup';
 import LevelList from './LevelList/LevelList';
 import SideDrawerGroup from './SideDrawerGroup';
 
@@ -18,12 +18,12 @@ function SideDrawer(props) {
   };
 
   const action = <NewLevelDialog openButton={'+'} />;
-  const { gameEntities, levels } = currentGame;
+  const { gameObjects, levels } = currentGame;
 
   return (
     <div className={classes.sideDrawerRoot}>
-      <SideDrawerGroup title={'Entities'}>
-        <EntityIconGroup entities={gameEntities} />
+      <SideDrawerGroup title={'Objects'}>
+        <ObjectIconGroup gameObjects={gameObjects} />
       </SideDrawerGroup>
       <SideDrawerGroup title={'Levels'} action={action}>
         <LevelList
@@ -51,7 +51,7 @@ SideDrawer.propTypes = {
 };
 
 SideDrawer.defaultProps = {
-  currentGame: { entities: [], levels: [] },
+  currentGame: { gameObjects: [], levels: [] },
 };
 
 export default SideDrawer;

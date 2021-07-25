@@ -1,14 +1,32 @@
+import { makeStyles, withTheme } from '@material-ui/core';
 import React from 'react';
-import Container from './Container';
-import { GameEngine } from './Engine/GameEngine';
-
-let GE = new GameEngine();
-GE.renderer.track('DEBUG TEXT!', '', '');
-GE.renderer.gridLines = false;
-GE.start();
 
 function Creator(props) {
-  return <Container />;
+  const classes = useStyles();
+  const { currentLevel, currentObject } = props;
+
+  return (
+    <div id='gameContainer' className={classes.creatorRoot}>
+      <canvas id='gameCanvas' className={classes.canvas}></canvas>
+    </div>
+  );
 }
 
-export default Creator;
+const useStyles = makeStyles((theme) => ({
+  creatorRoot: {
+    marginTop: 12,
+    height: '95%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'bottom',
+  },
+  canvas: {
+    border: '2px solid red',
+  },
+}));
+
+Creator.propTypes = {};
+
+Creator.defaultProps = {};
+
+export default withTheme(Creator);

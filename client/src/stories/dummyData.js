@@ -1,6 +1,6 @@
-import { getEntitySeeds } from './entities';
+import { getObjectSeeds } from './gameObjects';
 
-export const dummyEntities = [
+export const dummyObjects = [
   {
     id: 1,
     baseType: 0,
@@ -60,7 +60,7 @@ export const dummyGameData = [
     lastViewedLevel: {
       id: 1,
     },
-    gameEntities: getEntitySeeds(),
+    gameObjects: getObjectSeeds(),
     // [
     // {
     //   id: 1,
