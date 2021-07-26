@@ -1,0 +1,45 @@
+# Types
+type Entity implements Timestamps {
+  """
+  The id of the entity.
+  """
+  id: ID!
+
+  """
+  The display name of the symbol entity.
+  """
+  title: String
+
+  """
+  The display name of the data entity.
+  """
+  character: String
+
+  # Interface required
+
+  """
+  Datetime the entity was created at.
+  """
+  createdAt: Date!
+  """
+  Datetime the entity was last updated.
+  """
+  updatedAt: Date!
+}
+
+# # Inputs
+input EntityCreateInput {
+  """
+  The display name of the entity.
+  """
+  title: String!
+
+  """
+  The character of the entity.
+  """
+  character: String!
+}
+
+input EntityUpdateInput {
+  title: String!
+}

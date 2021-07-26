@@ -12,6 +12,9 @@ type Query {
 
   levelGameEntities: [LevelGameEntity]!
   levelGameEntity(id: ID!): LevelGameEntity
+  entitys: [Entity]!
+  entity(id: ID!): Entity
+  title: Entity
 }
 
 type Mutation {
@@ -25,4 +28,6 @@ type Mutation {
 
   createLevelGameEntity(levelGameEntity: LevelGameEntityCreateInput!): LevelGameEntity!
   updateLevelGameEntity(id: ID!, levelGameEntity: LevelGameEntityUpdateInput!): LevelGameEntity!
+  createEntity(entity: EntityCreateInput!): Entity!
+  updateEntity(id: ID!, entity: EntityUpdateInput): Entity!
 }
