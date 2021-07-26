@@ -15,11 +15,11 @@ function MainMenu(props) {
 
   const history = useHistory(); // https://reactrouter.com/web/api/Hooks
 
-  const navLinks = ['create', 'play', 'profile', 'about'];
+  const navLinks = ['create', 'play', 'profile', 'about', 'score'];
 
   return (
     <Grid container alignItems='center' direction='column'>
-      {navLinks.map(link => (
+      {navLinks.map((link) => (
         <Grid item key={`nav-link-${link}`} className={classes.navItem}>
           <Button onClick={() => history.push(link)}>
             {_.startCase(link)}
