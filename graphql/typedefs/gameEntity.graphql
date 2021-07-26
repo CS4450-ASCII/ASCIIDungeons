@@ -1,0 +1,17 @@
+type GameEntity implements Timestamps {
+
+  id: ID!
+  gameID: Int!
+  entityID: Int!
+
+}
+
+input GameEntityCreateInput {
+  gameID: ID!
+  entityID: ID!
+}
+
+input GameEntityUpdateInput {
+  gameID: ID!
+  entityID: ID!
+}
