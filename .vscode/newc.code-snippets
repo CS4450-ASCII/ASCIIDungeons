@@ -15,22 +15,22 @@
   // 	],
   // 	"description": "Log output to console"
   // }
-  "Print to console": {
+  "New component": {
     "scope": "javascript",
     "prefix": "newc",
     "body": [
       "import React from 'react';",
       "import { makeStyles } from '@material-ui/core';",
-      "\nconst useStyles = makeStyles({",
-      "  root: {}",
-      "});",
       "\nfunction $TM_FILENAME_BASE(props){",
       "  const classes = useStyles();",
       "  const {} = props;",
       "\n  return <div className={classes.root}></div>;",
       "}",
+      "\nconst useStyles = makeStyles({",
+      "  root: {}",
+      "});",
       "\nexport default $TM_FILENAME_BASE;"
     ],
-    "description": "Log output to console"
+    "description": "Create a new React component"
   }
 }

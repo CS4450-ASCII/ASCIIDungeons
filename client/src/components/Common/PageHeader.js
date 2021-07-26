@@ -4,15 +4,30 @@ import _ from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { AppContext } from '../../context/ContextProvider';
+import PropTypes from 'prop-types';
 
 function PageHeader(props) {
+  const { errors } = useContext(AppContext);
+  const location = _.get(useLocation(), 'pathname').slice(1);
+
+  return <PageHeaderDisplay {...{ errors, location, ...props }} />;
+}
+
+PageHeaderDisplay.propTypes = {
+  text: PropTypes.string,
+
+  small: PropTypes.bool,
+
+  errors: PropTypes.array,
+
+  location: PropTypes.string
+};
+
+export function PageHeaderDisplay(props) {
   const classes = useStyles();
-  const { text, small } = props;
+  const { text, small, errors, location } = props;
   const [output, setOutput] = useState('');
 
-  const { errors } = useContext(AppContext);
-
-  const location = _.get(useLocation(), 'pathname').slice(1);
   const titleOverrides = { main: ' ', signup: ' ', login: ' ' };
   const pageName = titleOverrides[location] || _.startCase(location);
 
@@ -76,4 +91,5 @@ const useStyles = makeStyles({
     wordWrap: 'break-word'
   }
 });
+
 export default PageHeader;

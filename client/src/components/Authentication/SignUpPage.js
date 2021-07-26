@@ -1,14 +1,14 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import authHelper from '../../helpers/authentication';
 import { useMutationWithError } from '../../helpers/customHooks';
 import formValidations from '../../helpers/formValidations';
 import { userRequests } from '../../requests/user';
-import FormComponent from '../Common/FormComponent';
-import InputField from '../Common/InputField';
+import FormComponent from '../Common/Forms/FormComponent';
+import InputField from '../Common/Forms/InputField';
 
 const useStyles = makeStyles({
   root: {}
@@ -23,29 +23,26 @@ function SignUpPage(props) {
     }
   });
 
-  const formFields = useMemo(
-    () => [
-      {
-        name: 'email',
-        Component: InputField
-      },
-      {
-        name: 'displayName',
-        Component: InputField
-      },
-      {
-        name: 'password',
-        Component: InputField,
-        type: 'password'
-      },
-      {
-        name: 'confirmPassword',
-        Component: InputField,
-        type: 'password'
-      }
-    ],
-    []
-  );
+  const formFields = [
+    {
+      name: 'email',
+      Component: InputField
+    },
+    {
+      name: 'displayName',
+      Component: InputField
+    },
+    {
+      name: 'password',
+      Component: InputField,
+      type: 'password'
+    },
+    {
+      name: 'confirmPassword',
+      Component: InputField,
+      type: 'password'
+    }
+  ];
 
   const onSubmit = values => {
     createUser({
