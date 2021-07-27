@@ -11,7 +11,9 @@ module.exports = {
       levelId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Level',
+          model: {
+            tableName: 'Levels',
+          },
           key: 'id'
         },
         onUpdate: 'cascade',
@@ -21,7 +23,9 @@ module.exports = {
       gameEntityId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'GameEntity',
+          model: {
+            tableName: 'GameEntities',
+          },
           key: 'id'
         },
         onUpdate: 'cascade',

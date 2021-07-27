@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('GameEntities', {
+    await queryInterface.createTable('Levels', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,24 +10,23 @@ module.exports = {
       },
       gameId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: {
-            tableName: 'game',
+            tableName: 'Games',
           },
           key: 'id'
-        }
-
+        },
+        onUpdate: 'cascade',
+        onDelete: 'cascade',
+        allowNull: false
       },
-      entityId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'entity',
-          },
-          key: 'id'
-        }
-
+      width: {
+        type: Sequelize.SMALLINT,
+        allowNull: false
+      },
+      height: {
+        type: Sequelize.SMALLINT,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +39,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('GameEntities');
+    await queryInterface.dropTable('Levels');
   }
 };
