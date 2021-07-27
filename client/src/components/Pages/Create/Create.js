@@ -1,10 +1,10 @@
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
-import { themeVariables } from '../../../muiAsciiTheme';
 import NewGameDialog from './Editor/Dialogs/NewGameDialog';
 import OpenGameDialog from './Editor/Dialogs/OpenGameDialog';
 import EditorBody from './Editor/EditorBody';
+import Toolbar from './Editor/Toolbar/Toolbar';
 
 function Create(props) {
   const classes = useStyles();
@@ -20,15 +20,7 @@ function Create(props) {
       className={classes.createRoot}
     >
       <Grid item>
-        <div
-          style={{
-            height: 30,
-            backgroundColor: themeVariables.palette.gray.light,
-            color: 'black',
-          }}
-        >
-          {'<Toolbar />'}{' '}
-        </div>
+        <Toolbar />
       </Grid>
       <Switch>
         <Route exact path={path}>

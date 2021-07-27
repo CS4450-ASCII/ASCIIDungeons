@@ -90,6 +90,13 @@ export const themeVariables = {
         padding: '8px 24px',
       },
     },
+    MuiMenuItem: {
+      root: {
+        fontSize: '1.2em',
+        fontWeight: 'regular',
+        padding: '0.6em 1.8em !important',
+      },
+    },
   },
 };
 
