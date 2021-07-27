@@ -4,6 +4,10 @@ type GameEntity implements Timestamps {
   gameID: Int!
   entityID: Int!
 
+  # Interface required
+
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 input GameEntityCreateInput {
