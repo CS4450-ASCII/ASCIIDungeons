@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   appRoot: {
     backgroundColor: 'black',
     width: '100vw',
-    height: '100vh'
+    height: '100vh',
   },
   container: {
     color: 'white',
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyItems: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   mainContent: {
     flex: 1,
@@ -39,8 +39,8 @@ const useStyles = makeStyles({
     padding: '1em',
     flexDirection: 'column',
     width: '100%',
-    overflow: 'auto'
-  }
+    overflow: 'auto',
+  },
 });
 
 function App() {
