@@ -1,5 +1,6 @@
 import { makeStyles, withTheme } from '@material-ui/core/styles';
 import React from 'react';
+import Checkbox from '../../../../Common/Checkbox';
 import EditMenu from './Menus/EditMenu';
 import FileMenu from './Menus/FileMenu';
 import ViewMenu from './Menus/ViewMenu';
@@ -11,7 +12,15 @@ function Toolbar(props) {
     <div className={classes.toolbarRoot}>
       <FileMenu endDivider />
       <EditMenu endDivider />
-      <ViewMenu />
+      <ViewMenu style={{ flex: 1 }} />
+      <Checkbox
+        label={'Published?'}
+        variant={'dark'}
+        labelStyle={{
+          fontSize: '1.5em',
+          paddingTop: 3,
+        }}
+      />
     </div>
   );
 }
@@ -23,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: 'min-content',
     width: '100%',
+    paddingRight: 12,
   },
 }));
 

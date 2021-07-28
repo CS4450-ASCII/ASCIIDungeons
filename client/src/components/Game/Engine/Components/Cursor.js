@@ -10,7 +10,7 @@ export class Cursor extends GameObject {
   constructor(ge) {
     super();
     /** The selected character of the cursor. */
-    this.character = null;
+    this.character = ' ';
     /** Is background rendering enabled? */
     this.background = false;
     /** The character color hex value. */

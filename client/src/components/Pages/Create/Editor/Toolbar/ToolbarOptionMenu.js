@@ -13,7 +13,7 @@ import MenuDivider from './Menus/MenuDivider';
 
 function ToolbarOptionMenu(props) {
   const classes = useStyles();
-  const { label, menuGroups, endDivider } = props;
+  const { label, menuGroups, endDivider, ...rest } = props;
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -27,7 +27,7 @@ function ToolbarOptionMenu(props) {
   };
 
   return (
-    <div className={classes.ToolbarOptionMenuRoot}>
+    <div className={classes.ToolbarOptionMenuRoot} {...rest}>
       <Button
         className={classes.openButton}
         ref={anchorRef}
@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
   openButton: {
     color: 'black',
-    height: '50px',
+    height: '35px',
     padding: '0 20px',
   },
   divider: {
