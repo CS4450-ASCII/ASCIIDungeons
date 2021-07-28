@@ -2,7 +2,7 @@ import {
   ApolloClient,
   ApolloProvider,
   createHttpLink,
-  InMemoryCache
+  InMemoryCache,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
@@ -12,7 +12,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './components/App/App';
 import ErrorBoundary from './components/Common/ErrorBoundary';
 import { AUTH_TOKEN } from './constants';
-import ContextProvider from './context/ContextProvider';
+import ErrorProvider from './context/ErrorProvider';
 import './index.css';
 import theme from './muiAsciiTheme';
 
@@ -20,7 +20,7 @@ import theme from './muiAsciiTheme';
  * Source: https://www.apollographql.com/docs/react/networking/authentication/
  ******************************************************************************/
 const httpLink = createHttpLink({
-  uri: '/graphql'
+  uri: '/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -30,14 +30,14 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : ''
-    }
+      authorization: token ? `Bearer ${token}` : '',
+    },
   };
 });
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 });
 /***********************************************************************/
 
@@ -47,14 +47,14 @@ ReactDOM.render(
       <ApolloProvider client={client}>
         <BrowserRouter>
           <CssBaseline />
-          <ContextProvider>
+          <ErrorProvider>
             <ThemeProvider theme={theme}>
               <App />
             </ThemeProvider>
-          </ContextProvider>
+          </ErrorProvider>
         </BrowserRouter>
       </ApolloProvider>
     </ErrorBoundary>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

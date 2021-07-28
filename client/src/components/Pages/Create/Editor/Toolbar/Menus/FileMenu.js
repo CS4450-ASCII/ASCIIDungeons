@@ -1,5 +1,8 @@
 import { makeStyles, withTheme } from '@material-ui/core';
 import React from 'react';
+import NewGameDialog from '../../Dialogs/NewGameDialog';
+import OpenGameDialog from '../../Dialogs/OpenGameDialog';
+import SaveAsDialog from '../../Dialogs/SaveAsDialog';
 import ToolbarOptionMenu from '../ToolbarOptionMenu';
 
 function FileMenu(props) {
@@ -8,13 +11,16 @@ function FileMenu(props) {
   const menuGroups = [
     [
       {
-        label: 'New Game',
+        label: <NewGameDialog openButton={<span>New Game</span>} />,
       },
       {
-        label: 'Open',
+        label: <OpenGameDialog openButton={<span>Open Game</span>} />,
       },
     ],
-    [{ label: 'Save', hotkey: 'Ctrl-S' }, { label: 'Save As' }],
+    [
+      { label: 'Save', hotkey: 'Ctrl-S' },
+      { label: <SaveAsDialog openButton={<span>Save As</span>} /> },
+    ],
   ];
   return (
     <ToolbarOptionMenu {...props} label={'File'} menuGroups={menuGroups} />

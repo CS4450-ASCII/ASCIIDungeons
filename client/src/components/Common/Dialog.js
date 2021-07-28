@@ -15,7 +15,7 @@ function Dialog(props) {
   const {
     children,
     title,
-    openButton,
+    openButton = <Button>{title}</Button>,
     content,
     submitButtonProps: buttonProps = {},
     onSubmit,

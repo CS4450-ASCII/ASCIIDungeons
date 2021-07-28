@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import NewGameDialog from './Editor/Dialogs/NewGameDialog';
@@ -31,8 +31,8 @@ function Create(props) {
             direction='column'
             className={classes.menuItemContainer}
           >
-            <NewGameDialog openButton={<Button>New Game</Button>} />
-            <OpenGameDialog openButton={<Button>Open</Button>} />
+            <NewGameDialog />
+            <OpenGameDialog />
           </Grid>
           <Grid item />
         </Route>

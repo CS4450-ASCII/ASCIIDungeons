@@ -7,8 +7,8 @@ function MenuOption(props) {
 
   return (
     <MenuItem className={classes.menuOptionRoot}>
-      <div style={{ flexGrow: 1 }}>{label}</div>
-      <div style={{ fontSize: '0.7em' }}>{hotkey}</div>
+      <div className={classes.label}>{label}</div>
+      <div className={classes.hotkey}>{hotkey}</div>
     </MenuItem>
   );
 }
@@ -16,6 +16,12 @@ function MenuOption(props) {
 const useStyles = makeStyles((theme) => ({
   menuOptionRoot: {
     display: 'flex',
+  },
+  label: {
+    flexGrow: 1,
+  },
+  hotkey: {
+    fontSize: '0.7em',
   },
 }));
 
