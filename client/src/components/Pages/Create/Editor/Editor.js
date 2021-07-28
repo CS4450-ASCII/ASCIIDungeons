@@ -1,8 +1,10 @@
 import { Grid, makeStyles } from '@material-ui/core';
-import _ from 'lodash';
 import React, { createContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { dummyGameData } from '../../../../stories/dummyData';
 import Creator from '../../../Game/Creator';
+import { Cursor } from '../../../Game/Engine/Components/Cursor';
+import { GameEngine } from '../../../Game/Engine/GameEngine';
 import BottomToolbar from './BottomToolbar/BottomToolbar';
 import SideDrawer from './SideDrawer/SideDrawer';
 import Toolbar from './Toolbar/Toolbar';
@@ -33,13 +35,12 @@ function EditorContainer(props) {
       }
     }
     */
-
-    setCurrentGame(
-      _.find(JSON.parse(localStorage.getItem('games')) || [], {
-        id: parseInt(gameId),
-      }),
-    );
-
+    setCurrentGame(dummyGameData[0]);
+    // setCurrentGame(
+    //   _.find(JSON.parse(localStorage.getItem('games')) || [], {
+    //     id: parseInt(gameId),
+    //   }),
+    // );
     /* TODO: Query for the level that has id of levelId 
     query shape:
     level {
@@ -61,23 +62,23 @@ function EditorContainer(props) {
       }
     }
     */
-    setCurrentLevel(
-      _.find(JSON.parse(localStorage.getItem('levels')) || [], {
-        id: parseInt(levelId),
-      }),
-    );
+    setCurrentLevel(dummyGameData[0].levels[0]);
+    // setCurrentLevel(
+    //   _.find(JSON.parse(localStorage.getItem('levels')) || [], {
+    //     id: parseInt(levelId),
+    //   }),
+    // );
   }, [gameId, levelId]);
 
-  // const [gameEngine, setGameEngine] = useState(null);
-  // const [cursor, setCursor] = useState(new Cursor(gameEngine));
+  const [gameEngine] = useState(new GameEngine());
+  const [cursor] = useState(new Cursor(gameEngine));
 
-  // useEffect(() => {
-  //   if (currentLevel) {
-  //     setGameEngine(new GameEngine());
-  //     gameEngine.addComponent(cursor);
-  //     gameEngine.start();
-  //   }
-  // }, [currentLevel]);
+  useEffect(() => {
+    if (currentLevel) {
+      gameEngine.addComponent(cursor);
+      gameEngine.start();
+    }
+  }, [currentLevel]);
 
   return <Editor {...{ ...props, currentGame, currentLevel }} />;
 }
