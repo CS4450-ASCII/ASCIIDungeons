@@ -7,7 +7,8 @@ import {
   withTheme,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { GameContext } from '../Editor';
 import MenuOption from './MenuOption';
 import MenuDivider from './Menus/MenuDivider';
 
@@ -15,8 +16,14 @@ function ToolbarOptionMenu(props) {
   const classes = useStyles();
   const { label, menuGroups, endDivider, ...rest } = props;
 
+  const { currentGame, currentLevel } = useContext(GameContext);
+
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [currentGame, currentLevel]);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -49,7 +56,7 @@ function ToolbarOptionMenu(props) {
               return (
                 <>
                   {menuGroup.map((menuOption) => (
-                    <MenuOption {...menuOption} />
+                    <MenuOption {...menuOption} onClick={handleClose} />
                   ))}
                   {addDivider && <MenuDivider />}
                 </>

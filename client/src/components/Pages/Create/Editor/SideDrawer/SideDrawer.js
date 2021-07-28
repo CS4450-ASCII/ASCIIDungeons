@@ -1,15 +1,16 @@
 import { makeStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import NewLevelDialog from '../Dialogs/NewLevelDialog';
+import { GameContext } from '../Editor';
 import ObjectIconGroup from '../ObjectIcons/ObjectIconGroup';
 import LevelList from './LevelList/LevelList';
 import SideDrawerGroup from './SideDrawerGroup';
 
 function SideDrawer(props) {
   const classes = useStyles();
-  const { currentGame, currentLevel } = props;
+  const { currentGame, currentLevel } = useContext(GameContext);
 
   const history = useHistory();
 
@@ -18,7 +19,7 @@ function SideDrawer(props) {
   };
 
   const action = <NewLevelDialog openButton={'+'} />;
-  const { gameObjects, levels } = currentGame;
+  const { gameObjects = [], levels = [] } = currentGame || {};
 
   return (
     <div className={classes.sideDrawerRoot}>
@@ -29,7 +30,7 @@ function SideDrawer(props) {
         <LevelList
           rows={levels}
           onSelectionChange={onLevelListChange}
-          initialSelectionIndex={currentLevel}
+          // initialSelectionIndex={currentLevel}
         />
       </SideDrawerGroup>
     </div>

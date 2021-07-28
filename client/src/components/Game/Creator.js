@@ -1,14 +1,19 @@
 import { makeStyles, withTheme } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
+import { GameContext } from '../Pages/Create/Editor/Editor';
 
 function Creator(props) {
   const classes = useStyles();
-  const { currentLevel, currentObject } = props;
+  const { currentObject } = props;
 
-  return (
+  const { currentGame, currentLevel } = useContext(GameContext);
+
+  return currentLevel ? (
     <div id='gameContainer' className={classes.creatorRoot}>
       <canvas id='gameCanvas' className={classes.canvas}></canvas>
     </div>
+  ) : (
+    <div className={classes.noLevelMessage}>No Level Selected</div>
   );
 }
 
@@ -22,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
   },
   canvas: {
     border: '2px solid red',
+  },
+  noLevelMessage: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
 

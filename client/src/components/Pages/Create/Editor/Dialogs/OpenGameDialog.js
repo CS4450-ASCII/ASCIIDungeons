@@ -1,14 +1,25 @@
 import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { dummyGameData } from '../../../../../stories/dummyData';
 import Dialog from '../../../../Common/Dialog';
 import ScrollList from '../../../../Common/ScrollList/ScrollList';
 
-function OpenGameDialog(props) {
+function OpenGameDialogContainer(props) {
+  // TODO: Query for a list of games created by the current user.
+  // id, title, and description.
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    setGames(JSON.parse(localStorage.getItem('games')) || []);
+  }, []);
+
+  return <OpenGameDialog {...props} games={games} />;
+}
+
+export function OpenGameDialog(props) {
   const classes = useStyles();
-  const { openButton, games = dummyGameData, ...rest } = props;
+  const { openButton, games, ...rest } = props;
 
   const [selectedGame, setSelectedGame] = useState(null);
 
@@ -20,17 +31,24 @@ function OpenGameDialog(props) {
       <ScrollList
         rows={games}
         onSelectionChange={(selection) => setSelectedGame(selection)}
+        emptyMessage={
+          'No games found. Click the "New Game" option to create a new one.'
+        }
       />
       <div className={classes.descriptionBox}>
-        {_.get(selectedGame, 'description', 'Nothing selected.')}
+        {_.get(
+          selectedGame,
+          'description',
+          selectedGame ? '(No description)' : 'Nothing selected.',
+        )}
       </div>
     </>
   );
 
   const onSubmit = () => {
     // TODO: Navigate to the editor game route with specified id.
-    history.push(
-      `${path}/${_.get(selectedGame, 'id')}/${_.get(
+    history.replace(
+      `/create/${_.get(selectedGame, 'id')}/${_.get(
         selectedGame,
         'lastViewedLevel.id',
         '',
@@ -76,4 +94,4 @@ const useStyles = makeStyles({
   },
 });
 
-export default OpenGameDialog;
+export default OpenGameDialogContainer;

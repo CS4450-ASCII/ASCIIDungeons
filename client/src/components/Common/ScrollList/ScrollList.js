@@ -1,4 +1,10 @@
-import { ListItem, ListItemText, makeStyles } from '@material-ui/core';
+import {
+  ListItem,
+  ListItemText,
+  makeStyles,
+  Typography,
+  withTheme,
+} from '@material-ui/core';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -7,7 +13,14 @@ import { themeVariables } from '../../../muiAsciiTheme';
 
 function ScrollList(props) {
   const classes = useStyles();
-  const { rows, onSelectionChange, height, itemSize, alignItems } = props;
+  const {
+    rows,
+    onSelectionChange,
+    height,
+    itemSize,
+    alignItems,
+    emptyMessage,
+  } = props;
 
   const [selectedIndex, setSelectedIndex] = useState(null);
 
@@ -33,12 +46,12 @@ function ScrollList(props) {
         onClick={() => handleChange(index)}
         selected={selected}
       >
-        <ListItemText primary={_.get(rows, `[${index}].title`)} />
+        <ListItemText primary={_.get(rows, `[${index}].title`, 'Untitled')} />
       </ListItem>
     );
   }
 
-  return (
+  return rows.length > 0 ? (
     <FixedSizeList
       height={height}
       width='100%'
@@ -50,12 +63,20 @@ function ScrollList(props) {
     >
       {renderRow}
     </FixedSizeList>
+  ) : (
+    <Typography className={classes.emptyMessage}>{emptyMessage}</Typography>
   );
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {},
-});
+  emptyMessage: {
+    backgroundColor: theme.palette.gray.dark,
+    color: 'white',
+    padding: 10,
+    height: 100,
+  },
+}));
 
 ScrollList.propTypes = {
   /**
@@ -92,6 +113,7 @@ ScrollList.defaultProps = {
   itemSize: 60,
   alignItems: 'center',
   onSelectionChange: (selection) => alert(JSON.stringify(selection)),
+  emptyMessage: 'Nothing found.',
 };
 
-export default ScrollList;
+export default withTheme(ScrollList);

@@ -13,6 +13,7 @@ function LevelList(props) {
       height={240}
       itemSize={40}
       alignItems={'left'}
+      emptyMessage={'No levels found. Click the "+" button to add one.'}
     />
   );
 }

@@ -1,4 +1,4 @@
-import { Grid, makeStyles, withTheme } from '@material-ui/core';
+import { Grid, makeStyles, Typography, withTheme } from '@material-ui/core';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { default as React, useState } from 'react';
@@ -27,9 +27,15 @@ function ObjectIconGroup(props) {
 
   return (
     <div className={classes.objectIconGroupRoot}>
-      <Grid container justifyContent={'left'} alignItems={'center'}>
-        {objectIcons}
-      </Grid>
+      {gameObjects.length > 0 ? (
+        <Grid container justifyContent={'left'} alignItems={'center'}>
+          {objectIcons}
+        </Grid>
+      ) : (
+        <Typography className={classes.emptyMessage}>
+          No objects found.
+        </Typography>
+      )}
     </div>
   );
 }
@@ -44,6 +50,9 @@ const useStyles = makeStyles((theme) => ({
       // border: '1px yellow solid',
       width: 'min-content',
     },
+  },
+  emptyMessage: {
+    padding: 10,
   },
 }));
 

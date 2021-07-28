@@ -1,15 +1,13 @@
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, withTheme } from '@material-ui/core';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import NewGameDialog from './Editor/Dialogs/NewGameDialog';
 import OpenGameDialog from './Editor/Dialogs/OpenGameDialog';
-import EditorBody from './Editor/EditorBody';
-import Toolbar from './Editor/Toolbar/Toolbar';
+import Editor from './Editor/Editor';
 
 function Create(props) {
   const classes = useStyles();
-
-  const { path, url } = useRouteMatch();
+  const { path } = useRouteMatch();
 
   return (
     <Grid
@@ -19,11 +17,9 @@ function Create(props) {
       justifyContent='space-between'
       className={classes.createRoot}
     >
-      <Grid item>
-        <Toolbar />
-      </Grid>
       <Switch>
         <Route exact path={path}>
+          <Grid item />
           <Grid
             item
             container
@@ -37,7 +33,7 @@ function Create(props) {
           <Grid item />
         </Route>
         <Route path={`${path}/:gameId/:levelId?`}>
-          <EditorBody />
+          <Editor />
         </Route>
         <Redirect to={path} />
       </Switch>
@@ -63,4 +59,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default Create;
+Create.propTypes = {};
+
+Create.defaultProps = {};
+
+export default withTheme(Create);
