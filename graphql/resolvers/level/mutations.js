@@ -3,12 +3,12 @@ import { Level } from '../../../database/models';
 const levelMutations = {
   createLevel: async (
     obj,
-    { level: { gameID, width, height } },
+    { level: { gameId, width, height } },
     context,
     info
   ) => {
     const level = await Level.create({
-      gameID,
+      gameId,
       width,
       height
     });
@@ -19,7 +19,7 @@ const levelMutations = {
   updateLevel: async (obj, args, context, info) => {
     let level = await Level.findOne({ where: { id: args.id } })
 
-    level.gameID = args.gameID;
+    level.gameId = args.gameId;
     level.width = args.width;
     level.height = args.height;
 

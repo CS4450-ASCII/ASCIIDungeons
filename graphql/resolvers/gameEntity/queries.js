@@ -1,3 +1,5 @@
+import { GameEntity } from '../../../database/models'
+
 const gameEntityQueries = {
   gameEntities: async (_) => {
     const gameEntities = await GameEntity.findAll();

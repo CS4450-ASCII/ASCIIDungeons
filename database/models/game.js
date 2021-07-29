@@ -11,8 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.User);
-      this.hasMany(models.GameEntity);
+      this.belongsTo(models.User, {
+        foreignKey: {
+          name: 'createdById',
+          allowNull: false
+        }
+      });
+      this.hasMany(models.GameEntity, {
+        foreignKey: {
+          name: 'gameEntityId',
+          allowNull: false
+        }
+      });
     }
   };
   Game.init({

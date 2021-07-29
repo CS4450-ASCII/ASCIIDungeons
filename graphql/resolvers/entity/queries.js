@@ -1,4 +1,4 @@
-import { Entity } from '../../../../ASCIIDungeons1/database/models';
+import { Entity } from '../../../database/models';
 
 /**************************************************************
  * References:
@@ -7,10 +7,16 @@ import { Entity } from '../../../../ASCIIDungeons1/database/models';
  **************************************************************/
 
 const entityQueries = {
-  symbol: async (_, args) => {
+  entities: async (_, args) => {
     const entities = await Entity.findAll();
 
     return entities;
+  },
+
+  entity: async (obj, args, context, info) => {
+    const entity = await Entity.findOne({ where: { id: args.id }});
+
+    return entity;
   }
 };
 

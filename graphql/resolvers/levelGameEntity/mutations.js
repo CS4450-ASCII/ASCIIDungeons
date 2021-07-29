@@ -20,8 +20,8 @@ const levelGameEntityMutations = {
   updateLevelGameEntity: async (obj, args, context, info) => {
     let levelGameEntity = await LevelGameEntity.findOne({ where: { id: args.id } })
 
-    levelGameEntity.levelID = args.levelID;
-    levelGameEntity.gameEntityID = args.gameEntityID;
+    levelGameEntity.levelId= args.levelID;
+    levelGameEntity.gameEntityId= args.gameEntityID;
     levelGameEntity.x = args.x;
     levelGameEntity.y = args.y;
 

@@ -1,7 +1,7 @@
 type GameEntity implements Timestamps {
 
   id: ID!
-  gameID: Int!
+  gameId: Int!
   entityID: Int!
 
   # Interface required
@@ -11,11 +11,11 @@ type GameEntity implements Timestamps {
 }
 
 input GameEntityCreateInput {
-  gameID: ID!
+  gameId: ID!
   entityID: ID!
 }
 
 input GameEntityUpdateInput {
-  gameID: ID!
+  gameId: ID!
   entityID: ID!
 }
