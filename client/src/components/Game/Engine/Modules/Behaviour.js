@@ -9,7 +9,7 @@ export class Behaviour extends GameModule {
     this.CURRENT_TIME = 0;
     this.DELTA_TIME = 0;
     this.OBJECTS = [];
-    this.INPUT = {};
+    this.INPUT = this.GE.input;
   }
 
   exec() {
@@ -23,5 +23,9 @@ export class Behaviour extends GameModule {
 
   addObject(object) {
     this.OBJECTS.push(object);
+  }
+
+  removeObject(object) {
+    this.OBJECTS = this.OBJECTS.filter(function(el){return el != object});
   }
 }
