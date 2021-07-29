@@ -1,7 +1,7 @@
-import { GameModule } from "./GameModule";
+import { GameModule } from './GameModule';
 
 /** The renderer module, handles drawing objects to the canvas and contains tools for doing so. */
-export class Renderer extends GameModule{
+export class Renderer extends GameModule {
   /** Builds the renderer. */
   constructor() {
     super();
@@ -42,19 +42,19 @@ export class Renderer extends GameModule{
     /** The current context to draw on. */
     this.currentCtx = null;
     /** List of renderer layers. */
-    this.layers = [{id: Number.MAX_SAFE_INTEGER, objects:[], canvasID: 1}];
+    this.layers = [{ id: Number.MAX_SAFE_INTEGER, objects: [], canvasID: 1 }];
     /** Object containing layers referenced with keys. */
-    this.layerKeys = {debug: this.layers[0]};
+    this.layerKeys = { debug: this.layers[0] };
     /** Layer for map drawing and other static objects. */
-    this.worldLayer = this.createLayer(0, "world", 0);
+    this.worldLayer = this.createLayer(0, 'world', 0);
     /** Layer for generic game objects. */
-    this.objectLayer = this.createLayer(1, "object", 1);
+    this.objectLayer = this.createLayer(1, 'object', 1);
     /** Layer for player game objects. */
-    this.objectLayer = this.createLayer(2, "player", 1);
+    this.objectLayer = this.createLayer(2, 'player', 1);
     /** Layer used to obscure unseen parts of the map. */
-    this.discoveryLayer = this.createLayer(3, "discovery", 2);
+    this.discoveryLayer = this.createLayer(3, 'discovery', 2);
     /** Layer for generic effects. */
-    this.effectLayer =  this.createLayer(4, "effect", 2);
+    this.effectLayer = this.createLayer(4, 'effect', 2);
   }
 
   exec() {
@@ -67,65 +67,90 @@ export class Renderer extends GameModule{
     }
     else*/ this.draw();
   }
-  
+
   /** Draws each object to the screen. */
   draw() {
-    if(this.prevContHeight !== this.container.clientHeight || this.prevContWidth !== this.container.clientWidth) {
+    if (
+      this.prevContHeight !== this.container.clientHeight ||
+      this.prevContWidth !== this.container.clientWidth
+    ) {
       this.resize();
     }
 
     this.currentCtx = this.mainCtx;
     this.mainCtx.clearRect(0, 0, this.mainCanvas.width, this.mainCanvas.height);
 
-    for(let layer of this.layers) {
-        if(layer.canvasID != 1) continue;
-        for(let object of layer.objects) {
-            object.draw(this);
-        }
+    for (let layer of this.layers) {
+      if (layer.canvasID != 1) continue;
+      for (let object of layer.objects) {
+        object.draw(this);
+      }
     }
 
-    if(this.redrawBackground) {
+    if (this.redrawBackground) {
       this.currentCtx = this.bgCtx;
-      this.bgCtx.clearRect(0, 0, this.backgroundCanvas.width, this.backgroundCanvas.height);
+      this.bgCtx.clearRect(
+        0,
+        0,
+        this.backgroundCanvas.width,
+        this.backgroundCanvas.height
+      );
 
-      for(let layer of this.layers) {
-        if(layer.canvasID != 0) continue;
-        for(let object of layer.objects) {
-            object.draw(this);
+      for (let layer of this.layers) {
+        if (layer.canvasID != 0) continue;
+        for (let object of layer.objects) {
+          object.draw(this);
         }
       }
 
       this.redrawBackground = false;
     }
 
-    if(this.redrawForeground) {
+    if (this.redrawForeground) {
       this.currentCtx = this.fgCtx;
-      this.fgCtx.clearRect(0, 0, this.foregroundCanvas.width, this.foregroundCanvas.height);
+      this.fgCtx.clearRect(
+        0,
+        0,
+        this.foregroundCanvas.width,
+        this.foregroundCanvas.height
+      );
 
-      for(let layer of this.layers) {
-        if(layer.canvasID != 2) continue;
-        for(let object of layer.objects) {
-            object.draw(this);
+      for (let layer of this.layers) {
+        if (layer.canvasID != 2) continue;
+        for (let object of layer.objects) {
+          object.draw(this);
         }
       }
 
-      if(this.gridLines) {
-        for(let i = 0; i < this.gridX; i++) {
-            if(i === 0) continue;
-  
-            this.fgCtx.strokeStyle = "#FF0000";
-            this.fgCtx.moveTo(this.foregroundCanvas.clientWidth/this.gridX*i, 0);
-            this.fgCtx.lineTo(this.foregroundCanvas.clientWidth/this.gridX*i, this.foregroundCanvas.clientHeight);
-            this.fgCtx.stroke();     
+      if (this.gridLines) {
+        for (let i = 0; i < this.gridX; i++) {
+          if (i === 0) continue;
+
+          this.fgCtx.strokeStyle = '#FF0000';
+          this.fgCtx.moveTo(
+            (this.foregroundCanvas.clientWidth / this.gridX) * i,
+            0
+          );
+          this.fgCtx.lineTo(
+            (this.foregroundCanvas.clientWidth / this.gridX) * i,
+            this.foregroundCanvas.clientHeight
+          );
+          this.fgCtx.stroke();
         }
-  
-        for(let i = 0; i < this.gridY; i++) {
-            if(i === 0) continue;
-  
-            this.fgCtx.strokeStyle = "#FF0000";
-            this.fgCtx.moveTo(0, this.foregroundCanvas.clientHeight/this.gridY*i);
-            this.fgCtx.lineTo(this.foregroundCanvas.clientWidth, this.foregroundCanvas.clientHeight/this.gridY*i);
-            this.fgCtx.stroke();  
+
+        for (let i = 0; i < this.gridY; i++) {
+          if (i === 0) continue;
+
+          this.fgCtx.strokeStyle = '#FF0000';
+          this.fgCtx.moveTo(
+            0,
+            (this.foregroundCanvas.clientHeight / this.gridY) * i
+          );
+          this.fgCtx.lineTo(
+            this.foregroundCanvas.clientWidth,
+            (this.foregroundCanvas.clientHeight / this.gridY) * i
+          );
+          this.fgCtx.stroke();
         }
       }
 
@@ -138,101 +163,104 @@ export class Renderer extends GameModule{
     let proposedWidth;
     let proposedHeight;
 
-    if(this.gridX === this.gridY) {
-          if(this.container.clientHeight > this.container.clientWidth){
-            proposedWidth = this.container.clientWidth;
-            proposedHeight = this.container.clientWidth;
-          }
-          else{
-            proposedWidth = this.container.clientHeight;
-            proposedHeight = this.container.clientHeight;
-          }
-
-          this.backgroundCanvas.style.width = proposedWidth;
-          this.backgroundCanvas.style.height = proposedHeight;
-          this.mainCanvas.style.width = proposedWidth;
-          this.mainCanvas.style.height = proposedHeight;
-          this.foregroundCanvas.style.width = proposedWidth;
-          this.foregroundCanvas.style.height = proposedHeight;
+    if (this.gridX === this.gridY) {
+      if (this.container.clientHeight > this.container.clientWidth) {
+        proposedWidth = this.container.clientWidth;
+        proposedHeight = this.container.clientWidth;
+      } else {
+        proposedWidth = this.container.clientHeight;
+        proposedHeight = this.container.clientHeight;
       }
-      else if(this.gridX > this.gridY) {
-          proposedWidth = this.container.clientWidth;
-          proposedHeight = (this.gridY/this.gridX)*proposedWidth;
 
-          if(proposedHeight > this.container.clientHeight) {
-              proposedHeight = this.container.clientHeight;
-              proposedWidth = (this.gridX/this.gridY)*proposedHeight;
-          }
+      this.backgroundCanvas.style.width = proposedWidth;
+      this.backgroundCanvas.style.height = proposedHeight;
+      this.mainCanvas.style.width = proposedWidth;
+      this.mainCanvas.style.height = proposedHeight;
+      this.foregroundCanvas.style.width = proposedWidth;
+      this.foregroundCanvas.style.height = proposedHeight;
+    } else if (this.gridX > this.gridY) {
+      proposedWidth = this.container.clientWidth;
+      proposedHeight = (this.gridY / this.gridX) * proposedWidth;
 
-          this.backgroundCanvas.style.width = proposedWidth;
-          this.backgroundCanvas.style.height = proposedHeight;
-          this.mainCanvas.style.width = proposedWidth;
-          this.mainCanvas.style.height = proposedHeight;
-          this.foregroundCanvas.style.width = proposedWidth;
-          this.foregroundCanvas.style.height = proposedHeight;
+      if (proposedHeight > this.container.clientHeight) {
+        proposedHeight = this.container.clientHeight;
+        proposedWidth = (this.gridX / this.gridY) * proposedHeight;
       }
-      else {
-          proposedHeight = this.container.clientHeight;
-          proposedWidth = (this.gridX/this.gridY)*proposedHeight;
 
-          if(proposedWidth > this.container.clientWidth) {
-              proposedWidth = this.container.clientWidth;
-              proposedHeight = (this.gridY/this.gridX)*proposedWidth;
-          }
+      this.backgroundCanvas.style.width = proposedWidth;
+      this.backgroundCanvas.style.height = proposedHeight;
+      this.mainCanvas.style.width = proposedWidth;
+      this.mainCanvas.style.height = proposedHeight;
+      this.foregroundCanvas.style.width = proposedWidth;
+      this.foregroundCanvas.style.height = proposedHeight;
+    } else {
+      proposedHeight = this.container.clientHeight;
+      proposedWidth = (this.gridX / this.gridY) * proposedHeight;
 
-          this.backgroundCanvas.style.width = proposedWidth;
-          this.backgroundCanvas.style.height = proposedHeight;
-          this.mainCanvas.style.width = proposedWidth;
-          this.mainCanvas.style.height = proposedHeight;
-          this.foregroundCanvas.style.width = proposedWidth;
-          this.foregroundCanvas.style.height = proposedHeight;
+      if (proposedWidth > this.container.clientWidth) {
+        proposedWidth = this.container.clientWidth;
+        proposedHeight = (this.gridY / this.gridX) * proposedWidth;
       }
-      
-      this.backgroundCanvas.width = proposedWidth;
-      this.backgroundCanvas.height = proposedHeight;
-      this.mainCanvas.width = proposedWidth;
-      this.mainCanvas.height = proposedHeight;
-      this.foregroundCanvas.width = proposedWidth;
-      this.foregroundCanvas.height = proposedHeight;
 
-      this.prevContWidth = this.container.clientWidth;
-      this.prevContHeight = this.container.clientHeight;
+      this.backgroundCanvas.style.width = proposedWidth;
+      this.backgroundCanvas.style.height = proposedHeight;
+      this.mainCanvas.style.width = proposedWidth;
+      this.mainCanvas.style.height = proposedHeight;
+      this.foregroundCanvas.style.width = proposedWidth;
+      this.foregroundCanvas.style.height = proposedHeight;
+    }
 
-      this.fontsize = this.backgroundCanvas.width/this.gridX;
+    this.backgroundCanvas.width = proposedWidth;
+    this.backgroundCanvas.height = proposedHeight;
+    this.mainCanvas.width = proposedWidth;
+    this.mainCanvas.height = proposedHeight;
+    this.foregroundCanvas.width = proposedWidth;
+    this.foregroundCanvas.height = proposedHeight;
 
-      this.redrawBackground = true;
-      this.redrawForeground = true;
+    this.prevContWidth = this.container.clientWidth;
+    this.prevContHeight = this.container.clientHeight;
+
+    this.fontsize = this.backgroundCanvas.width / this.gridX;
+
+    this.redrawBackground = true;
+    this.redrawForeground = true;
   }
 
   /** Builds the necessary canvases. */
   buildCanvases() {
-    let canvasStyles = {border: "5px solid white",position: "absolute",top: "50%",left: "50%",transform: "translate(-50%, -50%)"};
-    
-    this.backgroundCanvas = document.createElement("canvas");
-    this.backgroundCanvas.id = "bgCanvas";
-    this.backgroundCanvas.style.zIndex = "2";
+    let canvasStyles = {
+      border: '5px solid white',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    };
 
-    this.mainCanvas = document.createElement("canvas");
-    this.mainCanvas.id = "mainCanvas";
-    this.mainCanvas.style.zIndex = "3";
+    this.backgroundCanvas = document.createElement('canvas');
+    this.backgroundCanvas.id = 'bgCanvas';
+    this.backgroundCanvas.style.zIndex = '2';
 
-    this.foregroundCanvas = document.createElement("canvas");
-    this.foregroundCanvas.id = "fgCanvas";
-    this.foregroundCanvas.style.zIndex = "4";
+    this.mainCanvas = document.createElement('canvas');
+    this.mainCanvas.id = 'mainCanvas';
+    this.mainCanvas.style.zIndex = '3';
+
+    this.foregroundCanvas = document.createElement('canvas');
+    this.foregroundCanvas.id = 'fgCanvas';
+    this.foregroundCanvas.style.zIndex = '4';
 
     for (const style in canvasStyles) {
       this.backgroundCanvas.style[style] = canvasStyles[style];
       this.mainCanvas.style[style] = canvasStyles[style];
       this.foregroundCanvas.style[style] = canvasStyles[style];
     }
-    
+
     this.container.appendChild(this.backgroundCanvas);
     this.container.appendChild(this.mainCanvas);
     this.container.appendChild(this.foregroundCanvas);
 
-    this.bgCtx = this.backgroundCanvas.getContext("2d");
-    this.mainCtx = this.mainCanvas.getContext("2d");
-    this.fgCtx = this.foregroundCanvas.getContext("2d");
+    this.bgCtx = this.backgroundCanvas.getContext('2d');
+    this.mainCtx = this.mainCanvas.getContext('2d');
+    this.fgCtx = this.foregroundCanvas.getContext('2d');
 
     this.resize();
   }
@@ -245,11 +273,13 @@ export class Renderer extends GameModule{
    * @returns The compiled layer's reference.
    */
   createLayer(id, key, canvasID) {
-    if(this.layerKeys[key]) throw "Layer key already exists!";
+    if (this.layerKeys[key]) throw 'Layer key already exists!';
 
-    let layer = {id: id, objects:[], canvasID: canvasID};
+    let layer = { id: id, objects: [], canvasID: canvasID };
     this.layers.push(layer);
-    this.layers.sort((a,b) => {return a.id - b.id;});
+    this.layers.sort((a, b) => {
+      return a.id - b.id;
+    });
     this.layerKeys[key] = layer;
 
     return layer;
@@ -265,7 +295,11 @@ export class Renderer extends GameModule{
   }
 
   removeObject(object, layerKey) {
-    this.layerKeys[layerKey].objects = this.layerKeys[layerKey].objects.filter(function(el){return el != object});
+    this.layerKeys[layerKey].objects = this.layerKeys[layerKey].objects.filter(
+      function (el) {
+        return el != object;
+      }
+    );
   }
 
   /**
@@ -275,11 +309,11 @@ export class Renderer extends GameModule{
   drawMap(object) {
     let map = object.grid;
 
-    for(let row of map) {
-      if(!row) continue;
-        for(let col of row) {
-            if(col) this.drawChar(col);
-        }
+    for (let row of map) {
+      if (!row) continue;
+      for (let col of row) {
+        if (col) this.drawChar(col);
+      }
     }
   }
 
@@ -290,19 +324,23 @@ export class Renderer extends GameModule{
   drawChar(object) {
     let char = object.character;
     let x = object.x * this.fontsize;
-    let y = (object.y * this.fontsize) + this.fontsize;
+    let y = object.y * this.fontsize + this.fontsize;
     let charColor = object.cColor;
     let backgroundColor = object.bColor;
 
-    if(object.background) {
+    if (object.background) {
       this.currentCtx.fillStyle = backgroundColor;
       this.currentCtx.fillRect(x, y, this.fontsize, -this.fontsize);
       //this.ctx.fill();
     }
 
-    this.currentCtx.font = this.fontsize+"px IBMBios";
+    this.currentCtx.font = this.fontsize + 'px IBMBios';
     this.currentCtx.fillStyle = charColor;
-    this.currentCtx.fillText(char, x + Math.floor(this.fontsize/24), y - Math.floor(this.fontsize/9));
+    this.currentCtx.fillText(
+      char,
+      x + Math.floor(this.fontsize / 24),
+      y - Math.floor(this.fontsize / 9)
+    );
   }
 
   showGridLines(state) {
@@ -317,10 +355,12 @@ export class Renderer extends GameModule{
    * @param {string} key - The key to access in the tracked object.
    */
   track(label, object, key) {
-    this.layers[this.layers.length-1].objects.push({draw: function(rend) {
-      //TODO Actually track a variable.
-      rend.mainCtx.fillStyle = "#FFFFFF";
-      rend.mainCtx.fillText(label, 0, rend.fontsize);
-    }});
+    this.layers[this.layers.length - 1].objects.push({
+      draw: function (rend) {
+        //TODO Actually track a variable.
+        rend.mainCtx.fillStyle = '#FFFFFF';
+        rend.mainCtx.fillText(label, 0, rend.fontsize);
+      }
+    });
   }
 }
