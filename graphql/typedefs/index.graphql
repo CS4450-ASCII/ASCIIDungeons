@@ -6,6 +6,21 @@ type Query {
   users: [User]!
   user(id: ID!): User
   currentUser: User
+
+  levels: [Level]!
+  level(id: ID!): Level
+
+  levelGameEntities: [LevelGameEntity]!
+  levelGameEntity(id: ID!): LevelGameEntity
+
+  entities: [Entity]!
+  entity(id: ID!): Entity
+
+  games: [Game]!
+  game(id: ID!): Game
+
+  gameEntities: [GameEntity]!
+  gameEntity(id: ID!): GameEntity
 }
 
 type Mutation {
@@ -13,4 +28,19 @@ type Mutation {
   loginUser(user: UserLoginInput!): AuthPayload
   createUser(user: UserCreateInput!): AuthPayload
   updateUser(id: ID!, user: UserUpdateInput!): User!
+
+  createLevel(level: LevelCreateInput!): Level!
+  updateLevel(id: ID!, level: LevelUpdateInput!): Level!
+
+  createLevelGameEntity(levelGameEntity: LevelGameEntityCreateInput!): LevelGameEntity!
+  updateLevelGameEntity(id: ID!, levelGameEntity: LevelGameEntityUpdateInput!): LevelGameEntity!
+
+  createEntity(entity: EntityCreateInput!): Entity!
+  updateEntity(id: ID!, entity: EntityUpdateInput): Entity!
+
+  createGameEntity(GameEntity: GameEntityCreateInput!): GameEntity!
+  updateGameEntity(id: ID!, GameEntity:GameEntityUpdateInput!): GameEntity!
+
+  createGame(Game: GameCreateInput!): Game!
+  updateGame(id: ID!, Game:GameUpdateInput!): Game!
 }

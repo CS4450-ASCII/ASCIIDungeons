@@ -1,0 +1,27 @@
+# Types
+type LevelGameEntity implements Timestamps {
+  id: ID!
+  levelID: Int!
+  gameEntityID: Int!
+  x: Int!
+  y: Int!
+
+  # Interface required
+
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+input LevelGameEntityCreateInput {
+  levelID: Int!
+  gameEntityID: Int!
+  x: Int!
+  y: Int!
+}
+
+input LevelGameEntityUpdateInput {
+  levelID: Int!
+  gameEntityID: Int!
+  x: Int!
+  y: Int!
+}
