@@ -18,7 +18,7 @@ const userMutations = {
       throw new Error('User with email does not exist.');
     }
 
-    const passwordValid = await bcrypt.compare(password, user.hashedPassword);
+    const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) {
       throw new Error('Incorrect password.');
     }
@@ -33,21 +33,17 @@ const userMutations = {
     obj,
     { user: { email, password, displayName } },
     context,
-    info
+    info,
   ) => {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     const foundUser = await User.findOne({ where: { email } });
     if (foundUser) {
       throw new Error('User with email already exists.');
     }
 
     const user = await User.create({
-      displayName,
       email,
-      hashedPassword,
-      salt
+      password,
+      displayName,
     });
 
     const token = jwt.sign({ userId: user.id }, accessTokenSecret);
@@ -58,7 +54,7 @@ const userMutations = {
   updateUser: async (_, args) => {
     // update user
     // return newly updated user
-  }
+  },
 };
 
 export default userMutations;
