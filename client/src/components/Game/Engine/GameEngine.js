@@ -4,22 +4,33 @@ import { Scroller } from './Components/Scroller';
 import { InputHandler } from './Modules/InputHandler';
 import { Behaviour } from './Modules/Behaviour';
 import { Cursor } from './Components/Cursor';
+import { Player } from './Components/Player';
 
 /** Runs all game based logic. */
 export class GameEngine {
+  /** The active game engine. */
+  static active = null;
+
   /** Builds the game engine. */
   constructor() {
     /** List of current game objects. */
+    GameEngine.active = this;
+
+    this.container = null;
+
     this.objects = [
       new Map([
-          [{clear:true}],
-          [{clear:true}],
-          [{color:"#FFFFFF", text:"   @  "},{color:"#0000FF", text:"@"},{clear:true}],
-          [{clear:true}],
-          [{color:"#FFFFFF", text:"  @@@@@@"}]
+          [],
+          [],
+          [undefined,undefined,{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:2,y:2},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:3,y:2},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:4,y:2},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:5,y:2},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:6,y:2},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:7,y:2},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:8,y:2},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:9,y:2},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:10,y:2}],
+          [undefined,undefined,{character: "|",bColor: "#000000",background: false, cColor: "#FFFFFF",x:2,y:3},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:3,y:3},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:4,y:3},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:5,y:3},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:6,y:3},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:7,y:3},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:8,y:3},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:9,y:3},{character: "|",bColor: "#000000",background: false, cColor: "#FFFFFF",x:10,y:3}],
+          [undefined,undefined,{character: "|",bColor: "#000000",background: false, cColor: "#FFFFFF",x:2,y:4},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:3,y:4},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:4,y:4},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:5,y:4},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:6,y:4},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:7,y:4},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:8,y:4},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:9,y:4},{character: "|",bColor: "#000000",background: false, cColor: "#FFFFFF",x:10,y:4}],
+          [undefined,undefined,{character: "|",bColor: "#000000",background: false, cColor: "#FFFFFF",x:2,y:5},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:3,y:5},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:4,y:5},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:5,y:5},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:6,y:5},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:7,y:5},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:8,y:5},{character: ".",bColor: "#000000",background: false, cColor: "#FFFFFF",x:9,y:5},{character: "|",bColor: "#000000",background: false, cColor: "#FFFFFF",x:10,y:5}],
+          [undefined,undefined,{character: "|",bColor: "#000000",background: false, cColor: "#FFFFFF",x:2,y:6},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:3,y:6},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:4,y:6},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:5,y:6},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:6,y:6},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:7,y:6},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:8,y:6},{character: "_",bColor: "#000000",background: false, cColor: "#FFFFFF",x:9,y:6},{character: "|",bColor: "#000000",background: false, cColor: "#FFFFFF",x:10,y:6}],
         ]),
-      new Scroller("&", "#00FF00", true, "#000000"),
-      new Cursor(this)
+      //new Scroller("&", "#00FF00", true, "#000000"),
+      new Cursor(this),
+      new Player(3,4)
     ];
 
     this.behaviour = new Behaviour();
@@ -37,6 +48,10 @@ export class GameEngine {
       this.input,
       this.renderer
     ];
+
+    for (const module of this.pipeline) {
+      module.GE = this;
+    }
   }
 
   /** On every animation frame, run the pipeline. */
@@ -52,6 +67,18 @@ export class GameEngine {
 
   /** Starts the game engine. */
   start() {
+    if(!this.container) {
+      this.container = document.getElementById("gameContainer");
+      if(!this.container) {
+        requestAnimationFrame(this.start.bind(this));
+        return;
+      }
+    }
+    
+    this.renderer.container = this.container;
+
+    this.renderer.buildCanvases();
+
     this.buildLevel();
 
     requestAnimationFrame(this.runPipeline.bind(this));
@@ -60,15 +87,40 @@ export class GameEngine {
   /** Builds the current level. */
   buildLevel() {
     for (const object of this.objects) {
-
+      object.GE = this;
       //Render Linking
       this.renderer.addObject(object, object.layer);
-      this.behaviour.addObject(object);
+      if(object.isTicking) this.behaviour.addObject(object);
     }
   }
 
-  addComponent(component) {
+  addObject(component) {
+      this.objects.push(component);
       this.renderer.addObject(component, component.layer);
-      this.behaviour.addObject(component);
+      if(component.isTicking) this.behaviour.addObject(component);
+  }
+
+  removeObject(component) {
+    this.objects = this.objects.filter(function(el){return el != component});
+    this.renderer.removeObject(component, component.layer);
+    if(component.isTicking) this.behaviour.removeObject(component);
+  }
+
+  getObjectByType(type) {
+    for (const obj of this.objects) {
+      if(obj instanceof type) return obj;
+    }
+    return null;
+  }
+
+  getObjectsByType(type) {
+    let ret = [];
+
+    for (const obj of this.objects) {
+      if(obj instanceof type) ret.push(obj);
+    }
+
+    if(ret.length > 0) return ret;
+    return null;
   }
 }
