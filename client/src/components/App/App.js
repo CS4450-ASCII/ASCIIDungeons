@@ -14,21 +14,33 @@ figlet.parseFont('Slant', Slant);
 figlet.parseFont('SmSlant', SmSlant);
 
 const useStyles = makeStyles({
-  root: {
+  appRoot: {
     backgroundColor: 'black',
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    justifyItems: 'center',
-    width: '100vw'
+    width: '100vw',
+    height: '100vh',
   },
   container: {
     color: 'white',
     fontFamily: 'IBMBios',
-    maxWidth: '1536px',
     margin: 'auto',
-    height: '100vh',
-    width: '100%'
-  }
+    maxWidth: '1536px',
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyItems: 'center',
+    alignItems: 'center',
+  },
+  mainContent: {
+    flex: 1,
+    display: 'flex',
+    justifyItems: 'center',
+    alignItems: 'center',
+    padding: '1em',
+    flexDirection: 'column',
+    width: '100%',
+    overflow: 'auto',
+  },
 });
 
 function App() {
@@ -39,21 +51,23 @@ function App() {
   if (error) return `Error occurred: ${error.message}`;
 
   return (
-    <div className={classes.root}>
+    <div className={classes.appRoot}>
       {!loading && (
         <div className={classes.container}>
           <PageHeader text='ASCII Dungeons' />
-          <Switch>
-            <Route exact path='/signup'>
-              {currentUser ? <Redirect to='/main' /> : <SignUpPage />}
-            </Route>
-            <Route exact path='/login'>
-              {currentUser ? <Redirect to='/main' /> : <LoginPage />}
-            </Route>
-            <Route path='/'>
-              {currentUser ? <AppContainer /> : <Redirect to='/login' />}
-            </Route>
-          </Switch>
+          <main className={classes.mainContent}>
+            <Switch>
+              <Route exact path='/signup'>
+                {currentUser ? <Redirect to='/main' /> : <SignUpPage />}
+              </Route>
+              <Route exact path='/login'>
+                {currentUser ? <Redirect to='/main' /> : <LoginPage />}
+              </Route>
+              <Route path='/'>
+                {currentUser ? <AppContainer /> : <Redirect to='/login' />}
+              </Route>
+            </Switch>
+          </main>
           <PageFooter />
         </div>
       )}

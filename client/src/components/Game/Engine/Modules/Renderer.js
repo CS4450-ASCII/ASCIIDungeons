@@ -93,7 +93,7 @@ export class Renderer extends GameModule {
         0,
         0,
         this.backgroundCanvas.width,
-        this.backgroundCanvas.height
+        this.backgroundCanvas.height,
       );
 
       for (let layer of this.layers) {
@@ -112,7 +112,7 @@ export class Renderer extends GameModule {
         0,
         0,
         this.foregroundCanvas.width,
-        this.foregroundCanvas.height
+        this.foregroundCanvas.height,
       );
 
       for (let layer of this.layers) {
@@ -129,11 +129,11 @@ export class Renderer extends GameModule {
           this.fgCtx.strokeStyle = '#FF0000';
           this.fgCtx.moveTo(
             (this.foregroundCanvas.clientWidth / this.gridX) * i,
-            0
+            0,
           );
           this.fgCtx.lineTo(
             (this.foregroundCanvas.clientWidth / this.gridX) * i,
-            this.foregroundCanvas.clientHeight
+            this.foregroundCanvas.clientHeight,
           );
           this.fgCtx.stroke();
         }
@@ -144,11 +144,11 @@ export class Renderer extends GameModule {
           this.fgCtx.strokeStyle = '#FF0000';
           this.fgCtx.moveTo(
             0,
-            (this.foregroundCanvas.clientHeight / this.gridY) * i
+            (this.foregroundCanvas.clientHeight / this.gridY) * i,
           );
           this.fgCtx.lineTo(
             this.foregroundCanvas.clientWidth,
-            (this.foregroundCanvas.clientHeight / this.gridY) * i
+            (this.foregroundCanvas.clientHeight / this.gridY) * i,
           );
           this.fgCtx.stroke();
         }
@@ -233,7 +233,7 @@ export class Renderer extends GameModule {
       position: 'absolute',
       top: '50%',
       left: '50%',
-      transform: 'translate(-50%, -50%)'
+      transform: 'translate(-50%, -50%)',
     };
 
     this.backgroundCanvas = document.createElement('canvas');
@@ -298,7 +298,7 @@ export class Renderer extends GameModule {
     this.layerKeys[layerKey].objects = this.layerKeys[layerKey].objects.filter(
       function (el) {
         return el != object;
-      }
+      },
     );
   }
 
@@ -339,7 +339,7 @@ export class Renderer extends GameModule {
     this.currentCtx.fillText(
       char,
       x + Math.floor(this.fontsize / 24),
-      y - Math.floor(this.fontsize / 9)
+      y - Math.floor(this.fontsize / 9),
     );
   }
 
@@ -360,7 +360,7 @@ export class Renderer extends GameModule {
         //TODO Actually track a variable.
         rend.mainCtx.fillStyle = '#FFFFFF';
         rend.mainCtx.fillText(label, 0, rend.fontsize);
-      }
+      },
     });
   }
 }

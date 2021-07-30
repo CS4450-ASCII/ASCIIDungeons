@@ -5,7 +5,7 @@ export class GameObject {
     this.GE = {};
     this.x = 0;
     this.y = 0;
-    this.layer = "object";
+    this.layer = 'object';
     this.isTicking = false;
   }
 
