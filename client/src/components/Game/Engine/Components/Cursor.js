@@ -1,29 +1,32 @@
-import _ from 'lodash';
-import { Character } from './Character';
 import { GameObject } from './GameObject';
+import { Map } from './Map';
 
 /** A cursor that tracks the mouse position. */
 export class Cursor extends GameObject {
-  static gameObject = {};
+  static gameObject = { character: ' ', cColor: '#000000', bColor: '#FFFFFF' };
 
   /** Builds a Cursor. */
-  constructor(ge) {
+  constructor() {
     super();
+    this.x = -1;
+    this.y = -1;
     /** The selected character of the cursor. */
     this.character = ' ';
     /** Is background rendering enabled? */
-    this.background = false;
+    this.background = true;
     /** The character color hex value. */
-    this.cColor = '#ffffff';
-    /** Reference to the renderer. */
-    this.RENDERER = {};
-    this.GE = ge;
+    this.cColor = '#000000';
+    /** The background color hex value. */
+    this.bColor = '#FFFFFF';
+    this.isTicking = true;
+    this.MAP = null;
   }
 
   step(deltatime, input) {
-    if (this.RENDERER === {} || !this.RENDERER.canvas) return;
-
-    this.character = _.get(Cursor, 'gameObject.character', ' ');
+    if (!this.MAP) {
+      this.MAP = this.GE.getObjectByType(Map);
+      if (!this.MAP) return;
+    }
 
     if (!input.MOUSE_ON_CANVAS) {
       this.x = -1;
@@ -31,28 +34,29 @@ export class Cursor extends GameObject {
       return;
     }
 
+    this.character = Cursor.gameObject.character;
+    this.cColor = Cursor.gameObject.cColor;
+    this.bColor = Cursor.gameObject.bColor;
+
     this.x = Math.floor(
-      (input.MOUSE_POS.x / (this.RENDERER.canvas.width + 25)) *
-        this.RENDERER.gridX,
+      (input.MOUSE_POS.x / (this.GE.renderer.mainCanvas.width + 5)) *
+        this.GE.renderer.gridX,
     );
     this.y = Math.floor(
-      (input.MOUSE_POS.y / (this.RENDERER.canvas.height + 25)) *
-        this.RENDERER.gridY,
+      (input.MOUSE_POS.y / (this.GE.renderer.mainCanvas.height + 5)) *
+        this.GE.renderer.gridY,
     );
 
-    // if (input.KEYS_PRESSED.length > 0)
-    //   this.character = input.KEYS_PRESSED[input.KEYS_PRESSED.length - 1][0];
+    if (input.KEYS_PRESSED.length > 0)
+      Cursor.gameObject.character =
+        input.KEYS_PRESSED[input.KEYS_PRESSED.length - 1][0];
 
     if (input.MOUSE_CLICK || input.MOUSE_DOWN) {
-      let paintedChar = new Character(this.character);
-      paintedChar.x = this.x;
-      paintedChar.y = this.y;
-      this.GE.addComponent(paintedChar);
+      this.MAP.setSpace(this.x, this.y, this.character);
     }
   }
 
   draw(renderer) {
     renderer.drawChar(this);
-    this.RENDERER = renderer;
   }
 }

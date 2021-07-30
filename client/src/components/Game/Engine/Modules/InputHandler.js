@@ -29,7 +29,7 @@ export class InputHandler extends GameModule {
   
   exec() {
     if(!this.CANVAS) {
-      this.CANVAS = document.getElementById("gameCanvas");
+      this.CANVAS = this.GE.renderer.foregroundCanvas;
       if(this.CANVAS) {
         this.CANVAS.addEventListener("mousemove", this.mouseMoveEvent.bind(this));
         this.CANVAS.addEventListener("mouseenter", this.mouseEnterEvent.bind(this));

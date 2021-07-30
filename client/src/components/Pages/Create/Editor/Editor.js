@@ -2,9 +2,8 @@ import { Grid, makeStyles } from '@material-ui/core';
 import React, { createContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { dummyGameData } from '../../../../stories/dummyData';
-import Creator from '../../../Game/Creator';
-import { Cursor } from '../../../Game/Engine/Components/Cursor';
 import { GameEngine } from '../../../Game/Engine/GameEngine';
+import GameContainer from '../../../Game/GameContainer';
 import BottomToolbar from './BottomToolbar/BottomToolbar';
 import SideDrawer from './SideDrawer/SideDrawer';
 import Toolbar from './Toolbar/Toolbar';
@@ -71,11 +70,12 @@ function EditorContainer(props) {
   }, [gameId, levelId]);
 
   const [gameEngine] = useState(new GameEngine());
-  const [cursor] = useState(new Cursor(gameEngine));
+  // const [cursor] = useState(new Cursor(gameEngine));
 
   useEffect(() => {
     if (currentLevel) {
-      gameEngine.addComponent(cursor);
+      // gameEngine.addObject(cursor);
+      gameEngine.renderer.showGridLines(false);
       gameEngine.start();
     }
   }, [currentLevel]);
@@ -104,9 +104,13 @@ function Editor(props) {
       <Grid item>
         <Toolbar />
       </Grid>
-      <Grid item container className={classes.Editor}>
+      <Grid item container className={classes.editorRoot}>
         <Grid item xs={9} style={{ height: '100%', width: '100%' }}>
-          <Creator />
+          {currentLevel ? (
+            <GameContainer />
+          ) : (
+            <div className={classes.noLevelMessage}>No Level Selected</div>
+          )}
         </Grid>
         <Grid item xs={3}>
           <SideDrawer />
@@ -120,11 +124,18 @@ function Editor(props) {
 }
 
 const useStyles = makeStyles({
-  Editor: {
+  editorRoot: {
     flex: 1,
     // '& .MuiGrid-item': {
     //   border: '1px solid red',
     // },
+  },
+  noLevelMessage: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
