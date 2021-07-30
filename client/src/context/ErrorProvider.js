@@ -2,20 +2,20 @@
 import React, { Component, createContext } from 'react';
 
 const initialState = {
-  errors: []
+  errors: [],
 };
 
 // Create context
-export const AppContext = createContext(initialState);
+export const ErrorContext = createContext(initialState);
 
 // Provider component
-class ContextProvider extends Component {
+class ErrorProvider extends Component {
   constructor(props) {
     super(props);
     this.state = initialState;
   }
 
-  setErrors = errors => {
+  setErrors = (errors) => {
     this.setState({ errors });
   };
 
@@ -24,16 +24,16 @@ class ContextProvider extends Component {
     const { errors } = this.state;
 
     return (
-      <AppContext.Provider
+      <ErrorContext.Provider
         value={{
           errors,
-          setErrors: this.setErrors
+          setErrors: this.setErrors,
         }}
       >
         {children}
-      </AppContext.Provider>
+      </ErrorContext.Provider>
     );
   }
 }
 
-export default ContextProvider;
+export default ErrorProvider;

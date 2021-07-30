@@ -1,15 +1,21 @@
-import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import _ from 'lodash';
+import React, { useContext } from 'react';
+import { GameContext } from '../Editor';
 import NewGameDialog from './NewGameDialog';
 
 function SaveAsDialog(props) {
-  const { openButton, game, ...dialogProps } = props;
+  const { openButton, ...dialogProps } = props;
 
-  const onSubmit = values => {
+  const { currentGame } = useContext(GameContext);
+
+  const onSubmit = (values) => {
     alert(JSON.stringify(values));
   };
 
-  const initialValues = { ...game };
+  const initialValues = {
+    ...currentGame,
+    title: `Copy of ${_.get(currentGame, 'title')}`,
+  };
 
   return (
     <NewGameDialog
@@ -17,7 +23,7 @@ function SaveAsDialog(props) {
         title: 'Save As',
         openButton,
         onSubmit,
-        initialValues
+        initialValues,
       }}
       {...dialogProps}
     />

@@ -2,9 +2,11 @@
 export class GameObject {
   /** Builds a basic game object. */
   constructor() {
+    this.GE = {};
     this.x = 0;
     this.y = 0;
-    this.layer = "object";
+    this.layer = 'object';
+    this.isTicking = false;
   }
 
   /**

@@ -64,8 +64,6 @@ export function PageFooterDisplay(props) {
 
 const useStyles = makeStyles({
   root: {
-    position: 'absolute',
-    bottom: '0',
     width: '100%',
     maxWidth: '1536px',
     display: 'flex',
