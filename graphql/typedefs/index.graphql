@@ -32,4 +32,8 @@ type Mutation {
   createGame(params: GameCreateInput!): Game!
   updateGame(params: GameUpdateInput!): Game!
   deleteGame(id: ID!): DeletionPayload!
+
+  createLevel(params: LevelCreateInput!): Level!
+  updateLevel(params: LevelUpdateInput!): Level!
+  deleteLevel(id: ID!): DeletionPayload!
 }

@@ -1,7 +1,8 @@
 # Types
 type Level implements Timestamps {
   id: ID!
-  game: Game!
+  gameId: ID!
+  title: String!
   width: Int!
   height: Int!
 
@@ -13,12 +14,14 @@ type Level implements Timestamps {
 
 input LevelCreateInput {
   gameId: Int!
+  title: String
   width: Int!
   height: Int!
 }
 
 input LevelUpdateInput {
-  gameId: Int!
-  width: Int!
-  height: Int!
+  id: ID!
+  title: String
+  width: Int
+  height: Int
 }

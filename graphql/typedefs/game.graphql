@@ -5,6 +5,8 @@ type Game implements Timestamps {
   description: String
   isPublished: Boolean!
 
+  levels: [Level!]!
+
   createdAt: Date!
   updatedAt: Date!
 }

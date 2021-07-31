@@ -28,7 +28,6 @@ function NewGameDialog(props) {
   });
 
   const handleSubmit = async (values) => {
-    // TODO: Send an actual mutation to create a game at the backend.
     onSubmit && onSubmit(values);
 
     const response = await createGame({

@@ -1,32 +1,54 @@
-// import { Level } from '../../../database/models';
+import { ForbiddenError } from 'apollo-server-express';
+import { Game, Level } from '../../../database/models';
 
-// const levelMutations = {
-//   createLevel: async (
-//     obj,
-//     { level: { gameId, width, height } },
-//     { currentUser },
-//     info
-//   ) => {
-//     const level = await Level.create({
-//       gameId,
-//       width,
-//       height
-//     });
+const levelMutations = {
+  createLevel: async (obj, { params }, { currentUser }, info) => {
+    const game = await Game.findByPk(params.gameId);
+    if (!game) throw new Error('Game with specified gameId not found');
+    if (currentUser.id !== game.createdById) {
+      throw new ForbiddenError('Action forbidden');
+    }
+    const level = await Level.create(params);
+    return level;
+  },
 
-//     return level;
-//   },
+  updateLevel: async (
+    obj,
+    { params: { id, ...levelParams } },
+    { currentUser },
+    info,
+  ) => {
+    const level = await Level.findByPk(id, {
+      include: {
+        model: Game,
+        as: 'game',
+      },
+    });
+    if (!level) throw new Error('Level not found');
+    if (currentUser.id !== level.game.createdById) {
+      throw new ForbiddenError('Action forbidden');
+    }
 
-//   updateLevel: async (obj, args, { currentUser }, info) => {
-//     let level = await Level.findOne({ where: { id: args.id } })
+    await level.update(levelParams);
 
-//     level.gameId = args.gameId;
-//     level.width = args.width;
-//     level.height = args.height;
+    return level;
+  },
 
-//     level.save();
+  deleteLevel: async (parent, { id }, { currentUser }, info) => {
+    const level = await Level.findByPk(id, {
+      include: {
+        model: Game,
+        as: 'game',
+      },
+    });
+    if (!level) throw new Error('Game not found');
+    if (currentUser.id !== level.game.createdById) {
+      throw new ForbiddenError('Action forbidden');
+    }
+    const recordsDeletedCount = await Level.destroy({ where: { id } });
 
-//     return level;
-//   }
-// };
+    return { recordsDeletedCount };
+  },
+};
 
-// export default levelMutations;
+export default levelMutations;
