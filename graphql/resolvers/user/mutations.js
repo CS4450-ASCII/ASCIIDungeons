@@ -10,7 +10,12 @@ import { User } from '../../../database/models';
  **************************************************************/
 
 const userMutations = {
-  loginUser: async (obj, { user: { email, password } }, context, info) => {
+  loginUser: async (
+    parent,
+    { user: { email, password } },
+    { currentUser },
+    info,
+  ) => {
     // find email/password combination
     const user = await User.findOne({ where: { email } });
 
@@ -30,9 +35,9 @@ const userMutations = {
   },
 
   createUser: async (
-    obj,
+    parent,
     { user: { email, password, displayName } },
-    context,
+    { currentUser },
     info,
   ) => {
     const foundUser = await User.findOne({ where: { email } });

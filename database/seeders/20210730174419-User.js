@@ -12,17 +12,27 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    const user = {
-      displayName: 'Test User',
-      email: 'test@ascii.com',
-      password: 'pass123',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
     const salt = await bcrypt.genSalt();
-    user.password = await bcrypt.hash(user.password, salt);
+    const password = await bcrypt.hash('pass123', salt);
 
-    await queryInterface.bulkInsert('Users', [user]);
+    const users = [
+      {
+        displayName: 'Test User',
+        email: 'test@ascii.com',
+        password,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        displayName: 'Joe Man',
+        email: 'joe@ascii.com',
+        password,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    await queryInterface.bulkInsert('Users', users);
   },
 
   down: async (queryInterface, Sequelize) => {

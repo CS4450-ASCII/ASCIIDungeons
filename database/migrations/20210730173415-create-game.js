@@ -26,6 +26,7 @@ module.exports = {
       },
       isPublished: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

@@ -1,13 +1,13 @@
-import { LevelGameEntity } from '../../../database/models';
+// import { LevelGameEntity } from '../../../database/models';
 
-const levelGameEntityQueries = {
-  levelGameEntities: async (obj, args, context, info) => {
-    return await LevelGameEntity.findAll();
-  },
+// const levelGameEntityQueries = {
+//   levelGameEntities: async (obj, args, { currentUser }, info) => {
+//     return await LevelGameEntity.findAll();
+//   },
 
-  levelGameEntity: async (obj, args, context, info) => {
-    return await LevelGameEntity.findOne({ where: { id: args.id } });
-  }
-};
+//   levelGameEntity: async (obj, args, { currentUser }, info) => {
+//     return await LevelGameEntity.findOne({ where: { id: args.id } });
+//   }
+// };
 
-export default levelGameEntityQueries;
+// export default levelGameEntityQueries;

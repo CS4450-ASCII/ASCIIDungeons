@@ -1,13 +1,13 @@
-import { Level } from '../../../database/models';
+// import { Level } from '../../../database/models';
 
-const levelQueries = {
-  levels: async (obj, args, context, info) => {
-    return await Level.findAll();
-  },
+// const levelQueries = {
+//   levels: async (obj, args, { currentUser }, info) => {
+//     return await Level.findAll();
+//   },
 
-  level: async (obj, args, context, info) => {
-    return await Level.findOne({ where: { id: args.id } });
-  }
-};
+//   level: async (obj, args, { currentUser }, info) => {
+//     return await Level.findOne({ where: { id: args.id } });
+//   },
+// };
 
-export default levelQueries;
+// export default levelQueries;

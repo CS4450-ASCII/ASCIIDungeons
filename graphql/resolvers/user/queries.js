@@ -1,4 +1,4 @@
-import { User } from '../../../database/models';
+import { Game, User } from '../../../database/models';
 
 /**************************************************************
  * References:
@@ -7,19 +7,22 @@ import { User } from '../../../database/models';
  **************************************************************/
 
 const userQueries = {
-  users: async (obj, args, context, info) => {
+  users: async (obj, args, { currentUser }, info) => {
     // return all users
     return await User.findAll();
   },
 
-  user: async (obj, args, context, info) => {
+  user: async (obj, { id }, { currentUser }, info) => {
     // find user with id from args
-    return await User.findOne({ where: { id: args.id } });
+    const user = await User.findByPk(id, {
+      include: { model: Game, as: 'games' },
+    });
+    return user;
   },
 
-  currentUser: async (obj, args, context, info) => {
-    return context.currentUser;
-  }
+  currentUser: async (obj, args, { currentUser }, info) => {
+    return currentUser;
+  },
 };
 
 export default userQueries;

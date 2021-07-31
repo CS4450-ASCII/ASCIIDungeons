@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       createdById: DataTypes.INTEGER,
       title: DataTypes.STRING,
       description: DataTypes.STRING,
-      isPublished: DataTypes.BOOLEAN,
+      isPublished: { type: DataTypes.BOOLEAN, defaultValue: false },
     },
     {
       sequelize,

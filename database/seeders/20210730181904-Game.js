@@ -10,21 +10,28 @@ module.exports = {
      *   name: 'John Doe',
      *   isBetaMember: false
      * }], {});
+     *
      */
-    await queryInterface.bulkInsert(
-      'Games',
-      [
-        {
-          createdById: 1,
-          title: 'Amazing Game',
-          description: 'What an amazing game.',
-          isPublished: false,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ],
-      {},
-    );
+    const games = [
+      {
+        createdById: 1,
+        title: 'Test Game',
+        description: 'What an great test game.',
+        isPublished: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        createdById: 2,
+        title: "Joe's Amazing Game",
+        description: 'What an amazing game.',
+        isPublished: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    await queryInterface.bulkInsert('Games', games, {});
   },
 
   down: async (queryInterface, Sequelize) => {
