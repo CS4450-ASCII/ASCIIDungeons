@@ -1,34 +1,34 @@
-import { LevelGameEntity } from '../../../database/models';
+// import { LevelGameEntity } from '../../../database/models';
 
-const levelGameEntityMutations = {
-  createLevelGameEntity: async (
-    obj,
-    { levelGameEntity: { levelID, gameEntityID, x, y } },
-    context,
-    info
-  ) => {
-    const levelGameEntity = await LevelGameEntity.create({
-      levelID,
-      gameEntityID,
-      x,
-      y
-    });
+// const levelGameEntityMutations = {
+//   createLevelGameEntity: async (
+//     obj,
+//     { levelGameEntity: { levelID, gameEntityID, x, y } },
+//     { currentUser },
+//     info
+//   ) => {
+//     const levelGameEntity = await LevelGameEntity.create({
+//       levelID,
+//       gameEntityID,
+//       x,
+//       y
+//     });
 
-    return levelGameEntity;
-  },
+//     return levelGameEntity;
+//   },
 
-  updateLevelGameEntity: async (obj, args, context, info) => {
-    let levelGameEntity = await LevelGameEntity.findOne({ where: { id: args.id } })
+//   updateLevelGameEntity: async (obj, args, { currentUser }, info) => {
+//     let levelGameEntity = await LevelGameEntity.findOne({ where: { id: args.id } })
 
-    levelGameEntity.levelId= args.levelID;
-    levelGameEntity.gameEntityId= args.gameEntityID;
-    levelGameEntity.x = args.x;
-    levelGameEntity.y = args.y;
+//     levelGameEntity.levelId= args.levelID;
+//     levelGameEntity.gameEntityId= args.gameEntityID;
+//     levelGameEntity.x = args.x;
+//     levelGameEntity.y = args.y;
 
-    levelGameEntity.save();
+//     levelGameEntity.save();
 
-    return levelGameEntity;
-  }
-};
+//     return levelGameEntity;
+//   }
+// };
 
-export default levelGameEntityMutations;
+// export default levelGameEntityMutations;

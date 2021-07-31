@@ -1,6 +1,8 @@
 import { Grid, makeStyles, withTheme } from '@material-ui/core';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { graphqlGame } from '../../../graphql/game';
+import { useQueryWithError } from '../../../helpers/customHooks';
 import NewGameDialog from './Editor/Dialogs/NewGameDialog';
 import OpenGameDialog from './Editor/Dialogs/OpenGameDialog';
 import Editor from './Editor/Editor';
@@ -8,6 +10,10 @@ import Editor from './Editor/Editor';
 function Create(props) {
   const classes = useStyles();
   const { path } = useRouteMatch();
+
+  const { loading, data } = useQueryWithError(graphqlGame.QUERY_GAMES);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <Grid

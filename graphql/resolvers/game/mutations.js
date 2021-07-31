@@ -1,33 +1,49 @@
+import { ForbiddenError } from 'apollo-server-express';
 import { Game } from '../../../database/models';
 
 const gameMutations = {
-  createGame: async (obj, 
-    {game: { createdById, title, description, isPublished} },
-    context,
-    info
-    ) => {
+  createGame: async (
+    obj,
+    { params: { title, description } },
+    { currentUser },
+    info,
+  ) => {
     const game = await Game.create({
-      createdById,
       title,
       description,
-      isPublished
+      createdById: currentUser.id,
     });
 
     return game;
   },
 
-  updateGame: async (obj, args, context, info) => {
-    let game = await Game.findOne({ where: { id: args.id } })
+  updateGame: async (
+    parent,
+    { params: { id, ...gameParams } },
+    { currentUser },
+    info,
+  ) => {
+    const game = await Game.findByPk(id);
+    if (!game) throw new Error('Game not found');
+    if (currentUser.id !== game.createdById) {
+      throw new ForbiddenError('Action forbidden');
+    }
 
-    game.createdById = args.createdById;
-    game.title = args.title;
-    game.description = args.description;
-    game.isPublished = args.isPublished;
-
-    game.save();
+    game.update(gameParams);
 
     return game;
-  }
+  },
+
+  deleteGame: async (parent, { id }, { currentUser }, info) => {
+    const game = await Game.findByPk(id);
+    if (!game) throw new Error('Game not found');
+    if (currentUser.id !== game.createdById) {
+      throw new ForbiddenError('Action forbidden');
+    }
+    const recordsDeletedCount = await Game.destroy({ where: { id } });
+
+    return { recordsDeletedCount };
+  },
 };
 
 export default gameMutations;

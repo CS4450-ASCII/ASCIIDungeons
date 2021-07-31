@@ -1,20 +1,20 @@
 import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
+import { graphqlGame } from '../../../../../graphql/game';
+import { useQueryWithError } from '../../../../../helpers/customHooks';
 import Dialog from '../../../../Common/Dialog';
 import ScrollList from '../../../../Common/ScrollList/ScrollList';
 
 function OpenGameDialogContainer(props) {
   // TODO: Query for a list of games created by the current user.
   // id, title, and description.
-  const [games, setGames] = useState([]);
+  const { loading, data } = useQueryWithError(graphqlGame.QUERY_GAMES, {
+    fetchPolicy: 'cache-first',
+  });
 
-  useEffect(() => {
-    setGames(JSON.parse(localStorage.getItem('games')) || []);
-  }, []);
-
-  return <OpenGameDialog {...props} games={games} />;
+  return <OpenGameDialog {...props} games={_.get(data, 'games')} />;
 }
 
 export function OpenGameDialog(props) {
@@ -56,10 +56,6 @@ export function OpenGameDialog(props) {
     );
   };
 
-  const onClose = () => {
-    setSelectedGame(null);
-  };
-
   return (
     <div className={classes.root}>
       <Dialog
@@ -72,7 +68,6 @@ export function OpenGameDialog(props) {
             disabled: !selectedGame,
           },
           onSubmit,
-          onClose,
           fullWidth: true,
           maxWidth: 'sm',
           ...rest,

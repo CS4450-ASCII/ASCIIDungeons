@@ -2,15 +2,15 @@ import { Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import { graphqlUser } from '../../graphql/user';
 import authHelper from '../../helpers/authentication';
 import { useMutationWithError } from '../../helpers/customHooks';
 import formValidations from '../../helpers/formValidations';
-import { userRequests } from '../../requests/user';
 import FormComponent from '../Common/Forms/FormComponent';
 import InputField from '../Common/Forms/InputField';
 
 function LoginPage(props) {
-  const [loginUser] = useMutationWithError(userRequests.LOGIN_USER, {
+  const [loginUser] = useMutationWithError(graphqlUser.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
       authHelper.setAccessToken(loginUser.token);
     },
@@ -30,7 +30,7 @@ function LoginPage(props) {
 
   const onSubmit = (values) => {
     loginUser({
-      variables: { user: values },
+      variables: { params: values },
     });
   };
 

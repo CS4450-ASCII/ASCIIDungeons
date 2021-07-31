@@ -1,4 +1,5 @@
 'use strict';
+import bcrypt from 'bcrypt';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
@@ -9,11 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.Game, {
-        foreignKey: {
-          name: 'createdById',
-          allowNull: false
-        }
+      User.hasMany(models.Game, {
+        foreignKey: 'createdById',
+        as: 'games',
       });
     }
   }
@@ -21,26 +20,27 @@ module.exports = (sequelize, DataTypes) => {
     {
       displayName: {
         type: DataTypes.STRING(60),
-        allowNull: true
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        unique: true
+        unique: true,
       },
-      hashedPassword: {
+      password: {
         type: DataTypes.STRING(128),
-        allowNull: false
+        allowNull: false,
       },
-      salt: {
-        type: DataTypes.STRING(128),
-        allowNull: false
-      }
     },
     {
       sequelize,
-      modelName: 'User'
-    }
+      modelName: 'User',
+    },
   );
+
+  User.beforeCreate('hashPassword', async (user, options, cb) => {
+    const salt = await bcrypt.genSalt();
+    user.password = await bcrypt.hash(user.password, salt);
+  });
   return User;
 };

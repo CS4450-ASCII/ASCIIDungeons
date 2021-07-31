@@ -4,8 +4,8 @@ POST http://localhost:5000/graphql
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
-mutation ($user: UserCreateInput!) {
-  createUser(user: $user) {
+mutation ($params: UserCreateInput!) {
+  createUser(params: $params) {
     user {
       id
       email
@@ -19,7 +19,7 @@ mutation ($user: UserCreateInput!) {
   "user": {
     "displayName":"Test User",
     "email":"test@ascii.com",
-    "password":"pass123"
+    "password":"ascii123"
   }
 }
 
@@ -29,8 +29,8 @@ POST http://localhost:5000/graphql
 Content-Type: application/json
 X-REQUEST-TYPE: GraphQL
 
-mutation($user: UserLoginInput!) {
-  loginUser(user: $user) {
+mutation($params: UserLoginInput!) {
+  loginUser(params: $params) {
     user {
       id
       email

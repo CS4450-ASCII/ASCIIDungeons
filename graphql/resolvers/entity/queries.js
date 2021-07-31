@@ -1,23 +1,23 @@
-import { Entity } from '../../../database/models';
+// import { Entity } from '../../../database/models';
 
-/**************************************************************
- * References:
- * - https://graphql.org/learn/execution/#root-fields-resolvers
- *
- **************************************************************/
+// /**************************************************************
+//  * References:
+//  * - https://graphql.org/learn/execution/#root-fields-resolvers
+//  *
+//  **************************************************************/
 
-const entityQueries = {
-  entities: async (_, args) => {
-    const entities = await Entity.findAll();
+// const entityQueries = {
+//   entities: async (_, args) => {
+//     const entities = await Entity.findAll();
 
-    return entities;
-  },
+//     return entities;
+//   },
 
-  entity: async (obj, args, context, info) => {
-    const entity = await Entity.findOne({ where: { id: args.id }});
+//   entity: async (obj, args, { currentUser }, info) => {
+//     const entity = await Entity.findOne({ where: { id: args.id }});
 
-    return entity;
-  }
-};
+//     return entity;
+//   }
+// };
 
-export default entityQueries;
+// export default entityQueries;

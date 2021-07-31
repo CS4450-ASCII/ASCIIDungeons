@@ -1,7 +1,10 @@
 import { Grid, makeStyles } from '@material-ui/core';
+import _ from 'lodash';
 import React, { createContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { dummyGameData } from '../../../../stories/dummyData';
+import { graphqlGame } from '../../../../graphql/game';
+import { useQueryWithError } from '../../../../helpers/customHooks';
+import LoadingContainer from '../../../Common/LoadingContainer';
 import { GameEngine } from '../../../Game/Engine/GameEngine';
 import GameContainer from '../../../Game/GameContainer';
 import BottomToolbar from './BottomToolbar/BottomToolbar';
@@ -13,61 +16,11 @@ function EditorContainer(props) {
   const [currentGame, setCurrentGame] = useState(null);
   const [currentLevel, setCurrentLevel] = useState(null);
 
-  useEffect(() => {
-    /* TODO: Query for the game that has id of gameId 
-    query shape:
-    game {
-      id
-      title
-      description
-      levels {
-        id
-        title
-      }
-      gameObjects {
-        id 
-        object {
-          id
-          title
-          character
-        }
-      }
-    }
-    */
-    setCurrentGame(dummyGameData[0]);
-    // setCurrentGame(
-    //   _.find(JSON.parse(localStorage.getItem('games')) || [], {
-    //     id: parseInt(gameId),
-    //   }),
-    // );
-    /* TODO: Query for the level that has id of levelId 
-    query shape:
-    level {
-      id
-      title
-      levelGameObjects {
-        id
-        gameObject {
-          id
-          object {
-            id
-            title
-            character
-          }
-        }
-        xPosition
-        yPosition
-        data
-      }
-    }
-    */
-    setCurrentLevel(dummyGameData[0].levels[0]);
-    // setCurrentLevel(
-    //   _.find(JSON.parse(localStorage.getItem('levels')) || [], {
-    //     id: parseInt(levelId),
-    //   }),
-    // );
-  }, [gameId, levelId]);
+  const { loading, data } = useQueryWithError(graphqlGame.QUERY_GAME, {
+    variables: {
+      id: gameId,
+    },
+  });
 
   const [gameEngine] = useState(new GameEngine());
   // const [cursor] = useState(new Cursor(gameEngine));
@@ -80,7 +33,10 @@ function EditorContainer(props) {
     }
   }, [currentLevel]);
 
-  return <Editor {...{ ...props, currentGame, currentLevel }} />;
+  if (loading) return <LoadingContainer />;
+  return (
+    <Editor {...{ ...props, currentGame: _.get(data, 'game'), currentLevel }} />
+  );
 }
 
 const initialState = {

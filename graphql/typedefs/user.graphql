@@ -15,8 +15,9 @@ type User implements Timestamps {
   """
   email: String!
 
-  # Interface required
+  games: [Game!]!
 
+  # Interface required
   """
   Datetime the user was created at.
   """
