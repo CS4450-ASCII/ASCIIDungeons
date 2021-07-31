@@ -1,8 +1,16 @@
 import { Game } from '../../../database/models';
 
 const gameQueries = {
-  games: async (parent, args, { currentUser }, info) => {
-    const games = await Game.findAll();
+  games: async (parent, { filter }, { currentUser }, info) => {
+    let options;
+    switch (filter) {
+      case 'all':
+        break;
+      default:
+        options = { where: { createdById: currentUser.id } };
+        break;
+    }
+    const games = await Game.findAll(options);
     return games;
   },
 

@@ -12,7 +12,7 @@ import { User } from '../../../database/models';
 const userMutations = {
   loginUser: async (
     parent,
-    { user: { email, password } },
+    { params: { email, password } },
     { currentUser },
     info,
   ) => {
@@ -36,7 +36,7 @@ const userMutations = {
 
   createUser: async (
     parent,
-    { user: { email, password, displayName } },
+    { params: { email, password, displayName } },
     { currentUser },
     info,
   ) => {

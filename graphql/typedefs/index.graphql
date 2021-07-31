@@ -16,7 +16,7 @@ type Query {
   entities: [Entity]!
   entity(id: ID!): Entity
 
-  games: [Game]!
+  games(filter: String): [Game]!
   game(id: ID!): Game
 
   gameEntities: [GameEntity]!
