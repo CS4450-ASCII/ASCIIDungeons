@@ -15,7 +15,7 @@ function MainMenu(props) {
 
   const history = useHistory(); // https://reactrouter.com/web/api/Hooks
 
-  const navLinks = ['create', 'play', 'profile', 'about', 'score'];
+  const navLinks = ['create', 'play', 'profile', 'about'];
 
   return (
     <Grid container alignItems='center' direction='column'>
