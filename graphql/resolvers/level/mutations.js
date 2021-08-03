@@ -3,13 +3,18 @@ import { Game, Level } from '../../../database/models';
 
 const levelMutations = {
   createLevel: async (obj, { params }, { currentUser }, info) => {
-    const game = await Game.findByPk(params.gameId);
+    const game = await Game.findByPk(params.gameId, {
+      include: {
+        model: Level,
+        as: 'levels',
+      },
+    });
     if (!game) throw new Error('Game with specified gameId not found');
     if (currentUser.id !== game.createdById) {
       throw new ForbiddenError('Action forbidden');
     }
     const level = await Level.create(params);
-    return level;
+    return { level, levelIndex: game.levels.length };
   },
 
   updateLevel: async (

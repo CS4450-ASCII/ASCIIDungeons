@@ -12,6 +12,12 @@ type Level implements Timestamps {
   updatedAt: Date!
 }
 
+type LevelCreateResult {
+  level: Level!
+  levelIndex: Int!
+}
+
+# Inputs
 input LevelCreateInput {
   gameId: Int!
   title: String

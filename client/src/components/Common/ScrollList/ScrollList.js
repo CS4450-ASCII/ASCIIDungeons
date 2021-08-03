@@ -1,10 +1,4 @@
-import {
-  ListItem,
-  ListItemText,
-  makeStyles,
-  Typography,
-  withTheme,
-} from '@material-ui/core';
+import { ListItem, makeStyles, Typography, withTheme } from '@material-ui/core';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -20,9 +14,10 @@ function ScrollList(props) {
     itemSize,
     alignItems,
     emptyMessage,
+    initialSelection,
   } = props;
 
-  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(initialSelection);
 
   function renderRow(props) {
     const { index, style } = props;
@@ -30,9 +25,11 @@ function ScrollList(props) {
     const selected = selectedIndex === index;
 
     const handleChange = (index) => {
-      onSelectionChange(rows[index]);
+      onSelectionChange({ selection: rows[index], selectedIndex: index });
       setSelectedIndex(index);
     };
+
+    const title = _.get(rows, `[${index}].title`, 'Untitled');
 
     return (
       <ListItem
@@ -45,12 +42,21 @@ function ScrollList(props) {
         key={index}
         onClick={() => handleChange(index)}
         selected={selected}
+        title={title}
       >
-        <ListItemText primary={_.get(rows, `[${index}].title`, 'Untitled')} />
+        <div
+          style={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          {title}
+        </div>
       </ListItem>
     );
   }
 
+  // TODO: Scroll to the currently selected item so it is shown on load.
   return rows.length > 0 ? (
     <FixedSizeList
       height={height}
@@ -86,7 +92,7 @@ ScrollList.propTypes = {
 
   /**
    * The function to call whenever the selected item is changed.
-   * Of format: (selectedItem) => { };
+   * Of format: ({ selectedItem, index }) => { };
    */
   onSelectionChange: PropTypes.func,
 
@@ -112,7 +118,7 @@ ScrollList.defaultProps = {
   height: 240,
   itemSize: 60,
   alignItems: 'center',
-  onSelectionChange: (selection) => alert(JSON.stringify(selection)),
+  onSelectionChange: ({ selection, index }) => alert(JSON.stringify(selection)),
   emptyMessage: 'Nothing found.',
 };
 

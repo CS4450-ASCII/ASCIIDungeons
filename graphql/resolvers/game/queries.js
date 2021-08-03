@@ -20,6 +20,23 @@ const gameQueries = {
     });
     return game;
   },
+
+  gameContext: async (
+    parent,
+    { gameId, levelIndex = 0 },
+    { currentUser },
+    info,
+  ) => {
+    const currentGame = await Game.findByPk(gameId, {
+      include: { model: Level, as: 'levels' },
+    });
+    const currentLevel = currentGame.levels[levelIndex];
+
+    // TODO: Store the lastViewed level id as part of the game,
+    // so it can be used if the levelIndex is not provided.
+    // game.update({ lastViewedLevelId: levelId });
+    return { currentGame, currentLevel };
+  },
 };
 
 export default gameQueries;

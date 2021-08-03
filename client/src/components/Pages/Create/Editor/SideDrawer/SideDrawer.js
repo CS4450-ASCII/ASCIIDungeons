@@ -10,12 +10,14 @@ import SideDrawerGroup from './SideDrawerGroup';
 
 function SideDrawer(props) {
   const classes = useStyles();
-  const { currentGame, currentLevel } = useContext(GameContext);
+  const { currentGame, currentLevel, currentLevelIndex } = useContext(
+    GameContext,
+  );
 
   const history = useHistory();
 
-  const onLevelListChange = (selectedLevel) => {
-    history.push(`/create/${currentGame.id}/${selectedLevel.id}`);
+  const onLevelListChange = ({ selectedIndex }) => {
+    history.push(`/create/${currentGame.id}/${selectedIndex}`);
   };
 
   const action = <NewLevelDialog openButton={'+'} />;
@@ -30,7 +32,7 @@ function SideDrawer(props) {
         <LevelList
           rows={levels}
           onSelectionChange={onLevelListChange}
-          // initialSelectionIndex={currentLevel}
+          initialSelection={currentLevelIndex}
         />
       </SideDrawerGroup>
     </div>

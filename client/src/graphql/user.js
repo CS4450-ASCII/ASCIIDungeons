@@ -48,7 +48,7 @@ const CURRENT_USER = gql`
   ${COMPLETE_USER_FRAGMENT}
 `;
 
-export const graphqlUser = {
+export const userGraphql = {
   LOGIN_USER,
   CREATE_USER,
   CURRENT_USER,

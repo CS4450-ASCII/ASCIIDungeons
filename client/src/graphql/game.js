@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { levelGraphql } from './level';
 
 const BASIC_GAME_FRAGMENT = gql`
   fragment BasicGame on Game {
@@ -36,9 +37,30 @@ const QUERY_GAME = gql`
   ${BASIC_GAME_FRAGMENT}
 `;
 
-export const graphqlGame = {
+const GAME_CONTEXT = gql`
+  query GameContext($gameId: ID!, $levelIndex: ID) {
+    gameContext(gameId: $gameId, levelIndex: $levelIndex) {
+      currentGame {
+        ...BasicGame
+        levels {
+          id
+          title
+        }
+      }
+
+      currentLevel {
+        ...FullLevel
+      }
+    }
+  }
+  ${BASIC_GAME_FRAGMENT}
+  ${levelGraphql.FULL_LEVEL_FRAGMENT}
+`;
+
+export const gameGraphql = {
   BASIC_GAME_FRAGMENT,
   CREATE_GAME,
   QUERY_GAMES,
   QUERY_GAME,
+  GAME_CONTEXT,
 };

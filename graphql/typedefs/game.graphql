@@ -11,6 +11,11 @@ type Game implements Timestamps {
   updatedAt: Date!
 }
 
+type GameContext {
+  currentGame: Game!
+  currentLevel: Level
+}
+
 input GameCreateInput {
   title: String
   description: String
