@@ -17,7 +17,8 @@ type Query {
   entity(id: ID!): Entity
 
   games(filter: String): [Game]!
-  game(id: ID!): Game
+  game(id: ID!): Game!
+  gameContext(gameId: ID!, levelIndex: ID): GameContext!
 
   gameEntities: [GameEntity]!
   gameEntity(id: ID!): GameEntity
@@ -32,4 +33,8 @@ type Mutation {
   createGame(params: GameCreateInput!): Game!
   updateGame(params: GameUpdateInput!): Game!
   deleteGame(id: ID!): DeletionPayload!
+
+  createLevel(params: LevelCreateInput!): LevelCreateResult!
+  updateLevel(params: LevelUpdateInput!): Level!
+  deleteLevel(id: ID!): DeletionPayload!
 }

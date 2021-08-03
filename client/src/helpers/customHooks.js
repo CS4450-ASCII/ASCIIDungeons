@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ErrorContext } from '../context/ErrorProvider';
-import { graphqlUser } from '../graphql/user';
+import { userGraphql } from '../graphql/user';
 import authHelper from './authentication';
 
 export function useCurrentUser() {
@@ -14,7 +14,7 @@ export function useCurrentUser() {
   };
 
   const { loading, error, data, client } = useQueryWithError(
-    graphqlUser.CURRENT_USER,
+    userGraphql.CURRENT_USER,
     {
       fetchPolicy: 'cache-first',
     },

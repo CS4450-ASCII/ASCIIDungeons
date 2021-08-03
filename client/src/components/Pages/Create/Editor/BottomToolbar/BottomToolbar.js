@@ -21,8 +21,8 @@ function BottomToolbar(props) {
   const classes = useStyles();
   const { currentGame, currentLevel } = useContext(GameContext);
 
-  const gameTitle = _.get(currentGame, 'title', 'Untitled Game');
-  const levelTitle = _.get(currentLevel, 'title', null);
+  const gameTitle = _.get(currentGame, 'title');
+  const levelTitle = _.get(currentLevel, 'title');
 
   const title = _.compact([gameTitle, levelTitle]).join(' > ');
 

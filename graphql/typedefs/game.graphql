@@ -5,8 +5,15 @@ type Game implements Timestamps {
   description: String
   isPublished: Boolean!
 
+  levels: [Level!]!
+
   createdAt: Date!
   updatedAt: Date!
+}
+
+type GameContext {
+  currentGame: Game!
+  currentLevel: Level
 }
 
 input GameCreateInput {

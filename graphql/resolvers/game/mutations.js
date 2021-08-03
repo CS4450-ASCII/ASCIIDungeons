@@ -2,15 +2,9 @@ import { ForbiddenError } from 'apollo-server-express';
 import { Game } from '../../../database/models';
 
 const gameMutations = {
-  createGame: async (
-    obj,
-    { params: { title, description } },
-    { currentUser },
-    info,
-  ) => {
+  createGame: async (obj, { params }, { currentUser }, info) => {
     const game = await Game.create({
-      title,
-      description,
+      ...params,
       createdById: currentUser.id,
     });
 
@@ -29,7 +23,7 @@ const gameMutations = {
       throw new ForbiddenError('Action forbidden');
     }
 
-    game.update(gameParams);
+    await game.update(gameParams);
 
     return game;
   },

@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Level extends Model {
     /**
@@ -11,16 +9,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Game)
+      Level.belongsTo(models.Game, {
+        foreignKey: 'gameId',
+        onDelete: 'CASCADE',
+        as: 'game',
+      });
     }
-  };
-  Level.init({
-    gameId: DataTypes.INTEGER,
-    width: DataTypes.SMALLINT,
-    height: DataTypes.SMALLINT
-  }, {
-    sequelize,
-    modelName: 'Level',
-  });
+  }
+  Level.init(
+    {
+      gameId: DataTypes.INTEGER,
+      title: { type: DataTypes.STRING(60), defaultValue: 'Untitled Level' },
+      width: DataTypes.SMALLINT,
+      height: DataTypes.SMALLINT,
+    },
+    {
+      sequelize,
+      modelName: 'Level',
+    },
+  );
   return Level;
 };

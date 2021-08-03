@@ -3,6 +3,8 @@ import _ from 'lodash';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
+import { levelGraphql } from '../../../../../graphql/level';
+import { useMutationWithError } from '../../../../../helpers/customHooks';
 import FormDialog from '../../../../Common/Forms/FormDialog';
 import InputField from '../../../../Common/Forms/InputField';
 import { GameContext } from '../Editor';
@@ -14,20 +16,38 @@ function NewLevelDialog(props) {
   const history = useHistory();
   const { currentGame } = useContext(GameContext);
 
-  const onSubmit = (values) => {
-    // TODO: Send an mutation to the backend that creates a new level.
-    let levels = JSON.parse(localStorage.getItem('levels')) || [];
-    const randomId = _.random(1, 100000);
-    levels.push({
-      id: randomId,
-      ...values,
-      gameId: _.get(currentGame, 'id'),
+  const [createLevel] = useMutationWithError(levelGraphql.CREATE_LEVEL, {
+    update(cache, { data: { createLevel } }) {
+      cache.modify({
+        fields: {
+          levels(existingLevels = []) {
+            const newLevelRef = cache.writeFragment({
+              data: createLevel,
+              fragment: levelGraphql.BASIC_LEVEL_FRAGMENT,
+            });
+            return [...existingLevels, newLevelRef];
+          },
+        },
+      });
+    },
+  });
+
+  const onSubmit = async (values) => {
+    const response = await createLevel({
+      variables: {
+        params: {
+          ...values,
+          gameId: _.chain(currentGame).get('id').parseInt().value(),
+        },
+      },
     });
 
-    localStorage.setItem('levels', JSON.stringify(levels));
+    const newLevelIndex = _.get(response, 'data.createLevel.levelIndex');
 
-    // redirect to the level url
-    history.push(`/create/${_.get(currentGame, 'id')}/${randomId}`);
+    if (newLevelIndex) {
+      // redirect to the level url
+      history.push(`/create/${_.get(currentGame, 'id')}/${newLevelIndex}`);
+    }
   };
 
   const formFields = [

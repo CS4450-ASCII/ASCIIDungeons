@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'createdById',
         onDelete: 'CASCADE',
       });
+
+      Game.hasMany(models.Level, {
+        foreignKey: 'gameId',
+        as: 'levels',
+      });
     }
   }
   Game.init(

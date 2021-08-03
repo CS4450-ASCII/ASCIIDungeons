@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { graphqlGame } from '../../../../../graphql/game';
+import { gameGraphql } from '../../../../../graphql/game';
 import { useMutationWithError } from '../../../../../helpers/customHooks';
 import FormDialog from '../../../../Common/Forms/FormDialog';
 import InputField from '../../../../Common/Forms/InputField';
@@ -10,14 +10,14 @@ function NewGameDialog(props) {
   const { openButton, title = 'New Game', onSubmit, ...rest } = props;
   const history = useHistory();
 
-  const [createGame] = useMutationWithError(graphqlGame.CREATE_GAME, {
+  const [createGame] = useMutationWithError(gameGraphql.CREATE_GAME, {
     update(cache, { data: { createGame } }) {
       cache.modify({
         fields: {
           games(existingGames = []) {
             const newGameRef = cache.writeFragment({
               data: createGame,
-              fragment: graphqlGame.BASIC_GAME_FRAGMENT,
+              fragment: gameGraphql.BASIC_GAME_FRAGMENT,
             });
 
             return [...existingGames, newGameRef];
@@ -28,7 +28,6 @@ function NewGameDialog(props) {
   });
 
   const handleSubmit = async (values) => {
-    // TODO: Send an actual mutation to create a game at the backend.
     onSubmit && onSubmit(values);
 
     const response = await createGame({
