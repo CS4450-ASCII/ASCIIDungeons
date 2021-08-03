@@ -14,6 +14,8 @@ const useStyles = makeStyles({
   },
   title: {
     flexGrow: 1,
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 });
 
@@ -28,7 +30,9 @@ function BottomToolbar(props) {
 
   return (
     <div className={classes.bottomToolbarRoot}>
-      <div className={classes.title}>{title}</div>
+      <div className={classes.title} title={title}>
+        {title}
+      </div>
       <HotkeyLabel hotkey={'D'} label={'Draw'} />
       <HotkeyLabel hotkey={'E'} label={'Erase'} />
     </div>

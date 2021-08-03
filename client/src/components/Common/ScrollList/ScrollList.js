@@ -1,4 +1,10 @@
-import { ListItem, makeStyles, Typography, withTheme } from '@material-ui/core';
+import {
+  ListItem,
+  ListItemText,
+  makeStyles,
+  Typography,
+  withTheme,
+} from '@material-ui/core';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -44,14 +50,15 @@ function ScrollList(props) {
         selected={selected}
         title={title}
       >
-        <div
-          style={{
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+        <ListItemText
+          primary={title}
+          primaryTypographyProps={{
+            style: {
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            },
           }}
-        >
-          {title}
-        </div>
+        />
       </ListItem>
     );
   }
