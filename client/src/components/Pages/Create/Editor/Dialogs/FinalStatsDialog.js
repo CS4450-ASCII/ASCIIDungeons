@@ -3,29 +3,22 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { dummyGameData } from '../../../../../stories/dummyStatsData';
 import Dialog from '../../../../Common/Dialog';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 function FinalStatsDialog(props) {
   const classes = useStyles();
   const { openButton, games = dummyGameData, ...rest } = props;
 
-  const [selectedGame, setSelectedGame] = useState(null);
+  const [setSelectedGame] = useState(null);
 
   const content = (
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>Name</Paper>
+          <p className={classes.paper}>PortalDoc</p>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>Time Completed</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>LostBible</Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>12m 36s</Paper>
+          <p className={classes.paper}>Total Time: 12m 36s</p>
         </Grid>
       </Grid>
     </div>
@@ -61,6 +54,10 @@ const useStyles = makeStyles({
     fontFamily: ['IBMBios'],
     fontSize: '1.5em',
     padding: 10
+  },
+  paper: {
+    fontFamily: ['IBMBios'],
+    fontSize: '11px'
   }
 });
 
