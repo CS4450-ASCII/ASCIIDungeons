@@ -18,9 +18,9 @@ export class Renderer extends GameModule {
     /** Are debug grid lines drawn? */
     this.gridLines = false;
     /** Number of grid spaces left to right. */
-    this.gridX = 40;
+    this.gridX = 30;
     /**Number of grid spaces up to down. */
-    this.gridY = 15;
+    this.gridY = 30;
     /** The size of the text. */
     this.fontsize = 1;
     /** Background canvas. - 0 */
