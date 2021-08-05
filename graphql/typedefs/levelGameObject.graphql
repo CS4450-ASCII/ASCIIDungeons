@@ -1,8 +1,8 @@
 # Types
-type LevelGameEntity implements Timestamps {
+type LevelGameObject implements Timestamps {
   id: ID!
   levelID: Int!
-  gameEntityID: Int!
+  gameObjectID: Int!
   x: Int!
   y: Int!
 
@@ -12,16 +12,16 @@ type LevelGameEntity implements Timestamps {
   updatedAt: Date!
 }
 
-input LevelGameEntityCreateInput {
+input LevelGameObjectCreateInput {
   levelID: Int!
-  gameEntityID: Int!
+  gameObjectID: Int!
   x: Int!
   y: Int!
 }
 
-input LevelGameEntityUpdateInput {
+input LevelGameObjectUpdateInput {
   levelID: Int!
-  gameEntityID: Int!
+  gameObjectID: Int!
   x: Int!
   y: Int!
 }

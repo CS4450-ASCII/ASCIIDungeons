@@ -1,8 +1,10 @@
-type GameEntity implements Timestamps {
-
+type GameObject implements Timestamps {
   id: ID!
   gameId: Int!
-  entityID: Int!
+  objectId: Int!
+
+  object: Object!
+  game: Game!
 
   # Interface required
 
@@ -10,12 +12,12 @@ type GameEntity implements Timestamps {
   updatedAt: Date!
 }
 
-input GameEntityCreateInput {
+input GameObjectCreateInput {
   gameId: ID!
   entityID: ID!
 }
 
-input GameEntityUpdateInput {
+input GameObjectUpdateInput {
   gameId: ID!
   entityID: ID!
 }

@@ -23,8 +23,6 @@ function EditorContainer(props) {
     },
   );
 
-  const [gameEngine] = useState(new GameEngine());
-  // const [cursor] = useState(new Cursor(gameEngine));
   useEffect(() => {
     // rerun the query if the gameId or levelIndex change
     if (!loading) {
@@ -32,14 +30,17 @@ function EditorContainer(props) {
     }
   }, [gameId, levelIndex]);
 
+  const [gameEngine] = useState(new GameEngine());
+  // const [cursor] = useState(new Cursor(gameEngine));
+
   // TODO: Add this back in to connect the editor to the game engine.
-  // useEffect(() => {
-  //   if (currentLevel) {
-  //     // gameEngine.addObject(cursor);
-  //     gameEngine.renderer.showGridLines(false);
-  //     gameEngine.start();
-  //   }
-  // }, [currentLevel]);
+  useEffect(() => {
+    // if (currentLevel) {
+    // gameEngine.addObject(cursor);
+    gameEngine.renderer.showGridLines(true);
+    gameEngine.start();
+    // }
+  }, []);
 
   if (loading) return <LoadingContainer />;
 

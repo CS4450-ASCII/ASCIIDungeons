@@ -6,6 +6,7 @@ type Game implements Timestamps {
   isPublished: Boolean!
 
   levels: [Level!]!
+  gameObjects: [GameObject!]!
 
   createdAt: Date!
   updatedAt: Date!
