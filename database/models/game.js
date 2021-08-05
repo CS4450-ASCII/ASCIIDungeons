@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'gameId',
         as: 'levels',
       });
+
+      Game.hasMany(models.GameObject, {
+        foreignKey: 'gameId',
+        as: 'gameObjects',
+      });
     }
   }
   Game.init(
@@ -30,6 +35,20 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Game',
+      hooks: {
+        afterCreate: async (game, options) => {
+          const systemObjects = await sequelize.models.Object.findAll({
+            where: { baseType: 0 },
+          });
+
+          systemObjects.forEach((object) => {
+            sequelize.models.GameObject.create({
+              gameId: game.id,
+              objectId: object.id,
+            });
+          });
+        },
+      },
     },
   );
   return Game;

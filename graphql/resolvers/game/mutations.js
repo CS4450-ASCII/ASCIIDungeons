@@ -8,7 +8,18 @@ const gameMutations = {
       createdById: currentUser.id,
     });
 
-    return game;
+    await game.reload();
+    const gameWithAssociations = await Game.findByPk(game.id, {
+      include: { all: true, include: { all: true } },
+    });
+
+    debugger;
+    // const systemObjects = await Object.findAll({
+    //   where: { baseType: 0 },
+    // });
+    // await game.addGameObjects(systemObjects);
+
+    return gameWithAssociations;
   },
 
   updateGame: async (
@@ -17,7 +28,7 @@ const gameMutations = {
     { currentUser },
     info,
   ) => {
-    const game = await Game.findByPk(id);
+    const game = await Game.findByPk(id, { include: { all: true } });
     if (!game) throw new Error('Game not found');
     if (currentUser.id !== game.createdById) {
       throw new ForbiddenError('Action forbidden');
