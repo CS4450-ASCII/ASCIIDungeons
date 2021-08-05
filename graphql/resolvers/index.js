@@ -42,9 +42,6 @@ const resolvers = {
   Mutation: {
     ...allMutations,
   },
-  // GameObject: {
-  //   object: (parent, args, context, info) => {},
-  // },
 };
 
 export default resolvers;

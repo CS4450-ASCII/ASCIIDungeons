@@ -10,13 +10,16 @@ const gameQueries = {
         options = { where: { createdById: currentUser.id } };
         break;
     }
-    const games = await Game.findAll({ ...options, include: { all: true } });
+    const games = await Game.findAll({
+      ...options,
+      include: { all: true, include: { all: true } },
+    });
     return games;
   },
 
   game: async (parent, { id }, { currentUser }, info) => {
     const game = await Game.findByPk(id, {
-      include: { all: true },
+      include: { all: true, include: { all: true } },
     });
     return game;
   },
@@ -28,7 +31,7 @@ const gameQueries = {
     info,
   ) => {
     const currentGame = await Game.findByPk(gameId, {
-      include: { all: true },
+      include: { all: true, include: { all: true } },
     });
     const currentLevel = currentGame.levels[levelIndex];
 

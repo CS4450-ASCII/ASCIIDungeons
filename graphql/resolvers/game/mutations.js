@@ -13,12 +13,6 @@ const gameMutations = {
       include: { all: true, include: { all: true } },
     });
 
-    debugger;
-    // const systemObjects = await Object.findAll({
-    //   where: { baseType: 0 },
-    // });
-    // await game.addGameObjects(systemObjects);
-
     return gameWithAssociations;
   },
 
@@ -28,7 +22,9 @@ const gameMutations = {
     { currentUser },
     info,
   ) => {
-    const game = await Game.findByPk(id, { include: { all: true } });
+    const game = await Game.findByPk(id, {
+      include: { all: true, include: { all: true } },
+    });
     if (!game) throw new Error('Game not found');
     if (currentUser.id !== game.createdById) {
       throw new ForbiddenError('Action forbidden');
