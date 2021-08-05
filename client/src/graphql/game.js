@@ -46,6 +46,13 @@ const GAME_CONTEXT = gql`
           id
           title
         }
+        gameObjects {
+          id
+          object {
+            character
+            title
+          }
+        }
       }
 
       currentLevel {

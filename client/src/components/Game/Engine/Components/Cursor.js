@@ -3,7 +3,9 @@ import { Map } from './Map';
 
 /** A cursor that tracks the mouse position. */
 export class Cursor extends GameObject {
-  static gameObject = { character: ' ', cColor: '#000000', bColor: '#FFFFFF' };
+  static gameObject = {
+    object: { character: ' ', cColor: '#000000', bColor: '#FFFFFF' },
+  };
 
   /** Builds a Cursor. */
   constructor() {
@@ -34,9 +36,9 @@ export class Cursor extends GameObject {
       return;
     }
 
-    this.character = Cursor.gameObject.character;
-    this.cColor = Cursor.gameObject.cColor;
-    this.bColor = Cursor.gameObject.bColor;
+    this.character = Cursor.gameObject.object.character;
+    this.cColor = Cursor.gameObject.object.cColor;
+    this.bColor = Cursor.gameObject.object.bColor;
 
     this.x = Math.floor(
       (input.MOUSE_POS.x / (this.GE.renderer.mainCanvas.width + 5)) *
@@ -48,7 +50,7 @@ export class Cursor extends GameObject {
     );
 
     if (input.KEYS_PRESSED.length > 0)
-      Cursor.gameObject.character =
+      Cursor.gameObject.object.character =
         input.KEYS_PRESSED[input.KEYS_PRESSED.length - 1][0];
 
     if (input.MOUSE_CLICK || input.MOUSE_DOWN) {

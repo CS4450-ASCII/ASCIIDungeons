@@ -10,9 +10,7 @@ import SideDrawerGroup from './SideDrawerGroup';
 
 function SideDrawer(props) {
   const classes = useStyles();
-  const { currentGame, currentLevel, currentLevelIndex } = useContext(
-    GameContext,
-  );
+  const { currentGame, currentLevelIndex } = useContext(GameContext);
 
   const history = useHistory();
 
