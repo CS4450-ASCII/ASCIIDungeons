@@ -1,12 +1,14 @@
 import { makeStyles, withTheme } from '@material-ui/core';
-import React from 'react';
+import React, { useContext } from 'react';
 import NewGameDialog from '../../Dialogs/NewGameDialog';
 import OpenGameDialog from '../../Dialogs/OpenGameDialog';
 import SaveAsDialog from '../../Dialogs/SaveAsDialog';
+import { EditorContext } from '../../Editor';
 import ToolbarOptionMenu from '../ToolbarOptionMenu';
 
 function FileMenu(props) {
   const classes = useStyles();
+  const { handleSubmit } = useContext(EditorContext);
 
   const menuGroups = [
     [
@@ -18,7 +20,12 @@ function FileMenu(props) {
       },
     ],
     [
-      { label: 'Save', hotkey: 'Ctrl-S' },
+      {
+        label: 'Save',
+        hotkey: 'Ctrl-S',
+        onClick: handleSubmit,
+        closeMenuAfterClick: true,
+      },
       { label: <SaveAsDialog openButton={<span>Save As</span>} /> },
     ],
   ];

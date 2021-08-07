@@ -6,9 +6,10 @@ import {
   Popper,
   withTheme,
 } from '@material-ui/core';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { GameContext } from '../Editor';
+import { EditorContext } from '../Editor';
 import MenuOption from './MenuOption';
 import MenuDivider from './Menus/MenuDivider';
 
@@ -16,7 +17,7 @@ function ToolbarOptionMenu(props) {
   const classes = useStyles();
   const { label, menuGroups, endDivider, ...rest } = props;
 
-  const { currentGame, currentLevel } = useContext(GameContext);
+  const { currentGame, currentLevel } = useContext(EditorContext);
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -34,7 +35,7 @@ function ToolbarOptionMenu(props) {
   };
 
   return (
-    <div className={classes.ToolbarOptionMenuRoot} {...rest}>
+    <div className={classes.toolbarOptionMenuRoot} {...rest}>
       <Button
         className={classes.openButton}
         ref={anchorRef}
@@ -56,7 +57,13 @@ function ToolbarOptionMenu(props) {
               return (
                 <>
                   {menuGroup.map((menuOption) => (
-                    <MenuOption {...menuOption} onClick={handleClose} />
+                    <MenuOption
+                      {...menuOption}
+                      onClick={() => {
+                        _.invoke(menuOption, 'onClick');
+                        if (menuOption.closeMenuAfterClick) handleClose();
+                      }}
+                    />
                   ))}
                   {addDivider && <MenuDivider />}
                 </>
@@ -70,7 +77,7 @@ function ToolbarOptionMenu(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  ToolbarOptionMenuRoot: {
+  toolbarOptionMenuRoot: {
     display: 'flex',
     alignItems: 'center',
   },
@@ -78,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.gray.dark,
     minWidth: '275px',
     color: 'white',
+    zIndex: 4,
   },
   openButton: {
     color: 'black',

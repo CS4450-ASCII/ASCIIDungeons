@@ -18,7 +18,7 @@ type Query {
 
   games(filter: String): [Game]!
   game(id: ID!): Game!
-  gameContext(gameId: ID!, levelIndex: ID): GameContext!
+  editorContext(gameId: ID!, levelIndex: ID): EditorContext!
 
   gameEntities: [GameObject]!
   gameObject(id: ID!): GameObject
