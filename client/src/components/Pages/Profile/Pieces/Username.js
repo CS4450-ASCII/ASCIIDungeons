@@ -1,9 +1,13 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import React from 'react';
 import { useCurrentUser } from '../../../../helpers/customHooks';
 
 const useStyles = makeStyles({
-  root: {}
+  root: {},
+  line: {
+    width: "100%",
+    textAlign: "center"
+  }
 });
 
 function Username(props){
@@ -14,7 +18,10 @@ function Username(props){
 
   const { displayName, email } = currentUser || {};
 
-  return <h1>{displayName || email || 'Adventurer'}</h1>;
+  return <div className={classes.root}>
+    <div className={classes.line}><h1>{displayName || 'Adventurer'}</h1></div>
+    <div className={classes.line}><h3>{email}</h3></div>
+  </div>;
 }
 
 export default Username;
