@@ -5,6 +5,7 @@ type Level implements Timestamps {
   title: String!
   width: Int!
   height: Int!
+  mapData: String!
 
   # Interface required
 

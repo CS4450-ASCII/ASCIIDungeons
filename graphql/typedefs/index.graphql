@@ -10,12 +10,6 @@ type Query {
   levels: [Level]!
   level(id: ID!): Level
 
-  levelGameEntities: [LevelGameObject]!
-  levelGameObject(id: ID!): LevelGameObject
-
-  entities: [Object]!
-  entity(id: ID!): Object
-
   games(filter: String): [Game]!
   game(id: ID!): Game!
   editorContext(gameId: ID!, levelIndex: ID): EditorContext!

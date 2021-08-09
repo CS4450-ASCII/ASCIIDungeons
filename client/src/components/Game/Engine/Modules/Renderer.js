@@ -309,12 +309,9 @@ export class Renderer extends GameModule {
   drawMap(object) {
     let map = object.grid;
 
-    for (let row of map) {
-      if (!row) continue;
-      for (let col of row) {
-        if (col) this.drawChar(col);
-      }
-    }
+    map.forEach((object) => {
+      if (object) this.drawChar(object);
+    });
   }
 
   /**
@@ -325,8 +322,8 @@ export class Renderer extends GameModule {
     let char = object.character;
     let x = object.x * this.fontsize;
     let y = object.y * this.fontsize + this.fontsize;
-    let charColor = object.cColor;
-    let backgroundColor = object.bColor;
+    let charColor = object.cColor || '#FFFFFF';
+    let backgroundColor = object.bColor || '#000000';
 
     if (object.background) {
       this.currentCtx.fillStyle = backgroundColor;

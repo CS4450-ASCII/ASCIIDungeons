@@ -33,7 +33,11 @@ function EditorContainer(props) {
     }
   }, [gameId, levelIndex]);
 
-  const [updateGame] = useMutationWithError(gameGraphql.UPDATE_GAME);
+  const [updateGame] = useMutationWithError(gameGraphql.UPDATE_GAME, {
+    onCompleted: () => {
+      alert('Game successfully saved.');
+    },
+  });
 
   if (loading) return <LoadingContainer />;
 
@@ -41,12 +45,12 @@ function EditorContainer(props) {
   const currentLevel = _.get(data, 'editorContext.currentLevel');
 
   // redirect to create page index if currentGame not found
-  if (!currentGame) return <Redirect to={'/create'} />;
+  if (gameId && !currentGame) return <Redirect to={'/create'} />;
   // redirect to the currentGame index page if currentLevel not found
-  if (!currentLevel) return <Redirect to={`/create/${gameId}`} />;
+  // TODO: fix this so it does not redirect after adding a new level
+  // if (levelIndex && !currentLevel) return <Redirect to={`/create/${gameId}`} />;
 
   const onSave = (values) => {
-    console.log(values);
     updateGame({ variables: { params: values } });
   };
 
@@ -97,7 +101,7 @@ function Editor(props) {
           <Grid item container className={classes.editorRoot}>
             <Grid item xs={9} style={{ height: '100%', width: '100%' }}>
               {currentLevel ? (
-                <GameContainer />
+                <GameContainer mapData={currentLevel.mapData} />
               ) : (
                 <div className={classes.noLevelMessage}>No Level Selected</div>
               )}

@@ -16,7 +16,7 @@ function GameContainer(props) {
   useEffect(() => {
     // if (currentLevel) {
     // gameEngine.addObject(cursor);
-    gameEngine.current = new GameEngine();
+    gameEngine.current = new GameEngine(currentGame, currentLevel);
     gameEngine.current.renderer.showGridLines(true);
     gameEngine.current.start();
     // }

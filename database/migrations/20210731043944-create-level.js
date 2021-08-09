@@ -31,6 +31,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.SMALLINT,
       },
+      mapData: {
+        type: Sequelize.JSONB,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

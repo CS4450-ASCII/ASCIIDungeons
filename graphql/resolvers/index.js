@@ -42,6 +42,11 @@ const resolvers = {
   Mutation: {
     ...allMutations,
   },
+  Level: {
+    mapData: (level, args, context, info) => {
+      return JSON.stringify(level.mapData);
+    },
+  },
 };
 
 export default resolvers;

@@ -82,16 +82,32 @@ module.exports = {
 
     const player = {
       baseType: 0,
-      gameEngineLayer: 0,
+      gameEngineLayer: 1,
       title: 'Player Spawn Point',
       character: '@',
       isPassable: true,
       ...sharedAttributes,
     };
 
+    const floor = {
+      baseType: 0,
+      gameEngineLayer: 1,
+      title: 'Floor',
+      character: '.',
+      isPassable: true,
+      ...sharedAttributes,
+    };
+
     await queryInterface.bulkInsert(
       'Objects',
-      [...thickWalls, ...thinWalls, ...otherNonPassables, ...stairs, player],
+      [
+        ...thickWalls,
+        ...thinWalls,
+        ...otherNonPassables,
+        ...stairs,
+        player,
+        floor,
+      ],
       {},
     );
   },
