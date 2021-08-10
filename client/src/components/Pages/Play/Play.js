@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
+import { WelcomeScreen } from '../../Game/Engine/Components/WelcomeScreen';
 import { GameEngine } from '../../Game/Engine/GameEngine';
+import { Game } from "../../Game/Engine/TestData/PrototypeGame";
 import GameContainer from '../../Game/GameContainer';
 
 const useStyles = makeStyles({
@@ -17,7 +19,10 @@ function Play(props) {
   const [gameEngine] = useState(new GameEngine());
 
   useEffect(() => {
+    gameEngine.mountedGame = Game;
     gameEngine.renderer.showGridLines(false);
+    gameEngine.objects.push(new WelcomeScreen());
+    gameEngine.renderer.gridX = 60;
     gameEngine.start();
   }, []);
 

@@ -1,8 +1,10 @@
 /** Game object parent class. */
 export class GameObject {
+  static GE = {};
+
   /** Builds a basic game object. */
   constructor() {
-    this.GE = {};
+    this.GE = GameObject.GE;
     this.x = 0;
     this.y = 0;
     this.layer = 'object';
@@ -20,4 +22,9 @@ export class GameObject {
    * @param {object} renderer - A reference to the renderer module.
    */
   draw(renderer) {}
+
+  /**
+   * Called when the object is destroyed.
+   */
+  remove() {}
 }
