@@ -6,11 +6,35 @@ type Query {
   users: [User]!
   user(id: ID!): User
   currentUser: User
+
+  levels: [Level]!
+  level(id: ID!): Level
+
+  levelGameEntities: [LevelGameEntity]!
+  levelGameEntity(id: ID!): LevelGameEntity
+
+  entities: [Entity]!
+  entity(id: ID!): Entity
+
+  games(filter: String): [Game]!
+  game(id: ID!): Game!
+  gameContext(gameId: ID!, levelIndex: ID): GameContext!
+
+  gameEntities: [GameEntity]!
+  gameEntity(id: ID!): GameEntity
 }
 
 type Mutation {
   # Mutation signatures go here
-  loginUser(user: UserLoginInput!): AuthPayload
-  createUser(user: UserCreateInput!): AuthPayload
-  updateUser(id: ID!, user: UserUpdateInput!): User!
+  loginUser(params: UserLoginInput!): AuthPayload
+  createUser(params: UserCreateInput!): AuthPayload
+  updateUser(params: UserUpdateInput!): User!
+
+  createGame(params: GameCreateInput!): Game!
+  updateGame(params: GameUpdateInput!): Game!
+  deleteGame(id: ID!): DeletionPayload!
+
+  createLevel(params: LevelCreateInput!): LevelCreateResult!
+  updateLevel(params: LevelUpdateInput!): Level!
+  deleteLevel(id: ID!): DeletionPayload!
 }

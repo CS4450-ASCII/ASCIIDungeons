@@ -3,50 +3,50 @@ import _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import { userGraphql } from '../../graphql/user';
 import authHelper from '../../helpers/authentication';
 import { useMutationWithError } from '../../helpers/customHooks';
 import formValidations from '../../helpers/formValidations';
-import { userRequests } from '../../requests/user';
 import FormComponent from '../Common/Forms/FormComponent';
 import InputField from '../Common/Forms/InputField';
 
 const useStyles = makeStyles({
-  root: {}
+  root: {},
 });
 
 function SignUpPage(props) {
   const classes = useStyles();
 
-  const [createUser] = useMutationWithError(userRequests.CREATE_USER, {
+  const [createUser] = useMutationWithError(userGraphql.CREATE_USER, {
     onCompleted: ({ createUser }) => {
       authHelper.setAccessToken(createUser.token);
-    }
+    },
   });
 
   const formFields = [
     {
       name: 'email',
-      Component: InputField
+      Component: InputField,
     },
     {
       name: 'displayName',
-      Component: InputField
+      Component: InputField,
     },
     {
       name: 'password',
       Component: InputField,
-      type: 'password'
+      type: 'password',
     },
     {
       name: 'confirmPassword',
       Component: InputField,
-      type: 'password'
-    }
+      type: 'password',
+    },
   ];
 
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     createUser({
-      variables: { user: _.omit(values, 'confirmPassword') }
+      variables: { params: _.omit(values, 'confirmPassword') },
     });
   };
 
@@ -57,7 +57,7 @@ function SignUpPage(props) {
     // ensure password and confirm password are the same
     confirmPassword: Yup.string()
       .required('Confirm required.')
-      .oneOf([Yup.ref('password')], 'Passwords must match.')
+      .oneOf([Yup.ref('password')], 'Passwords must match.'),
   });
 
   return (
@@ -72,7 +72,7 @@ function SignUpPage(props) {
           </Typography>
         }
         gridProps={{
-          style: { paddingRight: 85 }
+          style: { paddingRight: 85 },
         }}
         validationSchema={validationSchema}
       />

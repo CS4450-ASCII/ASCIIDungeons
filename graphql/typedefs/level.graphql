@@ -1,0 +1,33 @@
+# Types
+type Level implements Timestamps {
+  id: ID!
+  gameId: ID!
+  title: String!
+  width: Int!
+  height: Int!
+
+  # Interface required
+
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type LevelCreateResult {
+  level: Level!
+  levelIndex: Int!
+}
+
+# Inputs
+input LevelCreateInput {
+  gameId: Int!
+  title: String
+  width: Int!
+  height: Int!
+}
+
+input LevelUpdateInput {
+  id: ID!
+  title: String
+  width: Int
+  height: Int
+}

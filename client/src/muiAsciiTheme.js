@@ -1,35 +1,35 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 
 export const themeVariables = {
   props: {
     MuiPaper: {
-      square: true
+      square: true,
     },
     MuiButtonBase: {
-      disableRipple: true
-    }
+      disableRipple: true,
+    },
   },
   palette: {
     primary: {
-      main: '#73A9C2'
+      main: '#73A9C2',
     },
     secondary: {
-      main: '#25874C'
+      main: '#25874C',
     },
     error: {
-      main: '#B35454'
+      main: '#B35454',
     },
     gray: {
       dark: '#575555',
-      light: '#C4C4C4'
+      light: '#C4C4C4',
     },
     blue: {
-      header: '#4C5676'
-    }
+      header: '#4C5676',
+    },
   },
   typography: {
     fontFamily: ['IBMBios'],
-    fontSize: '1.5em'
+    fontSize: '1.5em',
   },
   overrides: {
     MuiButton: {
@@ -37,58 +37,67 @@ export const themeVariables = {
         fontSize: '1.5em',
         textTransform: 'none',
         color: '#FFFFFF',
-        padding: 0
+        padding: 0,
       },
       text: {
-        padding: 0
-      }
+        padding: 0,
+      },
     },
     MuiInputBase: {
       input: {
-        padding: 6
-      }
+        padding: 6,
+      },
     },
     MuiTextField: {
       root: {
-        backgroundColor: '#FFFFFF'
-      }
+        backgroundColor: '#FFFFFF',
+      },
     },
     MuiGrid: {
       root: {
         // border: '1px solid red',
-      }
+      },
     },
     MuiPaper: {
       root: {
         backgroundColor: '#C4C4C4',
-        border: 'none'
-      }
+        color: 'inherit',
+        border: 'none',
+      },
     },
     MuiBackdrop: {
       root: {
-        backgroundColor: 'none'
-      }
+        backgroundColor: 'none',
+      },
     },
     MuiDialogTitle: {
       root: {
         backgroundColor: '#4C5676',
         color: '#FFFFFF',
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     },
     MuiDialogContent: {
       root: {
         padding: '8px 24px',
         marginBottom: 20,
-        overflowY: 'hidden'
-      }
+        overflowY: 'hidden',
+        color: 'black',
+      },
     },
     MuiDialogActions: {
       root: {
-        padding: '8px 24px'
-      }
-    }
-  }
+        padding: '8px 24px',
+      },
+    },
+    MuiMenuItem: {
+      root: {
+        fontSize: '1.2em',
+        fontWeight: 'regular',
+        padding: '0.6em 1.8em !important',
+      },
+    },
+  },
 };
 
-export default createMuiTheme(themeVariables);
+export default createTheme(themeVariables);

@@ -4,6 +4,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
+  mainMenuRoot: {
+    height: '100%'
+  },
   navItem: {
     height: 100
   }
@@ -18,8 +21,19 @@ function MainMenu(props) {
   const navLinks = ['create', 'play', 'profile', 'about'];
 
   return (
+<<<<<<< HEAD
     <Grid container alignItems='center' direction='column'>
       {navLinks.map((link) => (
+=======
+    <Grid
+      container
+      alignItems='center'
+      justifyContent='center'
+      direction='column'
+      className={classes.mainMenuRoot}
+    >
+      {navLinks.map(link => (
+>>>>>>> origin/play-game
         <Grid item key={`nav-link-${link}`} className={classes.navItem}>
           <Button onClick={() => history.push(link)}>
             {_.startCase(link)}

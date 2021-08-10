@@ -1,52 +1,46 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import { userGraphql } from '../../graphql/user';
 import authHelper from '../../helpers/authentication';
 import { useMutationWithError } from '../../helpers/customHooks';
 import formValidations from '../../helpers/formValidations';
-import { userRequests } from '../../requests/user';
 import FormComponent from '../Common/Forms/FormComponent';
 import InputField from '../Common/Forms/InputField';
 
-const useStyles = makeStyles({
-  root: {}
-});
-
 function LoginPage(props) {
-  const classes = useStyles();
-
-  const [loginUser] = useMutationWithError(userRequests.LOGIN_USER, {
+  const [loginUser] = useMutationWithError(userGraphql.LOGIN_USER, {
     onCompleted: ({ loginUser }) => {
       authHelper.setAccessToken(loginUser.token);
-    }
+    },
   });
 
   const formFields = [
     {
       name: 'email',
-      Component: InputField
+      Component: InputField,
     },
     {
       name: 'password',
       Component: InputField,
-      type: 'password'
-    }
+      type: 'password',
+    },
   ];
 
-  const onSubmit = values => {
+  const onSubmit = (values) => {
     loginUser({
-      variables: { user: values }
+      variables: { params: values },
     });
   };
 
   const validationSchema = Yup.object().shape({
     email: formValidations.VALID_EMAIL,
-    password: formValidations.PASSWORD_REQUIRED
+    password: formValidations.PASSWORD_REQUIRED,
   });
 
   return (
-    <div className={classes.root}>
+    <div>
       <FormComponent
         onSubmit={onSubmit}
         formFields={formFields}

@@ -1,16 +1,25 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import figlet from 'figlet';
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
-import { AppContext } from '../../context/ContextProvider';
-import PropTypes from 'prop-types';
+import { ErrorContext } from '../../context/ErrorProvider';
+
+const titleOverrides = { main: ' ', signup: ' ', login: ' ' };
+const isSmall = { create: true };
 
 function PageHeader(props) {
-  const { errors } = useContext(AppContext);
-  const location = _.get(useLocation(), 'pathname').slice(1);
+  const { errors } = useContext(ErrorContext);
+  const location = _.get(useLocation(), 'pathname').split('/')[1];
 
-  return <PageHeaderDisplay {...{ errors, location, ...props }} />;
+  const pageName = titleOverrides[location] || _.startCase(location);
+
+  return (
+    <PageHeaderDisplay
+      {...{ errors, location, pageName, small: isSmall[location], ...props }}
+    />
+  );
 }
 
 PageHeaderDisplay.propTypes = {
@@ -20,22 +29,19 @@ PageHeaderDisplay.propTypes = {
 
   errors: PropTypes.array,
 
-  location: PropTypes.string
+  location: PropTypes.string,
 };
 
 export function PageHeaderDisplay(props) {
   const classes = useStyles();
-  const { text, small, errors, location } = props;
+  const { text, small, errors, pageName } = props;
   const [output, setOutput] = useState('');
-
-  const titleOverrides = { main: ' ', signup: ' ', login: ' ' };
-  const pageName = titleOverrides[location] || _.startCase(location);
 
   useEffect(() => {
     figlet.text(
       text,
       {
-        font: `${small ? 'Sm' : ''}Slant`
+        font: `${small ? 'Sm' : ''}Slant`,
       },
       (err, result) => {
         if (err) {
@@ -43,7 +49,7 @@ export function PageHeaderDisplay(props) {
         } else {
           setOutput(result);
         }
-      }
+      },
     );
   }, [text, small]);
 
@@ -62,7 +68,7 @@ export function PageHeaderDisplay(props) {
       </Grid>
       {_.get(errors, 'length') > 0 && (
         <Grid item xs={12} className={classes.errorMessage}>
-          {errors.map(error => (
+          {errors.map((error) => (
             <Typography key={`error-${error}`} variant='h3' color='error'>
               {error}
             </Typography>
@@ -76,11 +82,10 @@ export function PageHeaderDisplay(props) {
 const useStyles = makeStyles({
   root: {
     width: 'max-content',
-    marginBottom: '5em',
     margin: 'auto',
     '& h2': {
-      marginTop: '-0.8em'
-    }
+      marginTop: '-0.8em',
+    },
   },
   errorMessage: {
     textAlign: 'center',
@@ -88,8 +93,8 @@ const useStyles = makeStyles({
     height: '100%',
     marginTop: '2em',
     marginBottom: '-3em',
-    wordWrap: 'break-word'
-  }
+    wordWrap: 'break-word',
+  },
 });
 
 export default PageHeader;

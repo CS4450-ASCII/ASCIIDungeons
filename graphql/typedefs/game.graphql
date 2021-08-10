@@ -1,0 +1,29 @@
+type Game implements Timestamps {
+  id: ID!
+  createdById: Int!
+  title: String
+  description: String
+  isPublished: Boolean!
+
+  levels: [Level!]!
+
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type GameContext {
+  currentGame: Game!
+  currentLevel: Level
+}
+
+input GameCreateInput {
+  title: String
+  description: String
+}
+
+input GameUpdateInput {
+  id: ID!
+  title: String
+  description: String
+  isPublished: Boolean
+}

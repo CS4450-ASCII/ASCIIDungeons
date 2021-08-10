@@ -1,16 +1,45 @@
-import { makeStyles } from '@material-ui/core';
+import _ from 'lodash';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { gameGraphql } from '../../../../../graphql/game';
+import { useMutationWithError } from '../../../../../helpers/customHooks';
 import FormDialog from '../../../../Common/Forms/FormDialog';
 import InputField from '../../../../Common/Forms/InputField';
 
 function NewGameDialog(props) {
   const { openButton, title = 'New Game', onSubmit, ...rest } = props;
+  const history = useHistory();
 
-  const handleSubmit = values => {
-    if (onSubmit) {
-      onSubmit(values);
-    } else {
-      alert(JSON.stringify(values));
+  const [createGame] = useMutationWithError(gameGraphql.CREATE_GAME, {
+    update(cache, { data: { createGame } }) {
+      cache.modify({
+        fields: {
+          games(existingGames = []) {
+            const newGameRef = cache.writeFragment({
+              data: createGame,
+              fragment: gameGraphql.BASIC_GAME_FRAGMENT,
+            });
+
+            return [...existingGames, newGameRef];
+          },
+        },
+      });
+    },
+  });
+
+  const handleSubmit = async (values) => {
+    onSubmit && onSubmit(values);
+
+    const response = await createGame({
+      variables: {
+        params: values,
+      },
+    });
+
+    const newGameId = _.get(response, 'data.createGame.id');
+    // navigate to the newly created game
+    if (newGameId) {
+      history.replace(`/create/${newGameId}`);
     }
   };
 
@@ -18,14 +47,14 @@ function NewGameDialog(props) {
     {
       name: 'title',
       Component: InputField,
-      noWrap: true
+      noWrap: true,
     },
     {
       name: 'description',
       Component: InputField,
       multiline: true,
-      rows: 8
-    }
+      rows: 8,
+    },
   ];
 
   return (
@@ -36,7 +65,7 @@ function NewGameDialog(props) {
         formFields,
         onSubmit: handleSubmit,
         maxWidth: 'xs',
-        ...rest
+        ...rest,
       }}
     />
   );

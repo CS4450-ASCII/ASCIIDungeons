@@ -2,22 +2,22 @@ import { useMutation, useQuery } from '@apollo/client';
 import _ from 'lodash';
 import { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { AppContext } from '../context/ContextProvider';
-import { userRequests } from '../requests/user';
+import { ErrorContext } from '../context/ErrorProvider';
+import { userGraphql } from '../graphql/user';
 import authHelper from './authentication';
 
 export function useCurrentUser() {
   let currentUser = {
     id: undefined,
     email: undefined,
-    displayName: undefined
+    displayName: undefined,
   };
 
   const { loading, error, data, client } = useQueryWithError(
-    userRequests.CURRENT_USER,
+    userGraphql.CURRENT_USER,
     {
-      fetchPolicy: 'cache-first'
-    }
+      fetchPolicy: 'cache-first',
+    },
   );
 
   currentUser = _.get(data, 'currentUser', {});
@@ -31,30 +31,30 @@ export function useCurrentUser() {
 }
 
 export function useMutationWithError(mutation, options) {
-  const { setErrors } = useContext(AppContext);
+  const { setErrors } = useContext(ErrorContext);
 
   // clear errors whenever the location changes
   useOnLocationChanged(() => setErrors(null));
 
   return useMutation(mutation, {
-    onError: error => {
+    onError: (error) => {
       setErrors([error.message]);
     },
-    ...options
+    ...options,
   });
 }
 
 export function useQueryWithError(query, options) {
-  const { setErrors } = useContext(AppContext);
+  const { setErrors } = useContext(ErrorContext);
 
   // clear errors whenever the location changes
   useOnLocationChanged(() => setErrors(null));
 
   return useQuery(query, {
-    onError: error => {
+    onError: (error) => {
       setErrors([error.message]);
     },
-    ...options
+    ...options,
   });
 }
 

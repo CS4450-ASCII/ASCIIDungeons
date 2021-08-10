@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import React, { useState } from 'react';
 import FinalStatsDialog from './Editor/Dialogs/FinalStatsDialog';
@@ -11,14 +12,27 @@ const useStyles = makeStyles({
     }
   }
 });
+=======
+import { Grid, makeStyles, withTheme } from '@material-ui/core';
+import React from 'react';
+import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { gameGraphql } from '../../../graphql/game';
+import { useQueryWithError } from '../../../helpers/customHooks';
+import NewGameDialog from './Editor/Dialogs/NewGameDialog';
+import OpenGameDialog from './Editor/Dialogs/OpenGameDialog';
+import Editor from './Editor/Editor';
+>>>>>>> origin/play-game
 
 function Create(props) {
   const classes = useStyles();
-  const {} = props;
+  const { path } = useRouteMatch();
 
-  const [game, setGame] = useState();
+  const { loading, data } = useQueryWithError(gameGraphql.QUERY_GAMES);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
+<<<<<<< HEAD
     <div className={classes.root}>
       {/* Toolbar */}
       {!game && (
@@ -35,7 +49,59 @@ function Create(props) {
         </Grid>
       )}
     </div>
+=======
+    <Grid
+      container
+      direction='column'
+      alignItems='center'
+      justifyContent='space-between'
+      className={classes.createRoot}
+    >
+      <Switch>
+        <Route exact path={path}>
+          <Grid item />
+          <Grid
+            item
+            container
+            alignItems='center'
+            direction='column'
+            className={classes.menuItemContainer}
+          >
+            <NewGameDialog />
+            <OpenGameDialog />
+          </Grid>
+          <Grid item />
+        </Route>
+        <Route path={`${path}/:gameId/:levelIndex?`}>
+          <Editor />
+        </Route>
+        <Redirect to={path} />
+      </Switch>
+    </Grid>
+>>>>>>> origin/play-game
   );
 }
 
-export default Create;
+const useStyles = makeStyles({
+  createRoot: {
+    '& .MuiGrid-item': {
+      width: '100%',
+    },
+    width: '100%',
+    height: '100%',
+    maxWidth: 1000,
+    maxHeight: 1000,
+    border: '1px solid white',
+  },
+  menuItemContainer: {
+    '& .MuiButton-root': {
+      height: 80,
+    },
+  },
+});
+
+Create.propTypes = {};
+
+Create.defaultProps = {};
+
+export default withTheme(Create);
