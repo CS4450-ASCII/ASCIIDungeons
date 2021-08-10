@@ -5,11 +5,11 @@ import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   mainMenuRoot: {
-    height: '100%'
+    height: '100%',
   },
   navItem: {
-    height: 100
-  }
+    height: 100,
+  },
 });
 
 function MainMenu(props) {
@@ -18,7 +18,7 @@ function MainMenu(props) {
 
   const history = useHistory(); // https://reactrouter.com/web/api/Hooks
 
-  const navLinks = ['create', 'play', 'profile', 'about'];
+  const navLinks = ['create', 'play', 'profile', 'gamelist', 'about'];
 
   return (
     <Grid
