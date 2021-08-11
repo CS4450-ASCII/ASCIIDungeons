@@ -9,7 +9,7 @@ const Template = (args) => <Checkbox {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  initialValue: true,
+  initiallyChecked: true,
   variant: 'light',
   endLabel: '',
   startLabel: '',

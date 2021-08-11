@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import { GameModule } from './GameModule';
 
 /** The renderer module, handles drawing objects to the canvas and contains tools for doing so. */
@@ -19,9 +18,9 @@ export class Renderer extends GameModule {
     /** Are debug grid lines drawn? */
     this.gridLines = false;
     /** Number of grid spaces left to right. */
-    this.gridX = 30;
+    this.gridX = 40;
     /**Number of grid spaces up to down. */
-    this.gridY = 30;
+    this.gridY = 15;
     /** The size of the text. */
     this.fontsize = 1;
     /** Background canvas. - 0 */
@@ -308,12 +307,7 @@ export class Renderer extends GameModule {
    * @param {object} object - A reference to a Map object.
    */
   drawMap(object) {
-    
-    /*_.forEach(object.gridItems, (object) => {
-      if (object) this.drawChar(object);
-    });*/
-    
-    let map = object.gridItems;
+    let map = object.grid;
 
     for (let row in map) {
       if (!map[row]) continue;
@@ -335,8 +329,8 @@ export class Renderer extends GameModule {
     let char = object.character;
     let x = object.x * this.fontsize;
     let y = object.y * this.fontsize + this.fontsize;
-    let charColor = object.cColor || '#FFFFFF';
-    let backgroundColor = object.bColor || '#000000';
+    let charColor = object.cColor;
+    let backgroundColor = object.bColor;
 
     if (object.background) {
       this.currentCtx.fillStyle = backgroundColor;

@@ -3,10 +3,10 @@ import React from 'react';
 
 function MenuOption(props) {
   const classes = useStyles();
-  const { label, hotkey, ...rest } = props;
+  const { label, hotkey } = props;
 
   return (
-    <MenuItem className={classes.menuOptionRoot} {...rest}>
+    <MenuItem className={classes.menuOptionRoot}>
       <div className={classes.label}>{label}</div>
       <div className={classes.hotkey}>{hotkey}</div>
     </MenuItem>

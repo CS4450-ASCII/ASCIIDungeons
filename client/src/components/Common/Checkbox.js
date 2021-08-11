@@ -6,14 +6,14 @@ import React, { useState } from 'react';
 function Checkbox(props) {
   const classes = useStyles();
   const {
-    initialValue,
+    initiallyChecked,
     variant,
     label,
     labelPlacement,
     onChange,
     labelStyle,
   } = props;
-  const [checked, setChecked] = useState(initialValue);
+  const [checked, setChecked] = useState(initiallyChecked);
 
   const handleChange = () => {
     setChecked((prevChecked) => {
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 Checkbox.propTypes = {
-  initialValue: PropTypes.bool,
+  initiallyChecked: PropTypes.bool,
 
   variant: PropTypes.oneOf(['light', 'dark']),
 
@@ -94,7 +94,7 @@ Checkbox.propTypes = {
 };
 
 Checkbox.defaultProps = {
-  initialValue: false,
+  initiallyChecked: false,
 
   variant: 'light',
 

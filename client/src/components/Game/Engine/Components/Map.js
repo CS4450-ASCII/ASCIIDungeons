@@ -1,5 +1,4 @@
-import _ from 'lodash';
-import { GameObject } from './GameObject';
+import {GameObject} from "./GameObject";
 
 /** World map object. */
 export class Map extends GameObject {
@@ -7,45 +6,33 @@ export class Map extends GameObject {
    * Builds a map object.
    * @param {object} map - Raw map data.
    */
-  constructor(mapProps) {
+  constructor(map = []) {
     super();
-    this.layer = 'world';
-    this.gridItems = _.get(mapProps, 'gridItems');
-    this.mapProps = mapProps;
+    this.layer = "world";
+    this.grid = map;
   }
 
   draw(renderer) {
     renderer.drawMap(this);
   }
 
-  getCharAt(x, y) {
-    const object = _.find(this.gridItems, { x, y });
-    if (!object) return 'ζ';
-
-    return object.character;
+  getCharAt(x,y) {
+    if(!this.grid[y]) return "ζ";
+    if(!this.grid[y][x]) return "ζ";
+    return this.grid[y][x].character;
   }
 
-  setSpace(x, y, gameObject) {
-    const newObject = {
-      ...gameObject,
-      x,
-      y,
-    };
-    const object = _.find(this.gridItems, { x, y });
-    if (object) {
-      _.merge(object, newObject);
-    } else {
-      this.gridItems.push(newObject);
-    }
+  setSpace(x, y, character = "?", cColor = "#FFFFFF", bColor = "#000000", background = false) {
+    if(!this.grid[y]) this.grid[y] = [];
 
-    _.invoke(this.mapProps, 'onSpaceChange', [...this.gridItems]);
+    this.grid[y][x] = {character,cColor,bColor,background,x,y};
     this.GE.renderer.redrawBackground = true;
   }
 
   clearSpace(x, y) {
-    if (!this.gridItems[y]) this.gridItems[y] = [];
+    if(!this.grid[y]) this.grid[y] = [];
 
-    this.gridItems[y][x] = undefined;
+    this.grid[y][x] = undefined;
     this.GE.renderer.redrawBackground = true;
   }
 }

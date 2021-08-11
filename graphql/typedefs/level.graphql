@@ -5,7 +5,6 @@ type Level implements Timestamps {
   title: String!
   width: Int!
   height: Int!
-  mapData: String!
 
   # Interface required
 
@@ -27,9 +26,8 @@ input LevelCreateInput {
 }
 
 input LevelUpdateInput {
-  id: ID
+  id: ID!
   title: String
   width: Int
   height: Int
-  mapData: String
 }

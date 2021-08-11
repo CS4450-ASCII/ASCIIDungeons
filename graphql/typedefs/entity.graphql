@@ -1,5 +1,5 @@
 # Types
-type Object implements Timestamps {
+type Entity implements Timestamps {
   """
   The id of the entity.
   """
@@ -18,17 +18,17 @@ type Object implements Timestamps {
   # Interface required
 
   """
-  Datetime the Object was created at.
+  Datetime the entity was created at.
   """
   createdAt: Date!
   """
-  Datetime the Object was last updated.
+  Datetime the entity was last updated.
   """
   updatedAt: Date!
 }
 
 # # Inputs
-input ObjectCreateInput {
+input EntityCreateInput {
   """
   The display name of the entity.
   """
@@ -40,6 +40,6 @@ input ObjectCreateInput {
   character: String!
 }
 
-input ObjectUpdateInput {
+input EntityUpdateInput {
   title: String!
 }

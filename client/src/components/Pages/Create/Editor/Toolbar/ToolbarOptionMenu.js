@@ -6,10 +6,9 @@ import {
   Popper,
   withTheme,
 } from '@material-ui/core';
-import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { EditorContext } from '../Editor';
+import { GameContext } from '../Editor';
 import MenuOption from './MenuOption';
 import MenuDivider from './Menus/MenuDivider';
 
@@ -17,7 +16,7 @@ function ToolbarOptionMenu(props) {
   const classes = useStyles();
   const { label, menuGroups, endDivider, ...rest } = props;
 
-  const { currentGame, currentLevel } = useContext(EditorContext);
+  const { currentGame, currentLevel } = useContext(GameContext);
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -35,7 +34,7 @@ function ToolbarOptionMenu(props) {
   };
 
   return (
-    <div className={classes.toolbarOptionMenuRoot} {...rest}>
+    <div className={classes.ToolbarOptionMenuRoot} {...rest}>
       <Button
         className={classes.openButton}
         ref={anchorRef}
@@ -55,19 +54,12 @@ function ToolbarOptionMenu(props) {
             {menuGroups.map((menuGroup, index) => {
               const addDivider = index !== menuGroups.length - 1;
               return (
-                <div key={`menu-group-${index}`}>
-                  {menuGroup.map((menuOption, index) => (
-                    <MenuOption
-                      key={`menu-option-${index}`}
-                      {...menuOption}
-                      onClick={() => {
-                        _.invoke(menuOption, 'onClick');
-                        if (menuOption.closeMenuAfterClick) handleClose();
-                      }}
-                    />
+                <>
+                  {menuGroup.map((menuOption) => (
+                    <MenuOption {...menuOption} onClick={handleClose} />
                   ))}
                   {addDivider && <MenuDivider />}
-                </div>
+                </>
               );
             })}
           </MenuList>
@@ -78,7 +70,7 @@ function ToolbarOptionMenu(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  toolbarOptionMenuRoot: {
+  ToolbarOptionMenuRoot: {
     display: 'flex',
     alignItems: 'center',
   },
@@ -86,7 +78,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.gray.dark,
     minWidth: '275px',
     color: 'white',
-    zIndex: 4,
   },
   openButton: {
     color: 'black',

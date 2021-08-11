@@ -1,12 +1,12 @@
 import _ from 'lodash';
 import React, { useContext } from 'react';
-import { EditorContext } from '../Editor';
+import { GameContext } from '../Editor';
 import NewGameDialog from './NewGameDialog';
 
 function SaveAsDialog(props) {
   const { openButton, ...dialogProps } = props;
 
-  const { currentGame } = useContext(EditorContext);
+  const { currentGame } = useContext(GameContext);
 
   const onSubmit = (values) => {
     alert(JSON.stringify(values));

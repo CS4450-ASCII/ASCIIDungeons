@@ -8,12 +8,7 @@ const gameMutations = {
       createdById: currentUser.id,
     });
 
-    await game.reload();
-    const gameWithAssociations = await Game.findByPk(game.id, {
-      include: { all: true, include: { all: true } },
-    });
-
-    return gameWithAssociations;
+    return game;
   },
 
   updateGame: async (
@@ -22,19 +17,13 @@ const gameMutations = {
     { currentUser },
     info,
   ) => {
-    const game = await Game.findByPk(id, {
-      include: { all: true, include: { all: true } },
-    });
+    const game = await Game.findByPk(id);
     if (!game) throw new Error('Game not found');
     if (currentUser.id !== game.createdById) {
       throw new ForbiddenError('Action forbidden');
     }
 
     await game.update(gameParams);
-    game.levels.forEach((level) => {
-      level.mapData = JSON.parse(level.mapData);
-      level.save();
-    });
 
     return game;
   },

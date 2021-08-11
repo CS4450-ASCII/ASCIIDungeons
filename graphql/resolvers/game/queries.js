@@ -1,4 +1,4 @@
-import { Game } from '../../../database/models';
+import { Game, Level } from '../../../database/models';
 
 const gameQueries = {
   games: async (parent, { filter }, { currentUser }, info) => {
@@ -10,28 +10,25 @@ const gameQueries = {
         options = { where: { createdById: currentUser.id } };
         break;
     }
-    const games = await Game.findAll({
-      ...options,
-      include: { all: true, include: { all: true } },
-    });
+    const games = await Game.findAll(options);
     return games;
   },
 
   game: async (parent, { id }, { currentUser }, info) => {
     const game = await Game.findByPk(id, {
-      include: { all: true, include: { all: true } },
+      include: { model: Level, as: 'levels' },
     });
     return game;
   },
 
-  editorContext: async (
+  gameContext: async (
     parent,
     { gameId, levelIndex = 0 },
     { currentUser },
     info,
   ) => {
     const currentGame = await Game.findByPk(gameId, {
-      include: { all: true, include: { all: true } },
+      include: { model: Level, as: 'levels' },
     });
     const currentLevel = currentGame.levels[levelIndex];
 

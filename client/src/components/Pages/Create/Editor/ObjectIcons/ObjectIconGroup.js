@@ -16,15 +16,11 @@ function ObjectIconGroup(props) {
     Cursor.gameObject = selectedObject;
   };
 
-  const objectIcons = gameObjects.map((gameObject, index) => (
-    <Grid
-      key={`object-icon-${index}`}
-      item
-      onClick={() => handleSelectionChange(gameObject)}
-    >
+  const objectIcons = gameObjects.map((object) => (
+    <Grid item onClick={() => handleSelectionChange(object)}>
       <ObjectIcon
-        gameObject={gameObject}
-        isSelected={gameObject.id === _.get(selectedObject, 'id')}
+        object={object}
+        isSelected={object.id === _.get(selectedObject, 'id')}
       />
     </Grid>
   ));
@@ -32,7 +28,7 @@ function ObjectIconGroup(props) {
   return (
     <div className={classes.objectIconGroupRoot}>
       {gameObjects.length > 0 ? (
-        <Grid container alignItems={'center'}>
+        <Grid container justifyContent={'left'} alignItems={'center'}>
           {objectIcons}
         </Grid>
       ) : (

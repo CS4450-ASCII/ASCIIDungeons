@@ -5,14 +5,14 @@ const initialState = {
   currentLevel: undefined,
 };
 
-export const EditorContext = createContext(initialState);
+export const GameContext = createContext(initialState);
 
 function GameProvider({ children }) {
   const [currentGame, setCurrentGame] = useState(null);
   const [currentLevel, setCurrentLevel] = useState(null);
 
   return (
-    <EditorContext.Provider
+    <GameContext.Provider
       value={{
         currentGame,
         setCurrentGame,
@@ -21,7 +21,7 @@ function GameProvider({ children }) {
       }}
     >
       {children}
-    </EditorContext.Provider>
+    </GameContext.Provider>
   );
 }
 
