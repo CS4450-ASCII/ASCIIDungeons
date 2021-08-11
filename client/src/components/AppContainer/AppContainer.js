@@ -13,7 +13,7 @@ function AppContainer(props) {
     <Switch>
       <Route path='/create' component={Create} />
       <Route exact path='/play' component={Play} />
-      <Route exact path='/users/:userID' component={Profile} />
+      <Route exact path='/users/:id' component={Profile} />
       <Route exact path='/about' component={About} />
       <Route exact path='/main' component={MainMenu} />
       <Redirect to='/main' />
