@@ -1,4 +1,5 @@
 import { EntityGrid } from './EntityGrid';
+import { FinalScreen } from './FinalScreen';
 import { GameObject } from './GameObject';
 import { Player } from './Player';
 
@@ -42,7 +43,13 @@ export class McGuffin extends GameObject {
         found = true;
         this.timeWaited += deltatime;
         
-        if(this.timeWaited >= this.timeToWait) console.log("END GAME!");
+        if(this.timeWaited >= this.timeToWait) {
+          this.GE.reset();
+          this.GE.renderer.gridX = 40;
+          this.GE.renderer.gridY = 3;
+          this.GE.renderer.resize();
+          this.GE.addObject(new FinalScreen());
+        }
       }
     }
 
