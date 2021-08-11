@@ -52,9 +52,20 @@ const USER = gql`
 query User($id: ID!) {
   user(id: $id) {
     id
+    displayName
+    email
     games {
       title
     }
+  }
+}
+`;
+
+const USERS = gql`
+query Users {
+  users {
+    id
+    displayName
   }
 }
 `;
@@ -67,4 +78,5 @@ export const userGraphql = {
   CREATE_USER,
   CURRENT_USER,
   USER,
+  USERS,
 };

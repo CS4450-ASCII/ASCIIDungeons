@@ -44,7 +44,7 @@ function Profile(props) {
   //TODO: Go into each subcomponent and replace dummy data with real data.
   return (
     <div className={classes.root}>
-      <Username />
+      <Username displayName={data.user.displayName} email={data.user.email}/>
       <Divider />
       <EditProfileDialog />
       <Divider />
