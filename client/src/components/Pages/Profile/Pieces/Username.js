@@ -13,10 +13,6 @@ function Username(props){
   const classes = useStyles();
   const {} = props;
 
-  //const { currentUser } = useCurrentUser();
-
-  //const { displayName, email } = currentUser || {};
-
   return <div className={classes.root}>
     <div className={classes.line}><h1>{props.displayName || 'Adventurer'}</h1></div>
     <div className={classes.line}><h3>{props.email}</h3></div>
