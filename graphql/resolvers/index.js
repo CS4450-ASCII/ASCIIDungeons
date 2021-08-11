@@ -5,7 +5,7 @@ const basename = path.basename(__filename);
 
 const [allQueries, allMutations] = fs
   .readdirSync(__dirname)
-  .filter(file => {
+  .filter((file) => {
     return file !== basename;
   })
   .reduce(
@@ -17,31 +17,36 @@ const [allQueries, allMutations] = fs
         importedQueries = require(path.join(filepath, 'queries.js')).default;
         importedMutations = require(path.join(
           filepath,
-          'mutations.js'
+          'mutations.js',
         )).default;
       } catch {}
 
       return [
         {
           ...queries,
-          ...importedQueries
+          ...importedQueries,
         },
         {
           ...mutations,
-          ...importedMutations
-        }
+          ...importedMutations,
+        },
       ];
     },
-    [{}, {}]
+    [{}, {}],
   );
 
 const resolvers = {
   Query: {
-    ...allQueries
+    ...allQueries,
   },
   Mutation: {
-    ...allMutations
-  }
+    ...allMutations,
+  },
+  Level: {
+    mapData: (level, args, context, info) => {
+      return JSON.stringify(level.mapData);
+    },
+  },
 };
 
 export default resolvers;

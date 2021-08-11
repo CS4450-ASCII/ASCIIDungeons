@@ -1,3 +1,7 @@
+import { withStyles } from '@material-ui/core';
+import { Component } from 'react';
+import { Cursor } from './Components/Cursor';
+import { Map } from './Components/Map';
 import { EntityGrid } from './Components/EntityGrid';
 import { GameObject } from './Components/GameObject';
 import { Behaviour } from './Modules/Behaviour';
@@ -5,13 +9,22 @@ import { GameModule } from './Modules/GameModule';
 import { InputHandler } from './Modules/InputHandler';
 import { Renderer } from './Modules/Renderer';
 
+const styles = {
+  gameEngineContainerRoot: {
+    marginTop: 12,
+    height: '95%',
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+};
 /** Runs all game based logic. */
-export class GameEngine {
-  /** The active game engine. */
-  static active = null;
-
+class GameEngine extends Component {
   /** Builds the game engine. */
-  constructor() {
+  constructor(props) {
+    super(props);
+
+    const { gridItems, mapProps, showGridLines } = this.props;
     /** List of current game objects. */
     GameEngine.active = this;
     GameObject.GE = this;
@@ -20,11 +33,13 @@ export class GameEngine {
     this.mountedGame = null;
 
     this.container = null;
+    
+    //this.objects = [new Map(mapProps), new Cursor(this)];
 
     this.objects = [
       
     ];
-
+    
     this.behaviour = new Behaviour();
 
     /** Refernce to the current input module. */
@@ -33,6 +48,7 @@ export class GameEngine {
 
     /** Refernce to the current renderer module. */
     this.renderer = new Renderer();
+    this.renderer.showGridLines(showGridLines);
 
     /** List of modules to be executed. */
     this.pipeline = [this.behaviour, this.input, this.renderer];
@@ -40,6 +56,14 @@ export class GameEngine {
     for (const module of this.pipeline) {
       module.GE = this;
     }
+
+    // this.state = {
+    //   showGridLines: showGrid,
+    // };
+  }
+
+  componentDidMount() {
+    this.start();
   }
 
   /** On every animation frame, run the pipeline. */
@@ -117,6 +141,13 @@ export class GameEngine {
     return null;
   }
 
+  render() {
+    const { classes } = this.props;
+    return (
+      <div id='gameContainer' className={classes.gameEngineContainerRoot}></div>
+    );
+  }
+  
   reset() {
     this.objects = [];
 
@@ -138,3 +169,5 @@ export class GameEngine {
     }
   }
 }
+
+export default withStyles(styles)(GameEngine);

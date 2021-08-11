@@ -10,18 +10,12 @@ type Query {
   levels: [Level]!
   level(id: ID!): Level
 
-  levelGameEntities: [LevelGameEntity]!
-  levelGameEntity(id: ID!): LevelGameEntity
-
-  entities: [Entity]!
-  entity(id: ID!): Entity
-
   games(filter: String): [Game]!
   game(id: ID!): Game!
-  gameContext(gameId: ID!, levelIndex: ID): GameContext!
+  editorContext(gameId: ID!, levelIndex: ID): EditorContext!
 
-  gameEntities: [GameEntity]!
-  gameEntity(id: ID!): GameEntity
+  gameEntities: [GameObject]!
+  gameObject(id: ID!): GameObject
 }
 
 type Mutation {
