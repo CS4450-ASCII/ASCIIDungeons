@@ -7,14 +7,14 @@ import { levelGraphql } from '../../../../../graphql/level';
 import { useMutationWithError } from '../../../../../helpers/customHooks';
 import FormDialog from '../../../../Common/Forms/FormDialog';
 import InputField from '../../../../Common/Forms/InputField';
-import { GameContext } from '../Editor';
+import { EditorContext } from '../Editor';
 
 function NewLevelDialog(props) {
   const classes = useStyles();
   const { openButton, title = 'New Level', ...dialogProps } = props;
 
   const history = useHistory();
-  const { currentGame } = useContext(GameContext);
+  const { currentGame } = useContext(EditorContext);
 
   const [createLevel] = useMutationWithError(levelGraphql.CREATE_LEVEL, {
     update(cache, { data: { createLevel } }) {

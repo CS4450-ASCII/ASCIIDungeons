@@ -1,412 +1,32 @@
+import { withStyles } from '@material-ui/core';
+import { Component } from 'react';
 import { Cursor } from './Components/Cursor';
 import { Map } from './Components/Map';
-import { Player } from './Components/Player';
 import { Behaviour } from './Modules/Behaviour';
 import { InputHandler } from './Modules/InputHandler';
 import { Renderer } from './Modules/Renderer';
 
+const styles = {
+  gameEngineContainerRoot: {
+    marginTop: 12,
+    height: '95%',
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+};
 /** Runs all game based logic. */
-export class GameEngine {
-  /** The active game engine. */
-  static active = null;
-
+class GameEngine extends Component {
   /** Builds the game engine. */
-  constructor() {
+  constructor(props) {
+    super(props);
+
+    const { gridItems, mapProps, showGridLines } = this.props;
     /** List of current game objects. */
     GameEngine.active = this;
 
     this.container = null;
-
-    this.objects = [
-      new Map([
-        [],
-        [],
-        [
-          undefined,
-          undefined,
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 2,
-          },
-        ],
-        [
-          undefined,
-          undefined,
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 3,
-          },
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 3,
-          },
-        ],
-        [
-          undefined,
-          undefined,
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 4,
-          },
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 4,
-          },
-        ],
-        [
-          undefined,
-          undefined,
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 5,
-          },
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 5,
-          },
-        ],
-        [
-          undefined,
-          undefined,
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 6,
-          },
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 6,
-          },
-        ],
-      ]),
-      //new Scroller("&", "#00FF00", true, "#000000"),
-      new Cursor(this),
-      new Player(3, 4),
-    ];
-
+    this.objects = [new Map(mapProps), new Cursor(this)];
     this.behaviour = new Behaviour();
 
     /** Refernce to the current input module. */
@@ -415,6 +35,7 @@ export class GameEngine {
 
     /** Refernce to the current renderer module. */
     this.renderer = new Renderer();
+    this.renderer.showGridLines(showGridLines);
 
     /** List of modules to be executed. */
     this.pipeline = [this.behaviour, this.input, this.renderer];
@@ -422,6 +43,14 @@ export class GameEngine {
     for (const module of this.pipeline) {
       module.GE = this;
     }
+
+    // this.state = {
+    //   showGridLines: showGrid,
+    // };
+  }
+
+  componentDidMount() {
+    this.start();
   }
 
   /** On every animation frame, run the pipeline. */
@@ -495,4 +124,13 @@ export class GameEngine {
     if (ret.length > 0) return ret;
     return null;
   }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div id='gameContainer' className={classes.gameEngineContainerRoot}></div>
+    );
+  }
 }
+
+export default withStyles(styles)(GameEngine);

@@ -1,24 +1,18 @@
 import gql from 'graphql-tag';
 import { levelGraphql } from './level';
 
+// Fragments
 const BASIC_GAME_FRAGMENT = gql`
   fragment BasicGame on Game {
     id
     title
     description
+    isPublished
     createdById
   }
 `;
 
-const CREATE_GAME = gql`
-  mutation CreateGame($params: GameCreateInput!) {
-    createGame(params: $params) {
-      ...BasicGame
-    }
-  }
-  ${BASIC_GAME_FRAGMENT}
-`;
-
+// Queries
 const QUERY_GAMES = gql`
   query GetGames($filter: String) {
     games(filter: $filter) {
@@ -37,9 +31,9 @@ const QUERY_GAME = gql`
   ${BASIC_GAME_FRAGMENT}
 `;
 
-const GAME_CONTEXT = gql`
-  query GameContext($gameId: ID!, $levelIndex: ID) {
-    gameContext(gameId: $gameId, levelIndex: $levelIndex) {
+const EDITOR_CONTEXT = gql`
+  query EditorContext($gameId: ID!, $levelIndex: ID) {
+    editorContext(gameId: $gameId, levelIndex: $levelIndex) {
       currentGame {
         ...BasicGame
         levels {
@@ -64,10 +58,29 @@ const GAME_CONTEXT = gql`
   ${levelGraphql.FULL_LEVEL_FRAGMENT}
 `;
 
+// Mutations
+const UPDATE_GAME = gql`
+  mutation UpdateGame($params: GameUpdateInput!) {
+    updateGame(params: $params) {
+      id
+    }
+  }
+`;
+
+const CREATE_GAME = gql`
+  mutation CreateGame($params: GameCreateInput!) {
+    createGame(params: $params) {
+      ...BasicGame
+    }
+  }
+  ${BASIC_GAME_FRAGMENT}
+`;
+
 export const gameGraphql = {
   BASIC_GAME_FRAGMENT,
   CREATE_GAME,
   QUERY_GAMES,
   QUERY_GAME,
-  GAME_CONTEXT,
+  EDITOR_CONTEXT,
+  UPDATE_GAME,
 };

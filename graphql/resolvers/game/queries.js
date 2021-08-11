@@ -24,7 +24,7 @@ const gameQueries = {
     return game;
   },
 
-  gameContext: async (
+  editorContext: async (
     parent,
     { gameId, levelIndex = 0 },
     { currentUser },

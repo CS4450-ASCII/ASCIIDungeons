@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useContext } from 'react';
-import { GameContext } from '../Editor';
+import { EditorContext } from '../Editor';
 import HotkeyLabel from './HotkeyLabel';
 
 const useStyles = makeStyles({
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 
 function BottomToolbar(props) {
   const classes = useStyles();
-  const { currentGame, currentLevel } = useContext(GameContext);
+  const { currentGame, currentLevel } = useContext(EditorContext);
 
   const gameTitle = _.get(currentGame, 'title');
   const levelTitle = _.get(currentLevel, 'title');
