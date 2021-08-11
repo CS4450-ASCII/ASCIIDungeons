@@ -27,4 +27,5 @@ input GameUpdateInput {
   title: String
   description: String
   isPublished: Boolean
+  levels: [LevelUpdateInput]
 }

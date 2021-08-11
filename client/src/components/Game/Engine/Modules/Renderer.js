@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { GameModule } from './GameModule';
 
 /** The renderer module, handles drawing objects to the canvas and contains tools for doing so. */
@@ -307,9 +308,7 @@ export class Renderer extends GameModule {
    * @param {object} object - A reference to a Map object.
    */
   drawMap(object) {
-    let map = object.grid;
-
-    map.forEach((object) => {
+    _.forEach(object.gridItems, (object) => {
       if (object) this.drawChar(object);
     });
   }

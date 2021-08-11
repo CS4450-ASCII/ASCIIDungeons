@@ -55,9 +55,10 @@ function ToolbarOptionMenu(props) {
             {menuGroups.map((menuGroup, index) => {
               const addDivider = index !== menuGroups.length - 1;
               return (
-                <>
-                  {menuGroup.map((menuOption) => (
+                <div key={`menu-group-${index}`}>
+                  {menuGroup.map((menuOption, index) => (
                     <MenuOption
+                      key={`menu-option-${index}`}
                       {...menuOption}
                       onClick={() => {
                         _.invoke(menuOption, 'onClick');
@@ -66,7 +67,7 @@ function ToolbarOptionMenu(props) {
                     />
                   ))}
                   {addDivider && <MenuDivider />}
-                </>
+                </div>
               );
             })}
           </MenuList>

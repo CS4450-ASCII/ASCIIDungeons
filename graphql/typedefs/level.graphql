@@ -27,8 +27,9 @@ input LevelCreateInput {
 }
 
 input LevelUpdateInput {
-  id: ID!
+  id: ID
   title: String
   width: Int
   height: Int
+  mapData: String
 }

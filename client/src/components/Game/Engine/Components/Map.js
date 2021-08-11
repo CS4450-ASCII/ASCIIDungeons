@@ -7,10 +7,11 @@ export class Map extends GameObject {
    * Builds a map object.
    * @param {object} map - Raw map data.
    */
-  constructor(mapData = '[]') {
+  constructor(mapProps) {
     super();
     this.layer = 'world';
-    this.grid = JSON.parse(mapData);
+    this.gridItems = _.get(mapProps, 'gridItems');
+    this.mapProps = mapProps;
   }
 
   draw(renderer) {
@@ -18,42 +19,33 @@ export class Map extends GameObject {
   }
 
   getCharAt(x, y) {
-    const object = _.find(this.grid, { x, y });
+    const object = _.find(this.gridItems, { x, y });
     if (!object) return 'ζ';
 
     return object.character;
   }
 
-  setSpace(
-    x,
-    y,
-    character = '?',
-    cColor = '#FFFFFF',
-    bColor = '#000000',
-    background = false,
-  ) {
+  setSpace(x, y, gameObject) {
     const newObject = {
-      character,
-      cColor,
-      bColor,
-      background,
+      ...gameObject,
       x,
       y,
     };
-    const object = _.find(this.grid, { x, y });
+    const object = _.find(this.gridItems, { x, y });
     if (object) {
       _.merge(object, newObject);
     } else {
-      this.grid.push(newObject);
+      this.gridItems.push(newObject);
     }
 
+    _.invoke(this.mapProps, 'onSpaceChange', [...this.gridItems]);
     this.GE.renderer.redrawBackground = true;
   }
 
   clearSpace(x, y) {
-    if (!this.grid[y]) this.grid[y] = [];
+    if (!this.gridItems[y]) this.gridItems[y] = [];
 
-    this.grid[y][x] = undefined;
+    this.gridItems[y][x] = undefined;
     this.GE.renderer.redrawBackground = true;
   }
 }

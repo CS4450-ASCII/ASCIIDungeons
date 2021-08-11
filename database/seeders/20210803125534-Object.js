@@ -3,11 +3,11 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const sharedAttributes = {
+      baseType: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
     const wallAttributes = {
-      baseType: 0,
       gameEngineLayer: 0,
       isPassable: false,
       dataTemplate: null,
@@ -15,7 +15,6 @@ module.exports = {
     };
 
     const stairAttributes = {
-      baseType: 0,
       gameEngineLayer: 0,
       isPassable: true,
       dataTemplate: JSON.stringify({
@@ -81,7 +80,6 @@ module.exports = {
     }));
 
     const player = {
-      baseType: 0,
       gameEngineLayer: 1,
       title: 'Player Spawn Point',
       character: '@',
@@ -90,10 +88,17 @@ module.exports = {
     };
 
     const floor = {
-      baseType: 0,
       gameEngineLayer: 1,
       title: 'Floor',
       character: '.',
+      isPassable: true,
+      ...sharedAttributes,
+    };
+
+    const trophy = {
+      gameEngineLayer: 1,
+      title: 'Trophy - End of Game',
+      character: '§',
       isPassable: true,
       ...sharedAttributes,
     };
@@ -107,6 +112,7 @@ module.exports = {
         ...stairs,
         player,
         floor,
+        trophy,
       ],
       {},
     );

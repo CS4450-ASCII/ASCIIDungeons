@@ -3,7 +3,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const getGameObjectsForGame = (gameId) =>
-      [...Array(32).keys()].slice(1).map((objectId) => ({
+      [...Array(33).keys()].slice(1).map((objectId) => ({
         gameId,
         objectId,
         createdAt: new Date(),
