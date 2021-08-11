@@ -1,9 +1,25 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+import { userGraphql } from '../../../../graphql/user';
+import { useCurrentUser, useQueryWithError } from '../../../../helpers/customHooks';
 import FormDialog from '../../../Common/Forms/FormDialog';
 import InputField from '../../../Common/Forms/InputField';
 
 function EditProfileDialog(props) {
   const { openButton, title = 'Edit Profile', onSubmit, ...rest } = props;
+
+  const { id } = useParams();
+  const { loading, data, refetch } = useQueryWithError(
+    userGraphql.USER,
+    {
+      variables: {
+        id,
+      },
+    },
+  );
+
+  const { currentUser } = useCurrentUser();
+
   //const history = useHistory();
 
   // const [createGame] = useMutationWithError(gameGraphql.CREATE_GAME, {
@@ -52,18 +68,23 @@ function EditProfileDialog(props) {
     },
   ];
 
-  return (
-    <FormDialog
-      {...{
-        title,
-        openButton,
-        formFields,
-        onSubmit: handleSubmit,
-        maxWidth: 'xs',
-        ...rest,
-      }}
-    />
-  );
+  if(currentUser.id == data.user.id){
+    return (
+      <FormDialog
+        {...{
+          title,
+          openButton,
+          formFields,
+          onSubmit: handleSubmit,
+          maxWidth: 'xs',
+          ...rest,
+        }}
+      />
+    );
+  }
+  else {
+    return <div></div>
+  }
 }
 
 export default EditProfileDialog;

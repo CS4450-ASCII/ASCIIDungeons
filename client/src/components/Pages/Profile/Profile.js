@@ -44,7 +44,6 @@ function Profile(props) {
   //TODO: Go into each subcomponent and replace dummy data with real data.
   return (
     <div className={classes.root}>
-      <p>{data.user.id}</p>
       <Username />
       <Divider />
       <EditProfileDialog />
@@ -53,7 +52,7 @@ function Profile(props) {
       <Divider />
       <Stats />
       <Divider />
-      <Games />
+      <Games games={data.user.games}/>
       <Divider />
       <Divider />
       <Divider />
