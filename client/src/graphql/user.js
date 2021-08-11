@@ -72,6 +72,14 @@ query Users {
 
 //TODO
 // UPDATE_USER (see CreateUser above)
+const UPDATE_USER = gql`
+  mutation UpdateUser($params: UserUpdateInput!) {
+    updateUser(params: $params) {
+      ...AuthPayload
+    }
+  }
+  ${AUTH_PAYLOAD_FRAGMENT}
+`;
 
 export const userGraphql = {
   LOGIN_USER,
@@ -79,4 +87,5 @@ export const userGraphql = {
   CURRENT_USER,
   USER,
   USERS,
+  UPDATE_USER,
 };
