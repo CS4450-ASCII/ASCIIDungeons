@@ -29,14 +29,11 @@ function SearchBox(props){
   const handleClick = (event) => {
     data.users.map(user => {
       if(user.displayName === currentSearch){
-        console.log("MATCH FOUND!");
         // If there is a User that matches the current search, redirect to their profile page:
         history.push(`/users/${user.id}`);
       }
       else {
-        console.log("SEARCH DIDN'T MATCH");
-        console.log(user);
-        console.log("Current search: " + currentSearch);
+        // TODO: Handle displaying error message
       }
     })
   };
