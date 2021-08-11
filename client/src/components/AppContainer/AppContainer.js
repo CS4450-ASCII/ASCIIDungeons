@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import About from '../Pages/About/About';
@@ -14,7 +13,7 @@ function AppContainer(props) {
     <Switch>
       <Route path='/create' component={Create} />
       <Route exact path='/play' component={Play} />
-      <Route exact path='/profile' component={Profile} />
+      <Route exact path='/users/:userID' component={Profile} />
       <Route exact path='/about' component={About} />
       <Route exact path='/main' component={MainMenu} />
       <Redirect to='/main' />
