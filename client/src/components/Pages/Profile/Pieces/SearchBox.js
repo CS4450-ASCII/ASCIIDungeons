@@ -24,8 +24,6 @@ function SearchBox(props){
     userGraphql.USERS
   );
 
-  console.log(data);
-
   const handleClick = (event) => {
     data.users.map(user => {
       if(user.displayName === currentSearch){
