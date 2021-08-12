@@ -1,7 +1,8 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { userGraphql } from '../../../../graphql/user';
-import { useCurrentUser, useQueryWithError } from '../../../../helpers/customHooks';
+import { useCurrentUser, useMutationWithError, useQueryWithError } from '../../../../helpers/customHooks';
 import FormDialog from '../../../Common/Forms/FormDialog';
 import InputField from '../../../Common/Forms/InputField';
 
@@ -20,44 +21,39 @@ function EditProfileDialog(props) {
 
   const { currentUser } = useCurrentUser();
 
-  //const history = useHistory();
+  const history = useHistory();
 
-  // const [createGame] = useMutationWithError(gameGraphql.CREATE_GAME, {
-  //   update(cache, { data: { createGame } }) {
-  //     cache.modify({
-  //       fields: {
-  //         games(existingGames = []) {
-  //           const newGameRef = cache.writeFragment({
-  //             data: createGame,
-  //             fragment: gameGraphql.BASIC_GAME_FRAGMENT,
-  //           });
-
-  //           return [...existingGames, newGameRef];
-  //         },
-  //       },
-  //     });
-  //   },
-  // });
+  const [updateUser] = useMutationWithError(userGraphql.UPDATE_USER);
 
   const handleSubmit = async (values) => {
     onSubmit && onSubmit(values);
 
-    // const response = await createGame({
-    //   variables: {
-    //     params: values,
-    //   },
-    // });
+    console.log(values.displayName);
+    console.log(values.email);
 
-    // const newGameId = _.get(response, 'data.createGame.id');
-    // // navigate to the newly created game
-    // if (newGameId) {
-    //   history.replace(`/create/${newGameId}`);
+    const response = await updateUser({
+      variables: {
+        params: values
+      },
+    });
+
+    console.log(response);
+
+    //const updatedDisplayName = _.get(response, 'data.updateUser.displayName');
+    //const updatedEmail = _.get(response, 'data.updateUser.email');
+
+    //console.log(updatedDisplayName);
+    //console.log(updatedEmail);
+
+    //Refresh page if successful:
+    // if (updatedDisplayName) {
+    //   history.go(0);
     // }
   };
 
   const formFields = [
     {
-      name: 'display name',
+      name: 'displayName',
       Component: InputField,
       noWrap: true,
     },
@@ -72,6 +68,11 @@ function EditProfileDialog(props) {
     return (
       <FormDialog
         {...{
+          initialValues: {
+            id: currentUser.id,
+            displayName: currentUser.displayName,
+            email: currentUser.email
+          },
           title,
           openButton,
           formFields,

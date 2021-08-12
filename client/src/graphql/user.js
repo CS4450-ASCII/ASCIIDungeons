@@ -75,10 +75,11 @@ query Users {
 const UPDATE_USER = gql`
   mutation UpdateUser($params: UserUpdateInput!) {
     updateUser(params: $params) {
-      ...AuthPayload
+      id
+      displayName
+      email
     }
   }
-  ${AUTH_PAYLOAD_FRAGMENT}
 `;
 
 export const userGraphql = {
