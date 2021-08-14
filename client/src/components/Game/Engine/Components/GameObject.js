@@ -1,15 +1,20 @@
 /** Game object parent class. */
 export class GameObject {
-  static GE = {};
+  //static GE = {};
 
   /** Builds a basic game object. */
   constructor() {
-    this.GE = GameObject.GE;
+    this.GE = {};
     this.x = 0;
     this.y = 0;
     this.layer = 'object';
     this.isTicking = false;
   }
+
+  /**
+   * Called after the game engine is fully running.
+   */
+  init() {}
 
   /**
    * Called before every frame.

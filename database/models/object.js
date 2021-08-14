@@ -1,7 +1,7 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Level extends Model {
+  class Object extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,25 +9,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Level.belongsTo(models.Game, {
-        foreignKey: 'gameId',
-        onDelete: 'CASCADE',
-        as: 'game',
+      Object.hasMany(models.GameObject, {
+        foreignKey: 'objectId',
+        as: 'gameObjects',
       });
     }
   }
-  Level.init(
+  Object.init(
     {
-      gameId: DataTypes.INTEGER,
-      title: { type: DataTypes.STRING(60), defaultValue: 'Untitled Level' },
-      width: DataTypes.SMALLINT,
-      height: DataTypes.SMALLINT,
-      mapData: DataTypes.JSONB,
+      baseType: DataTypes.SMALLINT,
+      gameEngineLayer: DataTypes.SMALLINT,
+      title: DataTypes.STRING(60),
+      character: DataTypes.STRING(1),
+      isPassable: DataTypes.BOOLEAN,
+      dataTemplate: DataTypes.JSONB,
     },
     {
       sequelize,
-      modelName: 'Level',
+      modelName: 'Object',
     },
   );
-  return Level;
+  return Object;
 };

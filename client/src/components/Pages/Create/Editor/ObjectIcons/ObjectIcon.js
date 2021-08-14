@@ -5,8 +5,10 @@ import React from 'react';
 
 function ObjectIcon(props) {
   const classes = useStyles();
-  const { object, isSelected } = props;
-  const { character, title } = object;
+  const { gameObject, isSelected } = props;
+  const {
+    object: { character, title },
+  } = gameObject;
 
   return (
     <div className={clsx(classes.objectIconRoot, { isSelected })} title={title}>
@@ -30,13 +32,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 ObjectIcon.propTypes = {
-  object: PropTypes.object,
+  gameObject: PropTypes.object,
 
   isSelected: PropTypes.bool,
 };
 
 ObjectIcon.defaultProps = {
-  object: {},
+  gameObject: { object: {} },
 
   isSelected: false,
 };

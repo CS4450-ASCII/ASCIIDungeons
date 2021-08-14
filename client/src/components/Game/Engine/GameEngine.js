@@ -1,29 +1,36 @@
+import { withStyles } from '@material-ui/core';
+import { Component } from 'react';
 import { EntityGrid } from './Components/EntityGrid';
-import { GameObject } from './Components/GameObject';
 import { Behaviour } from './Modules/Behaviour';
-import { GameModule } from './Modules/GameModule';
 import { InputHandler } from './Modules/InputHandler';
 import { Renderer } from './Modules/Renderer';
 
+const styles = {
+  gameEngineContainerRoot: {
+    marginTop: 12,
+    height: '95%',
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+};
 /** Runs all game based logic. */
-export class GameEngine {
-  /** The active game engine. */
-  static active = null;
-
+class GameEngine extends Component {
   /** Builds the game engine. */
-  constructor() {
-    /** List of current game objects. */
-    GameEngine.active = this;
-    GameObject.GE = this;
-    GameModule.GE = this;
+  constructor(props) {
+    super(props);
 
-    this.mountedGame = null;
+    const { showGridLines, mountedGame, objects = [] } = this.props;
+    /** List of current game objects. */
+    // GameEngine.active = this;
+    //GameObject.GE = this;
+    //GameModule.GE = this;
+
+    this.mountedGame = mountedGame;
 
     this.container = null;
 
-    this.objects = [
-      
-    ];
+    this.objects = [];
 
     this.behaviour = new Behaviour();
 
@@ -33,6 +40,7 @@ export class GameEngine {
 
     /** Refernce to the current renderer module. */
     this.renderer = new Renderer();
+    this.renderer.showGridLines(showGridLines);
 
     /** List of modules to be executed. */
     this.pipeline = [this.behaviour, this.input, this.renderer];
@@ -40,6 +48,18 @@ export class GameEngine {
     for (const module of this.pipeline) {
       module.GE = this;
     }
+
+    for (const object of objects) {
+      this.addObject(object);
+    }
+
+    // this.state = {
+    //   showGridLines: showGrid,
+    // };
+  }
+
+  componentDidMount() {
+    this.start();
   }
 
   /** On every animation frame, run the pipeline. */
@@ -79,6 +99,7 @@ export class GameEngine {
       //Render Linking
       this.renderer.addObject(object, object.layer);
       if (object.isTicking) this.behaviour.addObject(object);
+      object.init();
     }
   }
 
@@ -135,6 +156,16 @@ export class GameEngine {
       this.renderer.gridX = level.width;
       this.renderer.gridY = level.height;
       this.renderer.resize();
+      obj.init();
     }
   }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div id='gameContainer' className={classes.gameEngineContainerRoot}></div>
+    );
+  }
 }
+
+export default withStyles(styles)(GameEngine);

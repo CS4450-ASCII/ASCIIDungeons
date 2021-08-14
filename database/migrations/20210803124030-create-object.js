@@ -1,37 +1,29 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Levels', {
+    await queryInterface.createTable('Objects', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      gameId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Games',
-          key: 'id',
-          as: 'gameId',
-        },
+      baseType: {
+        type: Sequelize.SMALLINT,
+      },
+      gameEngineLayer: {
+        type: Sequelize.SMALLINT,
       },
       title: {
-        allowNull: true,
         type: Sequelize.STRING(60),
-        defaultValue: 'Untitled Level',
       },
-      width: {
-        allowNull: false,
-        type: Sequelize.SMALLINT,
+      character: {
+        type: Sequelize.STRING(1),
       },
-      height: {
-        allowNull: false,
-        type: Sequelize.SMALLINT,
+      isPassable: {
+        type: Sequelize.BOOLEAN,
       },
-      mapData: {
+      dataTemplate: {
         type: Sequelize.JSONB,
       },
       createdAt: {
@@ -45,6 +37,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Levels');
+    await queryInterface.dropTable('Objects');
   },
 };

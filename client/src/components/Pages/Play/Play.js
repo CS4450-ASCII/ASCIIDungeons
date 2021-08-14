@@ -1,9 +1,64 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import _ from 'lodash';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { gameGraphql } from '../../../graphql/game';
+import { useQueryWithError } from '../../../helpers/customHooks';
+import LoadingContainer from '../../Common/LoadingContainer';
 import { WelcomeScreen } from '../../Game/Engine/Components/WelcomeScreen';
-import { GameEngine } from '../../Game/Engine/GameEngine';
-import { Game } from "../../Game/Engine/TestData/PrototypeGame";
-import GameContainer from '../../Game/GameContainer';
+import GameEngine from '../../Game/Engine/GameEngine';
+import { translateDBLevelToObjects } from '../../Game/Engine/Tools/Translator';
+
+function Play(props) {
+  const classes = useStyles();
+  const { gameId } = useParams();
+  const {} = props;
+
+  const [mountedGame, setMountedGame] = useState(null);
+
+  // const [gameEngine] = useState(new GameEngine());
+  const { data, loading } = useQueryWithError(gameGraphql.QUERY_FULL_GAME, {
+    variables: {
+      id: gameId,
+    },
+    onCompleted: ({ game }) => {
+      // convert game to mountedGame
+      const convertedLevels = _.map(game.levels, (level) =>
+        translateDBLevelToObjects(level),
+      );
+
+      const mountedGame = {
+        title: game.title,
+        levelIndex: -1,
+        nextLevel: function () {
+          this.levelIndex++;
+          return this.levels[this.levelIndex];
+        },
+        levels: convertedLevels,
+      };
+
+      setMountedGame(mountedGame);
+    },
+  });
+
+  // useEffect(() => {}, [gameId]);
+
+  // useEffect(() => {
+  //   gameEngine.mountedGame = Game;
+  //   gameEngine.renderer.showGridLines(false);
+  //   gameEngine.objects.push(new WelcomeScreen());
+  //   gameEngine.renderer.gridX = 60;
+  //   gameEngine.start();
+  // }, []);
+
+  if (loading || !mountedGame) return <LoadingContainer />;
+
+  return (
+    <div className={classes.root}>
+      <GameEngine mountedGame={mountedGame} objects={[new WelcomeScreen()]} />
+    </div>
+  );
+}
 
 const useStyles = makeStyles({
   root: {
@@ -11,26 +66,5 @@ const useStyles = makeStyles({
     height: 600,
   },
 });
-
-function Play(props) {
-  const classes = useStyles();
-  const {} = props;
-
-  const [gameEngine] = useState(new GameEngine());
-
-  useEffect(() => {
-    gameEngine.mountedGame = Game;
-    gameEngine.renderer.showGridLines(false);
-    gameEngine.objects.push(new WelcomeScreen());
-    gameEngine.renderer.gridX = 60;
-    gameEngine.start();
-  }, []);
-
-  return (
-    <div className={classes.root}>
-      <GameContainer />
-    </div>
-  );
-}
 
 export default Play;

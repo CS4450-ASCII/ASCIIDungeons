@@ -16,7 +16,7 @@ mutation ($params: UserCreateInput!) {
 }
 
 {
-  "user": {
+  "params": {
     "displayName":"Test User",
     "email":"test@ascii.com",
     "password":"ascii123"
@@ -41,7 +41,7 @@ mutation($params: UserLoginInput!) {
 }
 
 {
-  "user": {
+  "params": {
     "email":"test@ascii.com",
     "password":"pass123"
   }

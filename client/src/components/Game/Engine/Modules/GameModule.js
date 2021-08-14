@@ -1,10 +1,10 @@
 /** A basic game engine module. */
 export class GameModule {
-  static GE = {};
+  //static GE = {};
 
   /** Builds a basic module. */
   constructor() {
-    this.GE = GameModule.GE;
+    this.GE = {};
   }
   /** For active modules, this is called by the pipeline each frame. */
   exec() {}

@@ -6,6 +6,7 @@ const BASIC_LEVEL_FRAGMENT = gql`
     title
     width
     height
+    mapData
   }
 `;
 
