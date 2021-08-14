@@ -20,17 +20,14 @@ class GameEngine extends Component {
   constructor(props) {
     super(props);
 
-    const { showGridLines, mountedGame, objects = [] } = this.props;
-    /** List of current game objects. */
-    // GameEngine.active = this;
-    //GameObject.GE = this;
-    //GameModule.GE = this;
+    const { showGridLines, mountedGame, objects = [], playerName } = this.props;
 
     this.mountedGame = mountedGame;
+    this.playerName = playerName;
 
     this.container = null;
 
-    this.objects = [];
+    this.objects = objects;
 
     this.behaviour = new Behaviour();
 
@@ -49,9 +46,9 @@ class GameEngine extends Component {
       module.GE = this;
     }
 
-    for (const object of objects) {
-      this.addObject(object);
-    }
+    // for (const object of objects) {
+    //   this.addObject(object);
+    // }
 
     // this.state = {
     //   showGridLines: showGrid,
@@ -87,13 +84,13 @@ class GameEngine extends Component {
 
     this.renderer.buildCanvases();
 
-    this.buildLevel();
+    this.init();
 
     requestAnimationFrame(this.runPipeline.bind(this));
   }
 
   /** Builds the current level. */
-  buildLevel() {
+  init() {
     for (const object of this.objects) {
       object.GE = this;
       //Render Linking
@@ -103,21 +100,22 @@ class GameEngine extends Component {
     }
   }
 
-  addObject(component) {
-    component.GE = this;
-    this.objects.push(component);
-    this.renderer.addObject(component, component.layer);
-    if (component.isTicking) this.behaviour.addObject(component);
+  addObject(object) {
+    object.GE = this;
+    this.objects.push(object);
+    this.renderer.addObject(object, object.layer);
+    if (object.isTicking) this.behaviour.addObject(object);
+    object.init();
   }
 
-  removeObject(component) {
-    component.remove();
+  removeObject(object) {
+    object.remove();
 
     this.objects = this.objects.filter(function (el) {
-      return el != component;
+      return el != object;
     });
-    this.renderer.removeObject(component, component.layer);
-    if (component.isTicking) this.behaviour.removeObject(component);
+    this.renderer.removeObject(object, object.layer);
+    if (object.isTicking) this.behaviour.removeObject(object);
   }
 
   getObjectByType(type) {
@@ -156,7 +154,6 @@ class GameEngine extends Component {
       this.renderer.gridX = level.width;
       this.renderer.gridY = level.height;
       this.renderer.resize();
-      obj.init();
     }
   }
 

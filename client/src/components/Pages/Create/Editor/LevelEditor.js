@@ -15,15 +15,13 @@ function LevelEditor(props) {
         <GameEngine
           showGrid={showGrid}
           objects={[
-            [
-              new Map({
-                gridItems: value,
-                onSpaceChange: (values) => {
-                  console.log(values);
-                },
-              }),
-              new Cursor(),
-            ],
+            new Map({
+              gridItems: value,
+              onSpaceChange: (values) => {
+                console.log(values);
+              },
+            }),
+            new Cursor(),
           ]}
         />
       )}

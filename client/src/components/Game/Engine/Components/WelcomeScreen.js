@@ -6,6 +6,7 @@ export class WelcomeScreen extends GameObject {
   /** Builds a WelcomeScreen. */
   constructor() {
     super();
+    // TODO: replace random data with faker for even more randomness.
     this.mcGuffinOwners = ['Steven Hawking', 'Batman', 'Merlin'];
 
     this.mcGuffinAdjs = ['Stinky', 'Legendary', 'Blue'];
@@ -19,11 +20,13 @@ export class WelcomeScreen extends GameObject {
   }
 
   init() {
+    this.GE.mountedGame.mcGuffin = this.genMcGuffin();
+
     this.dungeonMessage = new Message(
       'Welcome to ' + this.GE.mountedGame.title + '!',
     );
     this.mcGuffinMessage = new Message(
-      'Your mission is to find ' + this.genMcGuffin() + '.',
+      'Your mission is to find ' + this.GE.mountedGame.mcGuffin + '.',
       0,
       1,
     );
@@ -31,6 +34,10 @@ export class WelcomeScreen extends GameObject {
     this.beginMessage.clickCallback = function () {
       this.GE.loadGameLevel(this.GE.mountedGame.nextLevel());
     };
+
+    this.GE.renderer.gridX = 60;
+    this.GE.renderer.gridY = 10;
+    this.GE.renderer.resize();
   }
 
   step(deltatime) {

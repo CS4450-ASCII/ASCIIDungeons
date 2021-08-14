@@ -45,8 +45,8 @@ export class McGuffin extends GameObject {
 
         if (this.timeWaited >= this.timeToWait) {
           this.GE.reset();
-          this.GE.renderer.gridX = 40;
-          this.GE.renderer.gridY = 3;
+          this.GE.renderer.gridX = 65;
+          this.GE.renderer.gridY = 10;
           this.GE.renderer.resize();
           this.GE.addObject(new FinalScreen());
         }

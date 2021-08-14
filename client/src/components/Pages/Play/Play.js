@@ -3,7 +3,10 @@ import _ from 'lodash';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { gameGraphql } from '../../../graphql/game';
-import { useQueryWithError } from '../../../helpers/customHooks';
+import {
+  useCurrentUser,
+  useQueryWithError,
+} from '../../../helpers/customHooks';
 import LoadingContainer from '../../Common/LoadingContainer';
 import { WelcomeScreen } from '../../Game/Engine/Components/WelcomeScreen';
 import GameEngine from '../../Game/Engine/GameEngine';
@@ -14,6 +17,7 @@ function Play(props) {
   const { gameId } = useParams();
   const {} = props;
 
+  const { currentUser } = useCurrentUser();
   const [mountedGame, setMountedGame] = useState(null);
 
   // const [gameEngine] = useState(new GameEngine());
@@ -51,11 +55,15 @@ function Play(props) {
   //   gameEngine.start();
   // }, []);
 
-  if (loading || !mountedGame) return <LoadingContainer />;
+  if (loading || !mountedGame || !currentUser) return <LoadingContainer />;
 
   return (
     <div className={classes.root}>
-      <GameEngine mountedGame={mountedGame} objects={[new WelcomeScreen()]} />
+      <GameEngine
+        mountedGame={mountedGame}
+        objects={[new WelcomeScreen()]}
+        playerName={_.get(currentUser, 'displayName', 'Adventurer')}
+      />
     </div>
   );
 }
