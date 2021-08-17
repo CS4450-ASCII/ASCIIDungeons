@@ -4,6 +4,7 @@ type Game implements Timestamps {
   title: String
   description: String
   isPublished: Boolean!
+  createdBy: User!
 
   levels: [Level!]!
   gameObjects: [GameObject!]!
