@@ -1,7 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import Filter from './Filter';
-import GameListGamesContainer from './GameListGames';
+import VerticalTabs from './FilterTabs';
 
 const useStyles = makeStyles({
   root: {},
@@ -13,8 +12,7 @@ function GameList(props) {
 
   return (
     <div className={classes.root}>
-      <Filter />
-      <GameListGamesContainer/>
+      <VerticalTabs/>
     </div>
   );
 }

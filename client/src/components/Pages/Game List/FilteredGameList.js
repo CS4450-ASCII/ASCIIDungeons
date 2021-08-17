@@ -1,6 +1,6 @@
 import { makeStyles, Button } from '@material-ui/core';
 import _ from 'lodash';
-import React, {useState} from 'react';
+import React from 'react';
 import { graphqlGame } from '../../../graphql/game';
 import { useQueryWithError } from '../../../helpers/customHooks';
 import LoadingContainer from '../../Common/LoadingContainer';
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
 });
 
-function GameListGamesContainer(props) {
+function FilteredGamesContainer(props) {
   const { loading, data } = useQueryWithError(graphqlGame.QUERY_GAMES, {
     fetchPolicy: 'cache-first',
   });
@@ -28,36 +28,34 @@ function GameListGamesContainer(props) {
     return <LoadingContainer />;
   }
 
-  return <GameListGames {...props} games={_.get(data, 'games')} />;
-}
+  return <FilteredGameList {...props} games={_.get(data, 'games')} />;
+};
 
-export function GameListGames(props) {
+function FilteredGameList(props) {
   const classes = useStyles();
-  const { openButton, games, ...rest } = props;
-
-  const [selectedGame, setSelectedGame] = useState(null);
+  const { games, value } = props;
   const { path, url } = useRouteMatch();
   const history = useHistory();
 
   const onSubmit = () => {
     // Navigates to the play game route with specified id.
     history.replace(
-      `/play/${_.get(selectedGame, 'id')}/${_.get(
-        selectedGame,
+      `/play/${_.get('id')}/${_.get(
         'lastViewedLevel.id',
         '',
       )}`,
     );
   };
 
-  return (
-    games.map((game) => 
+  return(
+    games.filter(game => game.title.startsWith(value)).map(filteredGame => ( 
     <div className={classes.root}>
     <Button className={classes.container} onClick={() => onSubmit()}>
-      {game.title} By: User
+      {filteredGame.title}
     </Button>
     </div>
-  ))
+  )))
+  
 }
 
-export default GameListGamesContainer;
+export default FilteredGamesContainer;

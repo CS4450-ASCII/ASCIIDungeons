@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { GameEngine } from '../../Game/Engine/GameEngine';
-import GameContainer from '../../Game/GameContainer';
+import GameList from '../Game List/GameList';
 
 const useStyles = makeStyles({
   root: {
-    width: 600,
-    height: 600,
+    width: 400,
+    height: 400,
   },
 });
 
@@ -23,7 +23,7 @@ function Play(props) {
 
   return (
     <div className={classes.root}>
-      <GameContainer />
+      <GameList />
     </div>
   );
 }
