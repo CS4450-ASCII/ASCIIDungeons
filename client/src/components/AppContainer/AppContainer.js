@@ -19,11 +19,7 @@ function AppContainer(props) {
       <Route exact path='/profile' component={Profile} />
       <Route exact path='/about' component={About} />
       <Route exact path='/main' component={MainMenu} />
-<<<<<<< HEAD
-      <Route exact path='/gamelist' component={GameList} />
-=======
       <Route exact path='/secret' component={Secret} />
->>>>>>> remotes/origin/main
       <Redirect to='/main' />
     </Switch>
   );
