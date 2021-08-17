@@ -18,7 +18,7 @@ export class Map extends GameObject {
     this.collisionGrid = [];
 
     for (let i = 0; i < this.GE.renderer.gridY; i++) {
-      this.collisionGrid[i] = new Array(this.GE.renderer.gridX).fill(1);
+      this.collisionGrid[i] = new Array(this.GE.renderer.gridX).fill(0);
     }
 
     for (const item of this.gridItems) {
