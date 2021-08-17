@@ -94,7 +94,7 @@ export default function VerticalTabs() {
         <Tab label="Z" {...a11yProps(25)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <FilteredGamesContainer value = 'A' />
+        <FilteredGamesContainer value = 'A'/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <FilteredGamesContainer value = 'B' />

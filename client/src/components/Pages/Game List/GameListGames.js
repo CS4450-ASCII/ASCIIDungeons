@@ -1,7 +1,7 @@
 import { makeStyles, Button } from '@material-ui/core';
 import _ from 'lodash';
 import React, {useState} from 'react';
-import { graphqlGame } from '../../../graphql/game';
+import { gameGraphql } from '../../../graphql/game';
 import { useQueryWithError } from '../../../helpers/customHooks';
 import LoadingContainer from '../../Common/LoadingContainer';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 });
 
 function GameListGamesContainer(props) {
-  const { loading, data } = useQueryWithError(graphqlGame.QUERY_GAMES, {
+  const { loading, data } = useQueryWithError(gameGraphql.QUERY_GAMES, {
     fetchPolicy: 'cache-first',
   });
 

@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { GameEngine } from '../../Game/Engine/GameEngine';
+import React from 'react';
 import GameList from '../Game List/GameList';
 
 const useStyles = makeStyles({
@@ -13,13 +12,6 @@ const useStyles = makeStyles({
 function Play(props) {
   const classes = useStyles();
   const {} = props;
-
-  const [gameEngine] = useState(new GameEngine());
-
-  useEffect(() => {
-    gameEngine.renderer.showGridLines(false);
-    gameEngine.start();
-  }, []);
 
   return (
     <div className={classes.root}>
