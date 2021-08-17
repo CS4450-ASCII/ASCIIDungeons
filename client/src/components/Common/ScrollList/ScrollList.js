@@ -20,9 +20,10 @@ function ScrollList(props) {
     itemSize,
     alignItems,
     emptyMessage,
+    initialSelection,
   } = props;
 
-  const [selectedIndex, setSelectedIndex] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(initialSelection);
 
   function renderRow(props) {
     const { index, style } = props;
@@ -30,9 +31,11 @@ function ScrollList(props) {
     const selected = selectedIndex === index;
 
     const handleChange = (index) => {
-      onSelectionChange(rows[index]);
+      onSelectionChange({ selection: rows[index], selectedIndex: index });
       setSelectedIndex(index);
     };
+
+    const title = _.get(rows, `[${index}].title`, 'Untitled');
 
     return (
       <ListItem
@@ -45,12 +48,22 @@ function ScrollList(props) {
         key={index}
         onClick={() => handleChange(index)}
         selected={selected}
+        title={title}
       >
-        <ListItemText primary={_.get(rows, `[${index}].title`, 'Untitled')} />
+        <ListItemText
+          primary={title}
+          primaryTypographyProps={{
+            style: {
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            },
+          }}
+        />
       </ListItem>
     );
   }
 
+  // TODO: Scroll to the currently selected item so it is shown on load.
   return rows.length > 0 ? (
     <FixedSizeList
       height={height}
@@ -86,7 +99,7 @@ ScrollList.propTypes = {
 
   /**
    * The function to call whenever the selected item is changed.
-   * Of format: (selectedItem) => { };
+   * Of format: ({ selectedItem, index }) => { };
    */
   onSelectionChange: PropTypes.func,
 
@@ -112,7 +125,7 @@ ScrollList.defaultProps = {
   height: 240,
   itemSize: 60,
   alignItems: 'center',
-  onSelectionChange: (selection) => alert(JSON.stringify(selection)),
+  onSelectionChange: ({ selection, index }) => alert(JSON.stringify(selection)),
   emptyMessage: 'Nothing found.',
 };
 

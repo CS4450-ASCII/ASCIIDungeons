@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { graphqlGame } from '../../../../../graphql/game';
+import { gameGraphql } from '../../../../../graphql/game';
 import { useQueryWithError } from '../../../../../helpers/customHooks';
 import Dialog from '../../../../Common/Dialog';
 import ScrollList from '../../../../Common/ScrollList/ScrollList';
@@ -10,7 +10,7 @@ import ScrollList from '../../../../Common/ScrollList/ScrollList';
 function OpenGameDialogContainer(props) {
   // TODO: Query for a list of games created by the current user.
   // id, title, and description.
-  const { loading, data } = useQueryWithError(graphqlGame.QUERY_GAMES, {
+  const { loading, data } = useQueryWithError(gameGraphql.QUERY_GAMES, {
     fetchPolicy: 'cache-first',
   });
 
@@ -30,7 +30,7 @@ export function OpenGameDialog(props) {
     <>
       <ScrollList
         rows={games}
-        onSelectionChange={(selection) => setSelectedGame(selection)}
+        onSelectionChange={({ selection }) => setSelectedGame(selection)}
         emptyMessage={
           'No games found. Click the "New Game" option to create a new one.'
         }

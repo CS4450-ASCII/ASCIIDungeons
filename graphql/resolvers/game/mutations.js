@@ -2,19 +2,18 @@ import { ForbiddenError } from 'apollo-server-express';
 import { Game } from '../../../database/models';
 
 const gameMutations = {
-  createGame: async (
-    obj,
-    { params: { title, description } },
-    { currentUser },
-    info,
-  ) => {
+  createGame: async (obj, { params }, { currentUser }, info) => {
     const game = await Game.create({
-      title,
-      description,
+      ...params,
       createdById: currentUser.id,
     });
 
-    return game;
+    await game.reload();
+    const gameWithAssociations = await Game.findByPk(game.id, {
+      include: { all: true, include: { all: true } },
+    });
+
+    return gameWithAssociations;
   },
 
   updateGame: async (
@@ -23,13 +22,19 @@ const gameMutations = {
     { currentUser },
     info,
   ) => {
-    const game = await Game.findByPk(id);
+    const game = await Game.findByPk(id, {
+      include: { all: true, include: { all: true } },
+    });
     if (!game) throw new Error('Game not found');
     if (currentUser.id !== game.createdById) {
       throw new ForbiddenError('Action forbidden');
     }
 
-    game.update(gameParams);
+    await game.update(gameParams);
+    game.levels.forEach((level) => {
+      level.mapData = JSON.parse(level.mapData);
+      level.save();
+    });
 
     return game;
   },

@@ -4,7 +4,7 @@ import ScrollList from '../../../../../Common/ScrollList/ScrollList';
 
 function LevelList(props) {
   const classes = useStyles();
-  const { rows, onSelectionChange } = props;
+  const { rows, onSelectionChange, initialSelection } = props;
 
   return (
     <ScrollList
@@ -14,6 +14,7 @@ function LevelList(props) {
       itemSize={40}
       alignItems={'left'}
       emptyMessage={'No levels found. Click the "+" button to add one.'}
+      initialSelection={initialSelection}
     />
   );
 }

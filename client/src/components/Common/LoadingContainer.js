@@ -9,7 +9,11 @@ function LoadingContainer(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  loadingContainerRoot: {},
+  loadingContainerRoot: {
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+  },
 }));
 
 LoadingContainer.propTypes = {};

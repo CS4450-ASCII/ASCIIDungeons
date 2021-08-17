@@ -10,17 +10,12 @@ type Query {
   levels: [Level]!
   level(id: ID!): Level
 
-  levelGameEntities: [LevelGameEntity]!
-  levelGameEntity(id: ID!): LevelGameEntity
-
-  entities: [Entity]!
-  entity(id: ID!): Entity
-
   games(filter: String): [Game]!
-  game(id: ID!): Game
+  game(id: ID!): Game!
+  editorContext(gameId: ID!, levelIndex: ID): EditorContext!
 
-  gameEntities: [GameEntity]!
-  gameEntity(id: ID!): GameEntity
+  gameEntities: [GameObject]!
+  gameObject(id: ID!): GameObject
 }
 
 type Mutation {
@@ -32,4 +27,8 @@ type Mutation {
   createGame(params: GameCreateInput!): Game!
   updateGame(params: GameUpdateInput!): Game!
   deleteGame(id: ID!): DeletionPayload!
+
+  createLevel(params: LevelCreateInput!): LevelCreateResult!
+  updateLevel(params: LevelUpdateInput!): Level!
+  deleteLevel(id: ID!): DeletionPayload!
 }

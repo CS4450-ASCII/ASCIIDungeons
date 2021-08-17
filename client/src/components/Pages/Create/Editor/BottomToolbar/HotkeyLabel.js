@@ -1,5 +1,5 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import React from 'react';
 
 function HotkeyLabel(props) {
   const classes = useStyles();
@@ -16,10 +16,11 @@ function HotkeyLabel(props) {
 
 const useStyles = makeStyles({
   hotkeyLabelRoot: {
-    paddingLeft: '3em'
+    paddingLeft: '3em',
+    flex: '0 0 auto',
   },
   separator: {
-    padding: '0 4px'
+    padding: '0 4px',
   },
   hotkey: {
     color: 'black',
@@ -28,8 +29,8 @@ const useStyles = makeStyles({
     width: '25px',
     display: 'inline-flex',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default HotkeyLabel;

@@ -1,4 +1,4 @@
-import {GameModule} from './GameModule';
+import { GameModule } from './GameModule';
 
 /** This module will cause game components to tick each frame. It also passes in relavent info like delta time and inputs. */
 export class Behaviour extends GameModule {
@@ -27,5 +27,9 @@ export class Behaviour extends GameModule {
 
   removeObject(object) {
     this.OBJECTS = this.OBJECTS.filter(function(el){return el != object});
+  }
+
+  reset() {
+    this.OBJECTS = [];
   }
 }

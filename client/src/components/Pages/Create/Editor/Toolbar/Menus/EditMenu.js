@@ -7,6 +7,8 @@ function EditMenu(props) {
   const {} = props;
 
   const menuGroups = [
+    // TODO: Add Game Info option that allows updating the game title and description.
+    // [{ label: 'Game Info' }],
     [
       { label: 'Undo', hotkey: 'Ctrl-Z' },
       { label: 'Redo', hotkey: 'Ctrl-V' },

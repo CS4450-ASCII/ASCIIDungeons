@@ -3,7 +3,7 @@ import _ from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import { graphqlUser } from '../../graphql/user';
+import { userGraphql } from '../../graphql/user';
 import authHelper from '../../helpers/authentication';
 import { useMutationWithError } from '../../helpers/customHooks';
 import formValidations from '../../helpers/formValidations';
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 function SignUpPage(props) {
   const classes = useStyles();
 
-  const [createUser] = useMutationWithError(graphqlUser.CREATE_USER, {
+  const [createUser] = useMutationWithError(userGraphql.CREATE_USER, {
     onCompleted: ({ createUser }) => {
       authHelper.setAccessToken(createUser.token);
     },

@@ -12,6 +12,17 @@ module.exports = (sequelize, DataTypes) => {
       Game.belongsTo(models.User, {
         foreignKey: 'createdById',
         onDelete: 'CASCADE',
+        as: 'createdBy',
+      });
+
+      Game.hasMany(models.Level, {
+        foreignKey: 'gameId',
+        as: 'levels',
+      });
+
+      Game.hasMany(models.GameObject, {
+        foreignKey: 'gameId',
+        as: 'gameObjects',
       });
     }
   }
@@ -25,6 +36,20 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Game',
+      hooks: {
+        afterCreate: async (game, options) => {
+          const systemObjects = await sequelize.models.Object.findAll({
+            where: { baseType: 0 },
+          });
+
+          systemObjects.forEach((object) => {
+            sequelize.models.GameObject.create({
+              gameId: game.id,
+              objectId: object.id,
+            });
+          });
+        },
+      },
     },
   );
   return Game;

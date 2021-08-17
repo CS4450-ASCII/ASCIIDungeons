@@ -4,9 +4,18 @@ type Game implements Timestamps {
   title: String
   description: String
   isPublished: Boolean!
+  createdBy: User!
+
+  levels: [Level!]!
+  gameObjects: [GameObject!]!
 
   createdAt: Date!
   updatedAt: Date!
+}
+
+type EditorContext {
+  currentGame: Game!
+  currentLevel: Level
 }
 
 input GameCreateInput {
@@ -19,4 +28,5 @@ input GameUpdateInput {
   title: String
   description: String
   isPublished: Boolean
+  levels: [LevelUpdateInput]
 }

@@ -16,7 +16,7 @@ module.exports = {
       {
         createdById: 1,
         title: 'Test Game',
-        description: 'What an great test game.',
+        description: 'What a great test game.',
         isPublished: false,
         createdAt: new Date(),
         updatedAt: new Date(),
