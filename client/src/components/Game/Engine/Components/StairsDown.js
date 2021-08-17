@@ -2,6 +2,7 @@ import { EntityGrid } from './EntityGrid';
 import { GameObject } from './GameObject';
 import { Map } from './Map';
 import { Player } from './Player';
+import { TimedMessage } from './TimedMessage';
 
 /** Stairs used to move to the next level. */
 export class StairsDown extends GameObject {
@@ -26,6 +27,7 @@ export class StairsDown extends GameObject {
 
     this.grid = null;
     this.MAP = null;
+    this.fakeMessage = null;
   }
 
   step(deltatime) {
@@ -51,10 +53,23 @@ export class StairsDown extends GameObject {
         this.timeWaited += deltatime;
 
         if (this.timeWaited >= this.timeToWait && this.GE.mountedGame.hasNextLevel()) this.GE.loadGameLevel(this.GE.mountedGame.nextLevel());
+        else if (!this.GE.mountedGame.hasNextLevel() && this.timeWaited >= this.timeToWait) {
+          if (!this.fakeMessage) {
+            this.fakeMessage = new TimedMessage("DEAD END!");
+            this.GE.addObject(this.fakeMessage);
+          }
+
+          this.fakeMessage.x = ent.x - 4;
+          this.fakeMessage.y = ent.y - 1;
+        }
       }
     }
 
-    if (!found) this.timeWaited = 0;
+    if (!found) {
+      this.timeWaited = 0;
+      if (this.fakeMessage) this.fakeMessage.hangTime = -1;
+      this.fakeMessage = null;
+    }
   }
 
   draw(renderer) {

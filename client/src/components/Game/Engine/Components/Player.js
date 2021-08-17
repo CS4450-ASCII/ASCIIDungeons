@@ -32,7 +32,7 @@ export class Player extends GameObject {
     if (!this.MAP) {
       this.MAP = this.GE.getObjectByType(Map);
       if (!this.MAP) return;
-      this.MAP.setSpace(this.x, this.y, { character: "." });
+      //this.MAP.setSpace(this.x, this.y, { character: "." });
     }
 
     if (!this.grid) {
