@@ -14,8 +14,29 @@ export class Map extends GameObject {
     this.mapProps = mapProps;
   }
 
+  init() {
+    this.collisionGrid = [];
+
+    for (let i = 0; i < this.GE.renderer.gridY; i++) {
+      this.collisionGrid[i] = new Array(this.GE.renderer.gridX).fill(0);
+    }
+
+    for (const item of this.gridItems) {
+      this.collisionGrid[item.y][item.x] = this.convertToCollisionValue(item.character);
+    }
+  }
+
   draw(renderer) {
     renderer.drawMap(this);
+  }
+
+  getCollisionAt(x, y) {
+    return this.collisionGrid[y][x];
+  }
+
+  convertToCollisionValue(char) {
+    if (char === "." || char === "#") return 0;
+    else return 2;
   }
 
   getCharAt(x, y) {
@@ -40,6 +61,8 @@ export class Map extends GameObject {
 
     _.invoke(this.mapProps, 'onSpaceChange', [...this.gridItems]);
     this.GE.renderer.redrawBackground = true;
+
+    this.collisionGrid[y][x] = this.convertToCollisionValue(gameObject.character);
   }
 
   clearSpace(x, y) {
@@ -47,5 +70,7 @@ export class Map extends GameObject {
 
     this.gridItems[y][x] = undefined;
     this.GE.renderer.redrawBackground = true;
+
+    this.collisionGrid[y][x] = 1;
   }
 }

@@ -150,9 +150,9 @@ class GameEngine extends Component {
     this.objects.push(new EntityGrid());
 
     for (const obj of level.objects) {
-      this.addObject(obj);
       this.renderer.gridX = level.width;
       this.renderer.gridY = level.height;
+      this.addObject(obj);
       this.renderer.resize();
     }
   }

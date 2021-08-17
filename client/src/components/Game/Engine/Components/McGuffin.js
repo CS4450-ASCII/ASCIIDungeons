@@ -1,6 +1,7 @@
 import { EntityGrid } from './EntityGrid';
 import { FinalScreen } from './FinalScreen';
 import { GameObject } from './GameObject';
+import { Map } from './Map';
 import { Player } from './Player';
 
 /** Stairs used to move to the next level. */
@@ -28,6 +29,12 @@ export class McGuffin extends GameObject {
   }
 
   step(deltatime) {
+    if (!this.MAP) {
+      this.MAP = this.GE.getObjectByType(Map);
+      if (!this.MAP) return;
+      this.MAP.setSpace(this.x, this.y, { character: "." });
+    }
+
     if (!this.grid) {
       this.grid = this.GE.getObjectByType(EntityGrid);
       if (!this.grid) return;
