@@ -31,6 +31,19 @@ const QUERY_GAME = gql`
   ${BASIC_GAME_FRAGMENT}
 `;
 
+const QUERY_FULL_GAME = gql`
+  query GetFullGame($id: ID!) {
+    game(id: $id) {
+      ...BasicGame
+      levels {
+        ...FullLevel
+      }
+    }
+  }
+  ${BASIC_GAME_FRAGMENT}
+  ${levelGraphql.FULL_LEVEL_FRAGMENT}
+`;
+
 const EDITOR_CONTEXT = gql`
   query EditorContext($gameId: ID!, $levelIndex: ID) {
     editorContext(gameId: $gameId, levelIndex: $levelIndex) {
@@ -81,6 +94,7 @@ export const gameGraphql = {
   CREATE_GAME,
   QUERY_GAMES,
   QUERY_GAME,
+  QUERY_FULL_GAME,
   EDITOR_CONTEXT,
   UPDATE_GAME,
 };

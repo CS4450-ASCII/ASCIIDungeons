@@ -309,7 +309,7 @@ export class Renderer extends GameModule {
    */
   drawMap(object) {
     _.forEach(object.gridItems, (object) => {
-      if (object) this.drawChar(object);
+      this.drawChar(object);
     });
   }
 
@@ -339,9 +339,30 @@ export class Renderer extends GameModule {
     );
   }
 
+  drawText(object) {
+    let text = object.text;
+    let x = object.x * this.fontsize;
+    let y = object.y * this.fontsize + this.fontsize;
+    let textColor = object.tColor;
+
+    this.currentCtx.font = this.fontsize + 'px IBMBios';
+    this.currentCtx.fillStyle = textColor;
+    this.currentCtx.fillText(
+      text,
+      x + Math.floor(this.fontsize / 24),
+      y - Math.floor(this.fontsize / 9),
+    );
+  }
+
   showGridLines(state) {
     this.gridLines = state;
     this.redrawForeground = true;
+  }
+
+  reset() {
+    for (let layer of this.layers) {
+      layer.objects = [];
+    }
   }
 
   /**

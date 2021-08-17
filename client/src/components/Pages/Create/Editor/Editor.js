@@ -95,6 +95,7 @@ function Editor(props) {
   const { id, isPublished } = currentGame;
 
   const [gridItems, setGridItems] = useState(() => {
+    // TODO: Replace with mapData parser method.
     let gridItems = _.get(currentLevel, 'mapData');
     try {
       gridItems = JSON.parse(gridItems) || [];

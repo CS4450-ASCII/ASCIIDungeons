@@ -1,7 +1,6 @@
 import { withStyles } from '@material-ui/core';
 import { Component } from 'react';
-import { Cursor } from './Components/Cursor';
-import { Map } from './Components/Map';
+import { EntityGrid } from './Components/EntityGrid';
 import { Behaviour } from './Modules/Behaviour';
 import { InputHandler } from './Modules/InputHandler';
 import { Renderer } from './Modules/Renderer';
@@ -21,12 +20,15 @@ class GameEngine extends Component {
   constructor(props) {
     super(props);
 
-    const { gridItems, mapProps, showGridLines } = this.props;
-    /** List of current game objects. */
-    GameEngine.active = this;
+    const { showGridLines, mountedGame, objects = [], playerName } = this.props;
+
+    this.mountedGame = mountedGame;
+    this.playerName = playerName;
 
     this.container = null;
-    this.objects = [new Map(mapProps), new Cursor(this)];
+
+    this.objects = objects;
+
     this.behaviour = new Behaviour();
 
     /** Refernce to the current input module. */
@@ -43,6 +45,10 @@ class GameEngine extends Component {
     for (const module of this.pipeline) {
       module.GE = this;
     }
+
+    // for (const object of objects) {
+    //   this.addObject(object);
+    // }
 
     // this.state = {
     //   showGridLines: showGrid,
@@ -78,33 +84,38 @@ class GameEngine extends Component {
 
     this.renderer.buildCanvases();
 
-    this.buildLevel();
+    this.init();
 
     requestAnimationFrame(this.runPipeline.bind(this));
   }
 
   /** Builds the current level. */
-  buildLevel() {
+  init() {
     for (const object of this.objects) {
       object.GE = this;
       //Render Linking
       this.renderer.addObject(object, object.layer);
       if (object.isTicking) this.behaviour.addObject(object);
+      object.init();
     }
   }
 
-  addObject(component) {
-    this.objects.push(component);
-    this.renderer.addObject(component, component.layer);
-    if (component.isTicking) this.behaviour.addObject(component);
+  addObject(object) {
+    object.GE = this;
+    this.objects.push(object);
+    this.renderer.addObject(object, object.layer);
+    if (object.isTicking) this.behaviour.addObject(object);
+    object.init();
   }
 
-  removeObject(component) {
+  removeObject(object) {
+    object.remove();
+
     this.objects = this.objects.filter(function (el) {
-      return el != component;
+      return el != object;
     });
-    this.renderer.removeObject(component, component.layer);
-    if (component.isTicking) this.behaviour.removeObject(component);
+    this.renderer.removeObject(object, object.layer);
+    if (object.isTicking) this.behaviour.removeObject(object);
   }
 
   getObjectByType(type) {
@@ -123,6 +134,27 @@ class GameEngine extends Component {
 
     if (ret.length > 0) return ret;
     return null;
+  }
+
+  reset() {
+    this.objects = [];
+
+    for (let module of this.pipeline) {
+      module.reset();
+    }
+  }
+
+  loadGameLevel(level) {
+    this.reset();
+
+    this.objects.push(new EntityGrid());
+
+    for (const obj of level.objects) {
+      this.renderer.gridX = level.width;
+      this.renderer.gridY = level.height;
+      this.addObject(obj);
+      this.renderer.resize();
+    }
   }
 
   render() {
