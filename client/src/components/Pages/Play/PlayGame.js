@@ -12,7 +12,7 @@ import { WelcomeScreen } from '../../Game/Engine/Components/WelcomeScreen';
 import GameEngine from '../../Game/Engine/GameEngine';
 import { translateDBLevelToObjects } from '../../Game/Engine/Tools/Translator';
 
-function Play(props) {
+function PlayGame(props) {
   const classes = useStyles();
   const { gameId } = useParams();
   const {} = props;
@@ -75,4 +75,4 @@ const useStyles = makeStyles({
   },
 });
 
-export default Play;
+export default PlayGame;
