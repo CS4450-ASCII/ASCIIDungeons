@@ -2,17 +2,15 @@ import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { gameGraphql } from '../../../graphql/game';
 import {
-  useCurrentUser,
-  useQueryWithError
+  useCurrentUser
 } from '../../../helpers/customHooks';
 import LoadingContainer from '../../Common/LoadingContainer';
 import { WelcomeScreen } from '../../Game/Engine/Components/WelcomeScreen';
 import GameEngine from '../../Game/Engine/GameEngine';
-import { translateDBLevelToObjects } from '../../Game/Engine/Tools/Translator';
+import { Game } from '../../Game/Engine/TestData/SecretGame';
 
-function Play(props) {
+function Secret(props) {
   const classes = useStyles();
   const { gameId } = useParams();
   const { } = props;
@@ -21,7 +19,7 @@ function Play(props) {
   const [mountedGame, setMountedGame] = useState(null);
 
   // const [gameEngine] = useState(new GameEngine());
-  const { data, loading } = useQueryWithError(gameGraphql.QUERY_FULL_GAME, {
+  /*const { data, loading } = useQueryWithError(gameGraphql.QUERY_FULL_GAME, {
     variables: {
       id: gameId,
     },
@@ -46,7 +44,7 @@ function Play(props) {
 
       setMountedGame(mountedGame);
     },
-  });
+  });*/
 
   // useEffect(() => {}, [gameId]);
 
@@ -58,12 +56,12 @@ function Play(props) {
   //   gameEngine.start();
   // }, []);
 
-  if (loading || !mountedGame || !currentUser) return <LoadingContainer />;
+  if (!currentUser) return <LoadingContainer />;
 
   return (
     <div className={classes.root}>
       <GameEngine
-        mountedGame={mountedGame}
+        mountedGame={Game}
         objects={[new WelcomeScreen()]}
         playerName={_.get(currentUser, 'displayName', 'Adventurer')}
       />
@@ -78,4 +76,4 @@ const useStyles = makeStyles({
   },
 });
 
-export default Play;
+export default Secret;

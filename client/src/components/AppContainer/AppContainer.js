@@ -5,9 +5,10 @@ import Create from '../Pages/Create/Create';
 import MainMenu from '../Pages/MainMenu/MainMenu';
 import Play from '../Pages/Play/Play';
 import Profile from '../Pages/Profile/Profile';
+import Secret from '../Pages/Secret/Secret';
 
 function AppContainer(props) {
-  const {} = props;
+  const { } = props;
 
   return (
     <Switch>
@@ -16,6 +17,7 @@ function AppContainer(props) {
       <Route exact path='/profile' component={Profile} />
       <Route exact path='/about' component={About} />
       <Route exact path='/main' component={MainMenu} />
+      <Route exact path='/secret' component={Secret} />
       <Redirect to='/main' />
     </Switch>
   );

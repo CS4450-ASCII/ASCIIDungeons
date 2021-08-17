@@ -19,6 +19,7 @@ export class Player extends GameObject {
     this.x = x;
     this.y = y;
     this.layer = 'player';
+    this.collisionValue = 0;
 
     this.walkable = ['.', '#'];
     this.timeTillWalk = 0;
@@ -31,12 +32,27 @@ export class Player extends GameObject {
     if (!this.MAP) {
       this.MAP = this.GE.getObjectByType(Map);
       if (!this.MAP) return;
+      this.MAP.setSpace(this.x, this.y, { character: "." });
     }
 
     if (!this.grid) {
       this.grid = this.GE.getObjectByType(EntityGrid);
       if (!this.grid) return;
       this.grid.addEntity(this);
+    }
+
+    this.collisionValue += 0 + input.wasKeyPressed("p");
+    this.collisionValue *= (this.collisionValue <= 2);
+
+    switch (this.collisionValue) {
+      case 0:
+        this.character = "@";
+        break;
+      case 1:
+        this.character = "d";
+        break;
+      case 2:
+        this.character = "g";
     }
 
     this.timeTillWalk -= deltatime;
@@ -47,9 +63,12 @@ export class Player extends GameObject {
       let YVector =
         0 + !!input.KEYS_DOWN['w'] * -1 + !!input.KEYS_DOWN['s'] * 1;
 
+      if (this.x + XVector < 0 || this.x + XVector >= this.GE.renderer.gridX) XVector = 0;
+      if (this.y + YVector < 0 || this.y + YVector >= this.GE.renderer.gridY) YVector = 0;
+
       if (
-        this.checkBackgroundWalkable(
-          this.MAP.getCharAt(this.x + XVector, this.y + YVector),
+        this.checkWalkable(
+          this.MAP.getCollisionAt(this.x + XVector, this.y + YVector),
         )
       ) {
         this.x += XVector;
@@ -59,11 +78,11 @@ export class Player extends GameObject {
         return;
       }
 
-      XVector *= this.checkBackgroundWalkable(
-        this.MAP.getCharAt(this.x + XVector, this.y),
+      XVector *= this.checkWalkable(
+        this.MAP.getCollisionAt(this.x + XVector, this.y),
       );
-      YVector *= this.checkBackgroundWalkable(
-        this.MAP.getCharAt(this.x, this.y + YVector),
+      YVector *= this.checkWalkable(
+        this.MAP.getCollisionAt(this.x, this.y + YVector),
       );
 
       if (XVector != 0 && YVector != 0) YVector = 0;
@@ -78,11 +97,8 @@ export class Player extends GameObject {
     }
   }
 
-  checkBackgroundWalkable(slot) {
-    for (const walk of this.walkable) {
-      if (walk === slot) return true;
-    }
-    return true;
+  checkWalkable(value) {
+    return value <= this.collisionValue;
   }
 
   draw(renderer) {
