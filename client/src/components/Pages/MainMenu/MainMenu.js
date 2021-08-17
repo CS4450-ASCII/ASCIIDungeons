@@ -34,7 +34,7 @@ function MainMenu(props) {
     >
       {navLinks.map(link => (
         <Grid item key={`nav-link-${link}`} className={classes.navItem}>
-          <Button onClick={() => history.push(overrideLink.profile || link)}>
+          <Button onClick={() => history.push(overrideLink[link] || link)}>
             {_.startCase(link)}
           </Button>
         </Grid>
