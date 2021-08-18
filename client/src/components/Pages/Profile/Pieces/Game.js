@@ -1,6 +1,5 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useCurrentUser } from '../../../../helpers/customHooks';
+import React from 'react';
 
 const useStyles = makeStyles({
   root: {
@@ -27,22 +26,15 @@ const useStyles = makeStyles({
 
 function Game(props){
   const classes = useStyles();
-  const {} = props;
-
-  const desc1 = ["Very", "Super"];
-  const desc2 = ["Cool", "Dumb"];
-
-  const { currentUser } = useCurrentUser();
-
-  const { displayName, email } = currentUser || {};
+  const { displayName, title, description} = props;
 
   const rating = Math.ceil(Math.random()*100);
 
   return <div className={classes.root}>
     <div className={classes.container}>
-      <p>{desc1[Math.round(Math.random())]} {desc2[Math.round(Math.random())]} Game</p>
-      <p>By: {displayName || email || 'Adventurer'}</p>
-      <p><span className={rating > 75 ? classes.goodRating : rating > 50 ? classes.mehRating : classes.badRating}>{rating}%</span>/{Math.ceil(Math.random()*999)}</p>
+      <p>{ title }</p>
+      <p>By: { displayName }</p>
+      <p>{ description }</p>
     </div>
   </div>;
 }

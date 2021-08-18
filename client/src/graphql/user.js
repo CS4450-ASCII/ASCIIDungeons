@@ -56,6 +56,7 @@ query User($id: ID!) {
     email
     games {
       title
+      description
     }
   }
 }

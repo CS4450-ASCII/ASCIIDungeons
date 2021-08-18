@@ -52,7 +52,7 @@ function Profile(props) {
       <Divider />
       <Stats />
       <Divider />
-      <Games games={data.user.games}/>
+      <Games displayName={data.user.displayName} games={data.user.games}/>
       <Divider />
       <Divider />
       <Divider />
