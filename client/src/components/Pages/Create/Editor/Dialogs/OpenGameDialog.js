@@ -12,6 +12,9 @@ function OpenGameDialogContainer(props) {
   // id, title, and description.
   const { loading, data } = useQueryWithError(gameGraphql.QUERY_GAMES, {
     fetchPolicy: 'cache-first',
+    variables: {
+      filter: 'currentUser',
+    },
   });
 
   return <OpenGameDialog {...props} games={_.get(data, 'games')} />;

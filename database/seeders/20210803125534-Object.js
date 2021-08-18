@@ -14,14 +14,6 @@ module.exports = {
       ...sharedAttributes,
     };
 
-    const stairAttributes = {
-      gameEngineLayer: 0,
-      isPassable: true,
-      dataTemplate: JSON.stringify({
-        goToLevelId: null,
-      }),
-      ...sharedAttributes,
-    };
     const thickWalls = [
       ['╔', 'Top Left'],
       ['╦', 'Top Center'],
@@ -69,6 +61,19 @@ module.exports = {
       character,
       ...wallAttributes,
     }));
+
+    const stairAttributes = {
+      gameEngineLayer: 0,
+      isPassable: true,
+      dataTemplate: JSON.stringify({
+        stairsId: 'string',
+        goesTo: {
+          levelId: 'int',
+          stairsId: 'string',
+        },
+      }),
+      ...sharedAttributes,
+    };
 
     const stairs = [
       ['<', 'Up'],

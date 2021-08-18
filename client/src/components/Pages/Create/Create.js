@@ -11,7 +11,11 @@ function Create(props) {
   const classes = useStyles();
   const { path } = useRouteMatch();
 
-  const { loading, data } = useQueryWithError(gameGraphql.QUERY_GAMES);
+  const { loading, data } = useQueryWithError(gameGraphql.QUERY_GAMES, {
+    variables: {
+      filter: 'currentUser',
+    },
+  });
 
   if (loading) return <div>Loading...</div>;
 

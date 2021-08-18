@@ -47,6 +47,11 @@ const resolvers = {
       return JSON.stringify(level.mapData);
     },
   },
+  Object: {
+    dataTemplate: (object, args, context, info) => {
+      return JSON.stringify(object.dataTemplate);
+    },
+  },
 };
 
 export default resolvers;

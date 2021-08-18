@@ -5,6 +5,10 @@ type Object implements Timestamps {
   """
   id: ID!
 
+  baseType: Int!
+
+  gameEngineLayer: Int!
+
   """
   The display name of the symbol entity.
   """
@@ -14,6 +18,8 @@ type Object implements Timestamps {
   The display name of the data entity.
   """
   character: String
+  isPassable: Boolean!
+  dataTemplate: String
 
   # Interface required
 

@@ -44,6 +44,18 @@ const QUERY_FULL_GAME = gql`
   ${levelGraphql.FULL_LEVEL_FRAGMENT}
 `;
 
+const FULL_OBJECT_FRAGMENT = gql`
+  fragment FullObject on Object {
+    id
+    baseType
+    gameEngineLayer
+    title
+    character
+    isPassable
+    dataTemplate
+  }
+`;
+
 const EDITOR_CONTEXT = gql`
   query EditorContext($gameId: ID!, $levelIndex: ID) {
     editorContext(gameId: $gameId, levelIndex: $levelIndex) {
@@ -56,8 +68,7 @@ const EDITOR_CONTEXT = gql`
         gameObjects {
           id
           object {
-            character
-            title
+            ...FullObject
           }
         }
       }
@@ -69,6 +80,7 @@ const EDITOR_CONTEXT = gql`
   }
   ${BASIC_GAME_FRAGMENT}
   ${levelGraphql.FULL_LEVEL_FRAGMENT}
+  ${FULL_OBJECT_FRAGMENT}
 `;
 
 // Mutations
