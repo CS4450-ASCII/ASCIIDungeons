@@ -98,6 +98,8 @@ export class Player extends GameObject {
       if (this.x + XVector < 0 || this.x + XVector >= this.GE.renderer.gridX) XVector = 0;
       if (this.y + YVector < 0 || this.y + YVector >= this.GE.renderer.gridY) YVector = 0;
 
+      if(YVector === 0 && XVector === 0) return;
+
       if (
         this.checkWalkable(
           this.MAP.getCollisionAt(this.x + XVector, this.y + YVector),
