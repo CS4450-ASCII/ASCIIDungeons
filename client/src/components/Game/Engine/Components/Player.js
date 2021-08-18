@@ -1,6 +1,7 @@
 import { EntityGrid } from './EntityGrid';
 import { GameObject } from './GameObject';
 import { Map } from './Map';
+import { StairsUp } from './StairsUp';
 
 /** The player character. */
 export class Player extends GameObject {
@@ -26,13 +27,44 @@ export class Player extends GameObject {
     this.MAP = null;
     this.walkCoolDown = 200;
     this.grid = null;
+
+    this.firstTime = true;
+  }
+
+  init() {
+    this.MAP = this.GE.getObjectByType(Map);
+    this.grid = this.GE.getObjectByType(EntityGrid);
+
+    let playerExistsInLevel = false;
+
+    for (const row of this.grid.grid) {
+      if(!row) continue;
+      for (const space of row) {
+        if(!space) continue;
+        for (const ent of space) {
+          if(!ent) continue;
+          if(ent === this) playerExistsInLevel = true;
+        }
+      }
+    }
+
+    if(!playerExistsInLevel) this.grid.addEntity(this);
+
+    if(this.firstTime) {
+      let startStairs = new StairsUp(this.x, this.y);
+      startStairs.topLevelExit = true;
+      this.GE.mountedGame.levels[this.GE.mountedGame.levelIndex].objects.push(startStairs);
+      this.GE.addObject(startStairs);
+      this.firstTime = false;
+
+      this.MAP.setSpace(this.x, this.y, { character: "." });
+    }
   }
 
   step(deltatime, input) {
     if (!this.MAP) {
       this.MAP = this.GE.getObjectByType(Map);
       if (!this.MAP) return;
-      //this.MAP.setSpace(this.x, this.y, { character: "." });
     }
 
     if (!this.grid) {

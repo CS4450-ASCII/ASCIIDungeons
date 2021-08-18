@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core';
 import { Component } from 'react';
-import { EntityGrid } from './Components/EntityGrid';
+import { Player } from './Components/Player';
 import { Behaviour } from './Modules/Behaviour';
 import { InputHandler } from './Modules/InputHandler';
 import { Renderer } from './Modules/Renderer';
@@ -147,14 +147,19 @@ class GameEngine extends Component {
   loadGameLevel(level) {
     this.reset();
 
-    this.objects.push(new EntityGrid());
+    //this.objects.push(new EntityGrid());
+
+    this.renderer.gridX = level.width;
+    this.renderer.gridY = level.height;
 
     for (const obj of level.objects) {
-      this.renderer.gridX = level.width;
-      this.renderer.gridY = level.height;
+      if(obj instanceof Player) continue;
+      
       this.addObject(obj);
-      this.renderer.resize();
     }
+
+    this.addObject(this.mountedGame.player);
+    this.renderer.resize();
   }
 
   render() {

@@ -8,6 +8,7 @@ import {
   useQueryWithError
 } from '../../../helpers/customHooks';
 import LoadingContainer from '../../Common/LoadingContainer';
+import { Player } from '../../Game/Engine/Components/Player';
 import { WelcomeScreen } from '../../Game/Engine/Components/WelcomeScreen';
 import GameEngine from '../../Game/Engine/GameEngine';
 import { translateDBLevelToObjects } from '../../Game/Engine/Tools/Translator';
@@ -34,6 +35,8 @@ function PlayGame(props) {
       const mountedGame = {
         title: game.title,
         levelIndex: -1,
+        startLevelIndex: -1,
+        player: null,
         nextLevel: function () {
           this.levelIndex++;
           return this.levels[this.levelIndex];
@@ -43,6 +46,15 @@ function PlayGame(props) {
         },
         levels: convertedLevels,
       };
+
+      for (const level in convertedLevels) {
+        for (const object of convertedLevels[level].objects) {
+          if(object instanceof Player) {
+            mountedGame.player = object;
+            mountedGame.startLevelIndex = level;
+          }
+        }
+      }
 
       setMountedGame(mountedGame);
     },

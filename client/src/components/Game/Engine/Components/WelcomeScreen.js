@@ -1,3 +1,4 @@
+import { FailedScreen } from './FailedScreen';
 import { GameObject } from './GameObject';
 import { Message } from './Message';
 
@@ -32,7 +33,17 @@ export class WelcomeScreen extends GameObject {
     );
     this.beginMessage = new Message('BEGIN', 0, 3, true);
     this.beginMessage.clickCallback = function () {
-      this.GE.loadGameLevel(this.GE.mountedGame.nextLevel());
+      if (this.GE.mountedGame.player && this.GE.mountedGame.startLevelIndex >= 0) {
+        this.GE.mountedGame.levelIndex = this.GE.mountedGame.startLevelIndex;
+        this.GE.loadGameLevel(this.GE.mountedGame.levels[this.GE.mountedGame.startLevelIndex]);
+      }
+      else {
+        this.GE.reset();
+        this.GE.renderer.gridX = 65;
+        this.GE.renderer.gridY = 10;
+        this.GE.renderer.resize();
+        this.GE.addObject(new FailedScreen("It appears there's no dungeon here."));
+      }
     };
 
     this.GE.renderer.gridX = 60;

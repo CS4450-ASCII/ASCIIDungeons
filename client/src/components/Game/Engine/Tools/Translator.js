@@ -1,7 +1,9 @@
+import { EntityGrid } from '../Components/EntityGrid';
 import { Map } from '../Components/Map';
 import { McGuffin } from '../Components/McGuffin';
 import { Player } from '../Components/Player';
 import { StairsDown } from '../Components/StairsDown';
+import { StairsUp } from '../Components/StairsUp';
 
 /**
  * Builds a functioning game level from database output.
@@ -15,13 +17,33 @@ export function translateDBLevelToObjects(level) {
   let gridItems = [];
   let objects = [];
 
+  let playerLoaded = false;
+
   for (const object of parsedMapData) {
     switch (object.character) {
       case '@':
-        objects.push(new Player(object.x, object.y));
+        if(!playerLoaded) objects.push(new Player(object.x, object.y));
+        playerLoaded = true;
         break;
       case '>':
-        objects.push(new StairsDown(object.x, object.y));
+        if(object.goToLevelId && object.goToStairsId) {
+          if(!isNaN(parseInt(object.goToLevelId)) && !isNaN(parseInt(object.goToStairsId.split(',')[0])) && !isNaN(parseInt(object.goToStairsId.split(',')[1])))
+            objects.push(new StairsDown(object.x, object.y, {level: parseInt(object.goToLevelId), x: parseInt(object.goToStairsId.split(',')[0]), y: parseInt(object.goToStairsId.split(',')[1])}));
+          else
+          objects.push(new StairsDown(object.x, object.y));
+        }
+        else
+          objects.push(new StairsDown(object.x, object.y));
+        break;
+      case '<':
+        if(object.goToLevelId && object.goToStairsId) {
+          if(!isNaN(parseInt(object.goToLevelId)) && !isNaN(parseInt(object.goToStairsId.split(',')[0])) && !isNaN(parseInt(object.goToStairsId.split(',')[1])))
+            objects.push(new StairsUp(object.x, object.y, {level: parseInt(object.goToLevelId), x: parseInt(object.goToStairsId.split(',')[0]), y: parseInt(object.goToStairsId.split(',')[1])}));
+          else
+          objects.push(new StairsUp(object.x, object.y));
+        }
+        else
+          objects.push(new StairsUp(object.x, object.y));
         break;
       case '§':
         objects.push(new McGuffin(object.x, object.y));
@@ -35,7 +57,7 @@ export function translateDBLevelToObjects(level) {
   return {
     width: level.width,
     height: level.height,
-    objects: [new Map({ gridItems }), ...objects],
+    objects: [new Map({ gridItems }), new EntityGrid(), ...objects],
   };
 }
 
