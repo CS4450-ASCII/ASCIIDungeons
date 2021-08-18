@@ -48,8 +48,46 @@ const CURRENT_USER = gql`
   ${COMPLETE_USER_FRAGMENT}
 `;
 
+const USER = gql`
+query User($id: ID!) {
+  user(id: $id) {
+    id
+    displayName
+    email
+    games {
+      title
+      description
+    }
+  }
+}
+`;
+
+const USERS = gql`
+query Users {
+  users {
+    id
+    displayName
+  }
+}
+`;
+
+//TODO
+// UPDATE_USER (see CreateUser above)
+const UPDATE_USER = gql`
+  mutation UpdateUser($params: UserUpdateInput!) {
+    updateUser(params: $params) {
+      id
+      displayName
+      email
+    }
+  }
+`;
+
 export const userGraphql = {
   LOGIN_USER,
   CREATE_USER,
   CURRENT_USER,
+  USER,
+  USERS,
+  UPDATE_USER,
 };
