@@ -40,7 +40,8 @@ export class Cursor extends GameObject {
     if (input.wasKeyPressed('e')) Cursor.eraseMode = true;
     if (input.wasKeyPressed('d')) Cursor.eraseMode = false;
 
-    this.bColor = Cursor.eraseMode ? '#FF0000' : '#FFFFFF';
+    this.bColor = this.eraseMode ? '#FF0000' : '#FFFFFF';
+    this.character = this.eraseMode ? ' ' : Cursor.gameObject.object.character;
 
     if (!this.MAP) {
       this.MAP = this.GE.getObjectByType(Map);
@@ -70,6 +71,8 @@ export class Cursor extends GameObject {
       this.MAP.clearSpace(this.x, this.y);
       return;
     }
+
+    if (Cursor.gameObject.object.character === ' ') return;
 
     if ((input.MOUSE_CLICK || input.MOUSE_DOWN) && !validDataTemplate) {
       this.MAP.setSpace(this.x, this.y, Cursor.gameObject.object);
