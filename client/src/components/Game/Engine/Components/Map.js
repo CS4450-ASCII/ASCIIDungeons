@@ -12,6 +12,9 @@ export class Map extends GameObject {
     this.layer = 'world';
     this.gridItems = _.get(mapProps, 'gridItems');
     this.mapProps = mapProps;
+
+    this.setSpace = this.setSpace.bind(this);
+    this.clearSpace = this.clearSpace.bind(this);
   }
 
   init() {
@@ -22,7 +25,9 @@ export class Map extends GameObject {
     }
 
     for (const item of this.gridItems) {
-      this.collisionGrid[item.y][item.x] = this.convertToCollisionValue(item.character);
+      this.collisionGrid[item.y][item.x] = this.convertToCollisionValue(
+        item.character,
+      );
     }
   }
 
@@ -35,7 +40,7 @@ export class Map extends GameObject {
   }
 
   convertToCollisionValue(char) {
-    if (char === "." || char === "#") return 0;
+    if (char === '.' || char === '#') return 0;
     else return 2;
   }
 
@@ -46,15 +51,15 @@ export class Map extends GameObject {
     return object.character;
   }
 
-  setSpace(x, y, gameObject) {
+  setSpace(x, y, object) {
     const newObject = {
-      ...gameObject,
+      ...object,
       x,
       y,
     };
-    const object = _.find(this.gridItems, { x, y });
-    if (object) {
-      _.merge(object, newObject);
+    const mapObject = _.find(this.gridItems, { x, y });
+    if (mapObject) {
+      _.merge(mapObject, newObject);
     } else {
       this.gridItems.push(newObject);
     }
@@ -62,15 +67,13 @@ export class Map extends GameObject {
     _.invoke(this.mapProps, 'onSpaceChange', [...this.gridItems]);
     this.GE.renderer.redrawBackground = true;
 
-    this.collisionGrid[y][x] = this.convertToCollisionValue(gameObject.character);
+    // this.collisionGrid[y][x] = this.convertToCollisionValue(gameObject.character);
   }
 
   clearSpace(x, y) {
-    if (!this.gridItems[y]) this.gridItems[y] = [];
-
-    this.gridItems[y][x] = undefined;
+    _.remove(this.gridItems, { x, y });
+    // TODO: can we use a clearRect here instead for more efficiency?
     this.GE.renderer.redrawBackground = true;
-
     this.collisionGrid[y][x] = 1;
   }
 }

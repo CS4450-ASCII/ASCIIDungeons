@@ -1,5 +1,14 @@
+import _ from 'lodash';
 import { GameObject } from './GameObject';
 import { Map } from './Map';
+
+function objectHasValidDataTemplate(object) {
+  try {
+    return !_.isEmpty(JSON.parse(_.get(object, 'dataTemplate')));
+  } catch {
+    return false;
+  }
+}
 
 /** A cursor that tracks the mouse position. */
 export class Cursor extends GameObject {
@@ -8,7 +17,7 @@ export class Cursor extends GameObject {
   };
 
   /** Builds a Cursor. */
-  constructor() {
+  constructor(cursorProps) {
     super();
     this.x = -1;
     this.y = -1;
@@ -22,6 +31,7 @@ export class Cursor extends GameObject {
     this.bColor = '#FFFFFF';
     this.isTicking = true;
     this.MAP = null;
+    this.cursorProps = cursorProps;
   }
 
   step(deltatime, input) {
@@ -45,9 +55,27 @@ export class Cursor extends GameObject {
         this.GE.renderer.gridY,
     );
 
-    if (input.MOUSE_CLICK || input.MOUSE_DOWN) {
+    const validDataTemplate = objectHasValidDataTemplate(
+      Cursor.gameObject.object,
+    );
+
+    if ((input.MOUSE_CLICK || input.MOUSE_DOWN) && !validDataTemplate) {
       this.MAP.setSpace(this.x, this.y, Cursor.gameObject.object);
-      // this.onSpaceChange();
+    }
+
+    if (input.MOUSE_CLICK && validDataTemplate) {
+      this.MAP.setSpace(this.x, this.y, {
+        character: Cursor.gameObject.object.character,
+      });
+      _.invoke(
+        this.cursorProps,
+        'onLeftClick',
+        Cursor.gameObject.object,
+        this.x,
+        this.y,
+        this.MAP.setSpace,
+        this.MAP.clearSpace,
+      );
     }
   }
 

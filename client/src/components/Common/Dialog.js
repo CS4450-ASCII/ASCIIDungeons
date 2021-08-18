@@ -8,7 +8,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function Dialog(props) {
   const classes = useStyles();
@@ -20,6 +20,7 @@ function Dialog(props) {
     submitButtonProps: buttonProps = {},
     onSubmit,
     onClose,
+    onCancel,
     initiallyOpen = false,
     ...dialogProps
   } = props;
@@ -27,6 +28,10 @@ function Dialog(props) {
   const { text: buttonText, ...submitButtonProps } = buttonProps;
 
   const [open, setOpen] = useState(initiallyOpen);
+
+  useEffect(() => {
+    setOpen(initiallyOpen);
+  }, [initiallyOpen]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,6 +42,13 @@ function Dialog(props) {
       onClose();
     }
     setOpen(false);
+  };
+
+  const handleCancel = () => {
+    if (onCancel) {
+      onCancel();
+    }
+    handleClose();
   };
 
   const handleSubmit = () => {
@@ -59,7 +71,7 @@ function Dialog(props) {
       >
         <MuiDialogTitle disableTypography style={{ position: 'relative' }}>
           <Typography variant='h2'>{title}</Typography>
-          <ButtonBase className={classes.closeButton} onClick={handleClose}>
+          <ButtonBase className={classes.closeButton} onClick={handleCancel}>
             <Typography variant='h2'>X</Typography>
           </ButtonBase>
         </MuiDialogTitle>

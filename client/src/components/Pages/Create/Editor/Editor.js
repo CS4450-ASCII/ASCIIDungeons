@@ -9,6 +9,7 @@ import {
   useQueryWithError,
 } from '../../../../helpers/customHooks';
 import LoadingContainer from '../../../Common/LoadingContainer';
+import { parseMapData } from '../../../Game/Engine/Tools/Translator';
 import BottomToolbar from './BottomToolbar/BottomToolbar';
 import LevelEditor from './LevelEditor';
 import SideDrawer from './SideDrawer/SideDrawer';
@@ -95,15 +96,7 @@ function Editor(props) {
   const { id, isPublished } = currentGame;
 
   const [gridItems, setGridItems] = useState(() => {
-    // TODO: Replace with mapData parser method.
-    let gridItems = _.get(currentLevel, 'mapData');
-    try {
-      gridItems = JSON.parse(gridItems) || [];
-    } catch {
-      gridItems = [];
-    }
-
-    return gridItems;
+    return parseMapData(_.get(currentLevel, 'mapData'));
   });
 
   return (
