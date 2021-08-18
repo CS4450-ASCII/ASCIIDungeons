@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import About from '../Pages/About/About';
 import Create from '../Pages/Create/Create';
-import GameList from '../Pages/Game List/GameList';
 import MainMenu from '../Pages/MainMenu/MainMenu';
 import PlayGame from '../Pages/Play/PlayGame';
 import Profile from '../Pages/Profile/Profile';

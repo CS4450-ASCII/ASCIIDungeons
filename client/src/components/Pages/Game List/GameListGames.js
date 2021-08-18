@@ -1,21 +1,21 @@
-import { makeStyles, Button } from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import _ from 'lodash';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { gameGraphql } from '../../../graphql/game';
 import { useQueryWithError } from '../../../helpers/customHooks';
 import LoadingContainer from '../../Common/LoadingContainer';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
-    padding: "10px",
+    padding: '10px',
   },
   container: {
-    width: "200%",
-    height: "200%",
-    border: "3px solid white",
-    paddingLeft: "10px",
-    paddingRight: "10px"
+    width: '200%',
+    height: '200%',
+    border: '3px solid white',
+    paddingLeft: '10px',
+    paddingRight: '10px',
   },
 });
 
@@ -24,7 +24,7 @@ function GameListGamesContainer(props) {
     fetchPolicy: 'cache-first',
   });
 
-  if(loading){
+  if (loading) {
     return <LoadingContainer />;
   }
 
@@ -50,14 +50,13 @@ export function GameListGames(props) {
     );
   };
 
-  return (
-    games.map((game) => 
+  return games.map((game) => (
     <div className={classes.root}>
-    <Button className={classes.container} onClick={() => onSubmit()}>
-      {game.title} By: User
-    </Button>
+      <Button className={classes.container} onClick={() => onSubmit()}>
+        {game.title} By: User
+      </Button>
     </div>
-  ))
+  ));
 }
 
 export default GameListGamesContainer;

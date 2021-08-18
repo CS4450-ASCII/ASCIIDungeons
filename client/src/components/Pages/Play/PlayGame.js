@@ -11,6 +11,7 @@ import LoadingContainer from '../../Common/LoadingContainer';
 import { WelcomeScreen } from '../../Game/Engine/Components/WelcomeScreen';
 import GameEngine from '../../Game/Engine/GameEngine';
 import { translateDBLevelToObjects } from '../../Game/Engine/Tools/Translator';
+import GameList from '../Game List/GameList';
 
 function PlayGame(props) {
   const classes = useStyles();
