@@ -11,6 +11,8 @@ export class EntityGrid extends GameObject {
   step(deltatime) {}
 
   updateEntity(entity) {
+    this.validateSpace(entity.gX, entity.gY);
+
     this.grid[entity.gY][entity.gX] = this.grid[entity.gY][entity.gX].filter(function (el) {
       return el != entity;
     });

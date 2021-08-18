@@ -67,7 +67,7 @@ export class Map extends GameObject {
     _.invoke(this.mapProps, 'onSpaceChange', [...this.gridItems]);
     this.GE.renderer.redrawBackground = true;
 
-    // this.collisionGrid[y][x] = this.convertToCollisionValue(gameObject.character);
+    this.collisionGrid[y][x] = this.convertToCollisionValue(object.character);
   }
 
   clearSpace(x, y) {

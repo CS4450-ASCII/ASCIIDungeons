@@ -14,6 +14,7 @@ function ObjectIconGroup(props) {
     setSelectedObject(selectedObject);
     onSelectedObjectChange && onSelectedObjectChange(selectedObject);
     Cursor.gameObject = selectedObject;
+    Cursor.eraseMode = false;
   };
 
   const objectIcons = gameObjects.map((gameObject, index) => (

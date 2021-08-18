@@ -1,17 +1,18 @@
 import { EntityGrid } from './EntityGrid';
+import { FailedScreen } from './FailedScreen';
 import { GameObject } from './GameObject';
 import { Map } from './Map';
 import { Player } from './Player';
-import { StairsUp } from './StairsUp';
+import { StairsDown } from './StairsDown';
 import { TimedMessage } from './TimedMessage';
 
 /** Stairs used to move to the next level. */
-export class StairsDown extends GameObject {
+export class StairsUp extends GameObject {
   /** Builds a StairsDown. */
   constructor(x, y, exit = {level: -1, x: -1, y: -1}) {
     super();
     /** The appearance of the scroller. */
-    this.character = ">";
+    this.character = "<";
     /** Is background rendering enabled? */
     this.background = true;
     /** The character color hex value. */
@@ -35,6 +36,8 @@ export class StairsDown extends GameObject {
     this.grid = null;
     this.MAP = null;
     this.fakeMessage = null;
+
+    this.topLevelExit = false;
   }
 
   init() {
@@ -70,11 +73,20 @@ export class StairsDown extends GameObject {
         if (this.timeWaited >= this.timeToWait && this.hasExit) {
           this.GE.mountedGame.player.x = this.exit.x;
           this.GE.mountedGame.player.y = this.exit.y;
-          
+
           this.GE.mountedGame.levelIndex = this.exit.level;
           this.GE.loadGameLevel(this.GE.mountedGame.levels[this.exit.level]);
         }
         else if (!this.hasExit && this.timeWaited >= this.timeToWait) {
+          if(this.topLevelExit) {
+            this.GE.reset();
+            this.GE.renderer.gridX = 65;
+            this.GE.renderer.gridY = 10;
+            this.GE.renderer.resize();
+            this.GE.addObject(new FailedScreen());
+            return;
+          }
+
           if (!this.fakeMessage) {
             this.fakeMessage = new TimedMessage("DEAD END!");
             this.fakeMessage.tColor = "#FF0000";
@@ -96,11 +108,11 @@ export class StairsDown extends GameObject {
   }
 
   confirmExit(exit) {
-    if(!exit) return;
+    if(!exit) return false;
     if(!this.GE.mountedGame.levels[exit.level]) return false;
 
     for (const object of this.GE.mountedGame.levels[exit.level].objects) {
-      if(object instanceof StairsUp) {
+      if(object instanceof StairsDown) {
         if(object.x === exit.x && object.y === exit.y) return true;
       }
     }
