@@ -1,24 +1,18 @@
 import gql from 'graphql-tag';
 import { levelGraphql } from './level';
 
+// Fragments
 const BASIC_GAME_FRAGMENT = gql`
   fragment BasicGame on Game {
     id
     title
     description
+    isPublished
     createdById
   }
 `;
 
-const CREATE_GAME = gql`
-  mutation CreateGame($params: GameCreateInput!) {
-    createGame(params: $params) {
-      ...BasicGame
-    }
-  }
-  ${BASIC_GAME_FRAGMENT}
-`;
-
+// Queries
 const QUERY_GAMES = gql`
   query GetGames($filter: String) {
     games(filter: $filter) {
@@ -37,9 +31,34 @@ const QUERY_GAME = gql`
   ${BASIC_GAME_FRAGMENT}
 `;
 
-const GAME_CONTEXT = gql`
-  query GameContext($gameId: ID!, $levelIndex: ID) {
-    gameContext(gameId: $gameId, levelIndex: $levelIndex) {
+const QUERY_FULL_GAME = gql`
+  query GetFullGame($id: ID!) {
+    game(id: $id) {
+      ...BasicGame
+      levels {
+        ...FullLevel
+      }
+    }
+  }
+  ${BASIC_GAME_FRAGMENT}
+  ${levelGraphql.FULL_LEVEL_FRAGMENT}
+`;
+
+const FULL_OBJECT_FRAGMENT = gql`
+  fragment FullObject on Object {
+    id
+    baseType
+    gameEngineLayer
+    title
+    character
+    isPassable
+    dataTemplate
+  }
+`;
+
+const EDITOR_CONTEXT = gql`
+  query EditorContext($gameId: ID!, $levelIndex: ID) {
+    editorContext(gameId: $gameId, levelIndex: $levelIndex) {
       currentGame {
         ...BasicGame
         levels {
@@ -49,8 +68,7 @@ const GAME_CONTEXT = gql`
         gameObjects {
           id
           object {
-            character
-            title
+            ...FullObject
           }
         }
       }
@@ -62,6 +80,25 @@ const GAME_CONTEXT = gql`
   }
   ${BASIC_GAME_FRAGMENT}
   ${levelGraphql.FULL_LEVEL_FRAGMENT}
+  ${FULL_OBJECT_FRAGMENT}
+`;
+
+// Mutations
+const UPDATE_GAME = gql`
+  mutation UpdateGame($params: GameUpdateInput!) {
+    updateGame(params: $params) {
+      id
+    }
+  }
+`;
+
+const CREATE_GAME = gql`
+  mutation CreateGame($params: GameCreateInput!) {
+    createGame(params: $params) {
+      ...BasicGame
+    }
+  }
+  ${BASIC_GAME_FRAGMENT}
 `;
 
 export const gameGraphql = {
@@ -69,5 +106,7 @@ export const gameGraphql = {
   CREATE_GAME,
   QUERY_GAMES,
   QUERY_GAME,
-  GAME_CONTEXT,
+  QUERY_FULL_GAME,
+  EDITOR_CONTEXT,
+  UPDATE_GAME,
 };

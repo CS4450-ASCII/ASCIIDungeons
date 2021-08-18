@@ -1,5 +1,7 @@
 /** Game object parent class. */
 export class GameObject {
+  //static GE = {};
+
   /** Builds a basic game object. */
   constructor() {
     this.GE = {};
@@ -8,6 +10,11 @@ export class GameObject {
     this.layer = 'object';
     this.isTicking = false;
   }
+
+  /**
+   * Called after the game engine is fully running.
+   */
+  init() {}
 
   /**
    * Called before every frame.
@@ -20,4 +27,9 @@ export class GameObject {
    * @param {object} renderer - A reference to the renderer module.
    */
   draw(renderer) {}
+
+  /**
+   * Called when the object is destroyed.
+   */
+  remove() {}
 }

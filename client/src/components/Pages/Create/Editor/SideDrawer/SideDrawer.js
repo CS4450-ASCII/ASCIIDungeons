@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import NewLevelDialog from '../Dialogs/NewLevelDialog';
-import { GameContext } from '../Editor';
+import { EditorContext } from '../Editor';
 import ObjectIconGroup from '../ObjectIcons/ObjectIconGroup';
 import LevelList from './LevelList/LevelList';
 import SideDrawerGroup from './SideDrawerGroup';
 
 function SideDrawer(props) {
   const classes = useStyles();
-  const { currentGame, currentLevelIndex } = useContext(GameContext);
+  const { currentGame, currentLevelIndex } = useContext(EditorContext);
 
   const history = useHistory();
 

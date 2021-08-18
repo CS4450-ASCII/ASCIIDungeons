@@ -2,58 +2,66 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-     */
+    const sampleMap = [
+      [...new Array(10).fill('_')],
+      ['|', '@', ...new Array(7).fill('.'), '|'],
+      ['|', ...new Array(8).fill('.'), '|'],
+      ['|', ...new Array(8).fill('.'), '|'],
+      ['|', ...new Array(8).fill('_'), '|'],
+    ];
+
+    let mapData = [];
+    sampleMap.forEach((row, y) => {
+      row.forEach((character, x) => {
+        mapData.push({
+          character,
+          x,
+          y,
+          data: {},
+        });
+      });
+    });
+    mapData = JSON.stringify(mapData);
+
+    const sharedAttributes = {
+      mapData,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
     await queryInterface.bulkInsert('Levels', [
       {
         gameId: 1,
         title: 'Level 1',
         width: 40,
         height: 40,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        ...sharedAttributes,
       },
       {
         gameId: 1,
         title: 'Level 2',
         width: 30,
         height: 30,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        ...sharedAttributes,
       },
       {
         gameId: 2,
         title: 'The Beginning',
         width: 20,
         height: 20,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        ...sharedAttributes,
       },
       {
         gameId: 2,
         title: 'The End',
         width: 20,
         height: 20,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        ...sharedAttributes,
       },
     ]);
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
     await queryInterface.bulkDelete('Levels', null, {});
   },
 };

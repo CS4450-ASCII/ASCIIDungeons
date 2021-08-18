@@ -31,6 +31,10 @@ const gameMutations = {
     }
 
     await game.update(gameParams);
+    game.levels.forEach((level) => {
+      level.mapData = JSON.parse(level.mapData);
+      level.save();
+    });
 
     return game;
   },

@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       title: { type: DataTypes.STRING(60), defaultValue: 'Untitled Level' },
       width: DataTypes.SMALLINT,
       height: DataTypes.SMALLINT,
+      mapData: DataTypes.JSONB,
     },
     {
       sequelize,

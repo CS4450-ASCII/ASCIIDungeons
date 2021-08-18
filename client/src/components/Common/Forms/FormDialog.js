@@ -2,7 +2,7 @@ import {
   Button,
   DialogActions,
   DialogContent,
-  makeStyles
+  makeStyles,
 } from '@material-ui/core';
 import React from 'react';
 import Dialog from '../Dialog';
@@ -12,7 +12,7 @@ import FormFields from './FormFields';
 function FormDialog(props) {
   const classes = useStyles();
   const {
-    onSubmit = values => alert(JSON.stringify(values)),
+    onSubmit = (values) => alert(JSON.stringify(values)),
     formFields,
     submitButtonText = 'Submit',
     validationSchema,
@@ -24,8 +24,8 @@ function FormDialog(props) {
     <Dialog {...dialogProps}>
       {({ handleClose }) => (
         <FormComponent
-          onSubmit={values => {
-            onSubmit(values);
+          onSubmit={(values) => {
+            onSubmit(values, props);
             handleClose();
           }}
           {...{ validationSchema, initialValues }}
@@ -45,7 +45,7 @@ function FormDialog(props) {
 }
 
 const useStyles = makeStyles({
-  root: {}
+  root: {},
 });
 
 export default FormDialog;

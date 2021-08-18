@@ -3,12 +3,13 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const getGameObjectsForGame = (gameId) =>
-      [...Array(30).keys()].slice(1).map((objectId) => ({
+      [...Array(33).keys()].slice(1).map((objectId) => ({
         gameId,
         objectId,
         createdAt: new Date(),
         updatedAt: new Date(),
       }));
+
     await queryInterface.bulkInsert(
       'GameObjects',
       [...getGameObjectsForGame(1), ...getGameObjectsForGame(2)],

@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Game.belongsTo(models.User, {
         foreignKey: 'createdById',
         onDelete: 'CASCADE',
+        as: 'createdBy',
       });
 
       Game.hasMany(models.Level, {

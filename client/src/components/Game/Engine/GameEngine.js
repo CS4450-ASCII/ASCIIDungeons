@@ -1,411 +1,33 @@
-import { Cursor } from './Components/Cursor';
-import { Map } from './Components/Map';
+import { withStyles } from '@material-ui/core';
+import { Component } from 'react';
 import { Player } from './Components/Player';
 import { Behaviour } from './Modules/Behaviour';
 import { InputHandler } from './Modules/InputHandler';
 import { Renderer } from './Modules/Renderer';
 
+const styles = {
+  gameEngineContainerRoot: {
+    marginTop: 12,
+    height: '95%',
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative',
+  },
+};
 /** Runs all game based logic. */
-export class GameEngine {
-  /** The active game engine. */
-  static active = null;
-
+class GameEngine extends Component {
   /** Builds the game engine. */
-  constructor() {
-    /** List of current game objects. */
-    GameEngine.active = this;
+  constructor(props) {
+    super(props);
+
+    const { showGridLines, mountedGame, objects = [], playerName } = this.props;
+
+    this.mountedGame = mountedGame;
+    this.playerName = playerName;
 
     this.container = null;
 
-    this.objects = [
-      new Map([
-        [],
-        [],
-        [
-          undefined,
-          undefined,
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 2,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 2,
-          },
-        ],
-        [
-          undefined,
-          undefined,
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 3,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 3,
-          },
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 3,
-          },
-        ],
-        [
-          undefined,
-          undefined,
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 4,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 4,
-          },
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 4,
-          },
-        ],
-        [
-          undefined,
-          undefined,
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 5,
-          },
-          {
-            character: '.',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 5,
-          },
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 5,
-          },
-        ],
-        [
-          undefined,
-          undefined,
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 2,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 3,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 4,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 5,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 6,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 7,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 8,
-            y: 6,
-          },
-          {
-            character: '_',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 9,
-            y: 6,
-          },
-          {
-            character: '|',
-            bColor: '#000000',
-            background: false,
-            cColor: '#FFFFFF',
-            x: 10,
-            y: 6,
-          },
-        ],
-      ]),
-      //new Scroller("&", "#00FF00", true, "#000000"),
-      new Cursor(this),
-      new Player(3, 4),
-    ];
+    this.objects = objects;
 
     this.behaviour = new Behaviour();
 
@@ -415,6 +37,7 @@ export class GameEngine {
 
     /** Refernce to the current renderer module. */
     this.renderer = new Renderer();
+    this.renderer.showGridLines(showGridLines);
 
     /** List of modules to be executed. */
     this.pipeline = [this.behaviour, this.input, this.renderer];
@@ -422,6 +45,18 @@ export class GameEngine {
     for (const module of this.pipeline) {
       module.GE = this;
     }
+
+    // for (const object of objects) {
+    //   this.addObject(object);
+    // }
+
+    // this.state = {
+    //   showGridLines: showGrid,
+    // };
+  }
+
+  componentDidMount() {
+    this.start();
   }
 
   /** On every animation frame, run the pipeline. */
@@ -449,33 +84,38 @@ export class GameEngine {
 
     this.renderer.buildCanvases();
 
-    this.buildLevel();
+    this.init();
 
     requestAnimationFrame(this.runPipeline.bind(this));
   }
 
   /** Builds the current level. */
-  buildLevel() {
+  init() {
     for (const object of this.objects) {
       object.GE = this;
       //Render Linking
       this.renderer.addObject(object, object.layer);
       if (object.isTicking) this.behaviour.addObject(object);
+      object.init();
     }
   }
 
-  addObject(component) {
-    this.objects.push(component);
-    this.renderer.addObject(component, component.layer);
-    if (component.isTicking) this.behaviour.addObject(component);
+  addObject(object) {
+    object.GE = this;
+    this.objects.push(object);
+    this.renderer.addObject(object, object.layer);
+    if (object.isTicking) this.behaviour.addObject(object);
+    object.init();
   }
 
-  removeObject(component) {
+  removeObject(object) {
+    object.remove();
+
     this.objects = this.objects.filter(function (el) {
-      return el != component;
+      return el != object;
     });
-    this.renderer.removeObject(component, component.layer);
-    if (component.isTicking) this.behaviour.removeObject(component);
+    this.renderer.removeObject(object, object.layer);
+    if (object.isTicking) this.behaviour.removeObject(object);
   }
 
   getObjectByType(type) {
@@ -495,4 +135,39 @@ export class GameEngine {
     if (ret.length > 0) return ret;
     return null;
   }
+
+  reset() {
+    this.objects = [];
+
+    for (let module of this.pipeline) {
+      module.reset();
+    }
+  }
+
+  loadGameLevel(level) {
+    this.reset();
+
+    //this.objects.push(new EntityGrid());
+
+    this.renderer.gridX = level.width;
+    this.renderer.gridY = level.height;
+
+    for (const obj of level.objects) {
+      if(obj instanceof Player) continue;
+      
+      this.addObject(obj);
+    }
+
+    this.addObject(this.mountedGame.player);
+    this.renderer.resize();
+  }
+
+  render() {
+    const { classes } = this.props;
+    return (
+      <div id='gameContainer' className={classes.gameEngineContainerRoot}></div>
+    );
+  }
 }
+
+export default withStyles(styles)(GameEngine);
