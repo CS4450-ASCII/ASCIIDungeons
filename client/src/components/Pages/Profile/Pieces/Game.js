@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -12,6 +13,21 @@ const useStyles = makeStyles({
     border: "3px solid white",
     paddingLeft: "10px",
     paddingRight: "10px"
+  },
+  unstyledLink: {
+    color: "white",
+    textDecoration: "none",
+    '&:hover':{
+      textDecoration: "none"
+    }, '&:focus': {
+      textDecoration: "none"
+    }, '&:visited': {
+      textDecoration: "none"
+    }, '&:link': {
+      textDecoration: "none"
+    }, '&:active': {
+      textDecoration: "none"
+    }
   },
   goodRating: {
     color: "#00FF00"
@@ -26,16 +42,18 @@ const useStyles = makeStyles({
 
 function Game(props){
   const classes = useStyles();
-  const { displayName, title, description} = props;
+  const { displayName, title, description, id} = props;
 
   const rating = Math.ceil(Math.random()*100);
 
   return <div className={classes.root}>
-    <div className={classes.container}>
-      <p>{ title }</p>
-      <p>By: { displayName }</p>
-      <p>{ description }</p>
-    </div>
+    <Link className={classes.unstyledLink} to={("/play/" + id) }>
+      <div className={classes.container}>
+        <p className={classes.unstyledLink}>{ title }</p>
+        <p className={classes.unstyledLink}>By: { displayName }</p>
+        <p className={classes.unstyledLink}>{ description }</p>
+      </div>
+    </Link>
   </div>;
 }
 

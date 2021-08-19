@@ -55,6 +55,7 @@ query User($id: ID!) {
     displayName
     email
     games {
+      id
       title
       description
     }

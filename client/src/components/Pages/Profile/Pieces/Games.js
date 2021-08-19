@@ -20,7 +20,7 @@ function Games(props){
 
   return <div className={classes.root}>
     <div className={classes.line}><h3>Games</h3></div>
-    {games.map((game) => <Game displayName={displayName} title={game.title} description={game.description}/>)}
+    {games.map((game) => <Game displayName={displayName} title={game.title} description={game.description} id={game.id}/>)}
   </div>;
 }
 
