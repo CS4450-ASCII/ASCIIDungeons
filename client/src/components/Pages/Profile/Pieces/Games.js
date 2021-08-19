@@ -4,24 +4,30 @@ import Game from './Game';
 
 const useStyles = makeStyles({
   root: {
-    width: "100%",
-    display: "flex",
-    flexWrap: "wrap"
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   line: {
-    width: "100%",
-    textAlign: "center"
-  }
+    width: '100%',
+    textAlign: 'center',
+  },
 });
 
-function Games(props){
+function Games(props) {
   const classes = useStyles();
-  const { displayName, games} = props;
+  const { displayName, games } = props;
 
-  return <div className={classes.root}>
-    <div className={classes.line}><h3>Games</h3></div>
-    {games.map((game) => <Game displayName={displayName} title={game.title} description={game.description}/>)}
-  </div>;
+  return (
+    <div className={classes.root}>
+      <div className={classes.line}>
+        <h3>Games</h3>
+      </div>
+      {games.map((game) => (
+        <Game displayName={displayName} {...game} />
+      ))}
+    </div>
+  );
 }
 
 export default Games;

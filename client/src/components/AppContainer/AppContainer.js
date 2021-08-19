@@ -6,6 +6,7 @@ import MainMenu from '../Pages/MainMenu/MainMenu';
 import PlayGame from '../Pages/Play/PlayGame';
 import Profile from '../Pages/Profile/Profile';
 import Secret from '../Pages/Secret/Secret';
+import Play from '../Pages/Play/Play';
 
 function AppContainer(props) {
   const {} = props;
@@ -13,7 +14,7 @@ function AppContainer(props) {
   return (
     <Switch>
       <Route path='/create' component={Create} />
-      {/* <Route exact path='/play' component={Play} /> */}
+      <Route exact path='/play' component={Play} />
       <Route exact path='/users/:id' component={Profile} />
       <Route path='/play/:gameId' component={PlayGame} />
       <Route exact path='/profile' component={Profile} />

@@ -49,26 +49,28 @@ const CURRENT_USER = gql`
 `;
 
 const USER = gql`
-query User($id: ID!) {
-  user(id: $id) {
-    id
-    displayName
-    email
-    games {
-      title
-      description
+  query User($id: ID!) {
+    user(id: $id) {
+      id
+      displayName
+      email
+      games {
+        id
+        title
+        description
+        isPublished
+      }
     }
   }
-}
 `;
 
 const USERS = gql`
-query Users {
-  users {
-    id
-    displayName
+  query Users {
+    users {
+      id
+      displayName
+    }
   }
-}
 `;
 
 //TODO
