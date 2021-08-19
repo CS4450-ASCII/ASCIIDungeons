@@ -54,8 +54,6 @@ export function translateDBLevelToObjects(level) {
     }
   }
 
-  console.log(level.id);
-
   return {
     id: parseInt(level.id),
     width: level.width,
