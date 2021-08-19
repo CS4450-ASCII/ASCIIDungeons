@@ -8,7 +8,10 @@ const BASIC_GAME_FRAGMENT = gql`
     title
     description
     isPublished
-    createdById
+    createdBy {
+      id
+      displayName
+    }
   }
 `;
 

@@ -32,6 +32,8 @@ const gameQueries = {
   games: async (parent, { filter }, { currentUser }, info) => {
     let options;
     switch (filter) {
+      case 'all':
+        break;
       case 'currentUser':
         options = { where: { createdById: currentUser.id } };
         break;
