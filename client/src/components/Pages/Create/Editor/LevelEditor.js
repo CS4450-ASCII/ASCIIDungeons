@@ -1,12 +1,13 @@
 import { makeStyles, withTheme } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { Field } from 'react-final-form';
 import FormDialog from '../../../Common/Forms/FormDialog';
 import InputField from '../../../Common/Forms/InputField';
 import { Cursor } from '../../../Game/Engine/Components/Cursor';
 import { Map } from '../../../Game/Engine/Components/Map';
 import GameEngine from '../../../Game/Engine/GameEngine';
+import { EditorContext } from './Editor';
 
 function LevelEditor(props) {
   const classes = useStyles();
@@ -15,8 +16,10 @@ function LevelEditor(props) {
   const [ModalComponent, setModalComponent] = useState(null);
   const [modalProps, setModalProps] = useState({});
 
+  const { currentLevelIndex } = useContext(EditorContext);
+
   return (
-    <>
+    <Fragment key={currentLevelIndex}>
       <Field name='gridItems'>
         {({ input: { value, onChange } }) => (
           <GameEngine
@@ -84,7 +87,7 @@ function LevelEditor(props) {
         )}
       </Field>
       <FormDialog {...modalProps} />
-    </>
+    </Fragment>
   );
 }
 

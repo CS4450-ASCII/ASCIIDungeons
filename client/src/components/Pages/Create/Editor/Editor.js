@@ -99,6 +99,10 @@ function Editor(props) {
     return parseMapData(_.get(currentLevel, 'mapData'));
   });
 
+  useEffect(() => {
+    setGridItems(parseMapData(_.get(currentLevel, 'mapData')));
+  }, [currentLevelIndex]);
+
   return (
     <FForm
       onSubmit={onSave}
