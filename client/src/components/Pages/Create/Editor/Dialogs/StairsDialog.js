@@ -1,64 +1,55 @@
-import { makeStyles } from '@material-ui/core';
-import React from 'react';
-import * as Yup from 'yup';
-import FormDialog from '../../../../Common/Forms/FormDialog';
+import _ from 'lodash';
 import InputField from '../../../../Common/Forms/InputField';
+import LevelsDropdownList from '../LevelsDropdownList';
+import StairsDropdownList from '../StairsDropdownList';
 
-function StairsDialog(props) {
-  const classes = useStyles();
-  const { openButton, title = 'Edit Stairs', ...dialogProps } = props;
-
-  const onSubmit = async (values) => {};
-
-  const formFields = [
-    {
-      name: 'title',
-      Component: InputField,
-      nowWrap: true,
-    },
-    {
-      name: 'goToLevelId',
-      Component: InputField,
-      type: 'number',
-      inputWidth: 140,
-      nowWrap: true,
-    },
-    {
-      name: 'goToStairsId',
-      Component: InputField,
-      type: 'number',
-      inputWidth: 140,
-      nowWrap: true,
-    },
-  ];
-
-  const validationSchema = Yup.object().shape({
-    // width: Yup.number().required('Width is required.'),
-    // height: Yup.number().required('Height is required.'),
-  });
-
-  const initialValues = {
-    // width: 40,
-    // height: 40,
+export function displayStairsDialog(setModalProps, levels) {
+  return function (object, x, y, setMapSpace, clearMapSpace) {
+    if (!_.get(object, 'dataTemplate')) return;
+    const objectId = `${x},${y}`;
+    setModalProps({
+      key: objectId,
+      objectId,
+      initiallyOpen: true,
+      openButton: <div />,
+      formFields: [
+        {
+          name: 'title',
+          Component: InputField,
+          noWrap: true,
+        },
+        {
+          name: 'goToLevelId',
+          label: 'Go To Level',
+          Component: LevelsDropdownList,
+          options: levels,
+          inputWidth: 150,
+          noWrap: true,
+        },
+        {
+          name: 'goToStairsId',
+          label: 'Go To Stairs',
+          Component: StairsDropdownList,
+          levels,
+          inputWidth: 150,
+          noWrap: true,
+        },
+      ],
+      title: 'Edit Stairs',
+      initialValues: {
+        title: object.title,
+      },
+      onCancel: () => {
+        clearMapSpace(x, y);
+      },
+      onSubmit: (values, props) => {
+        const stairAttributes = {
+          objectId: _.get(props, 'objectId'),
+          ...object,
+          ...values,
+        };
+        setMapSpace(x, y, stairAttributes);
+      },
+    });
   };
-
-  return (
-    <FormDialog
-      {...{
-        title,
-        openButton,
-        onSubmit,
-        formFields,
-        validationSchema,
-        initialValues,
-        ...dialogProps,
-      }}
-    />
-  );
 }
-
-const useStyles = makeStyles({
-  root: {},
-});
-
-export default StairsDialog;

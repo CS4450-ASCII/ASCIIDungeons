@@ -7,6 +7,8 @@ type Level implements Timestamps {
   height: Int!
   mapData: String!
 
+  stairsData: String!
+
   # Interface required
 
   createdAt: Date!

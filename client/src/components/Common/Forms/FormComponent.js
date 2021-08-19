@@ -1,17 +1,22 @@
 import { Button, Grid, makeStyles } from '@material-ui/core';
 import { makeValidate } from 'mui-rff';
-import React from 'react';
+import React, { createContext } from 'react';
 import { Form as FForm } from 'react-final-form';
 import FormFields from './FormFields';
+
+const initialState = {
+  values: undefined,
+};
+export const FormContext = createContext(initialState);
 
 const useStyles = makeStyles({
   root: {
     width: 'max-content',
-    margin: 'auto'
+    margin: 'auto',
   },
   footer: {
-    marginTop: 10
-  }
+    marginTop: 10,
+  },
 });
 
 function FormComponent(props) {
@@ -24,7 +29,7 @@ function FormComponent(props) {
     submitButtonText = 'Submit',
     validationSchema,
     initialValues,
-    children
+    children,
   } = props;
 
   const validate = validationSchema && makeValidate(validationSchema);
@@ -35,28 +40,30 @@ function FormComponent(props) {
       initialValues={initialValues}
       validate={validate}
     >
-      {({ handleSubmit, values }) => (
-        <form onSubmit={handleSubmit}>
-          {!children && (
-            <FormFields
-              {...gridProps}
-              {...{ formFields }}
-              className={classes.root}
-            >
-              <Grid item>
-                <Button type='submit' color='primary'>
-                  {submitButtonText}
-                </Button>
-              </Grid>
-              {footer && (
-                <Grid item xs={12} className={classes.footer}>
-                  {footer}
+      {({ handleSubmit, values: formValues }) => (
+        <FormContext.Provider value={{ formValues }}>
+          <form onSubmit={handleSubmit}>
+            {!children && (
+              <FormFields
+                {...gridProps}
+                {...{ formFields }}
+                className={classes.root}
+              >
+                <Grid item>
+                  <Button type='submit' color='primary'>
+                    {submitButtonText}
+                  </Button>
                 </Grid>
-              )}
-            </FormFields>
-          )}
-          {children}
-        </form>
+                {footer && (
+                  <Grid item xs={12} className={classes.footer}>
+                    {footer}
+                  </Grid>
+                )}
+              </FormFields>
+            )}
+            {children}
+          </form>
+        </FormContext.Provider>
       )}
     </FForm>
   );
