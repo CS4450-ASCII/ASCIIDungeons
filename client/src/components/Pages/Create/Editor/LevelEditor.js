@@ -1,6 +1,6 @@
 import { makeStyles, withTheme } from '@material-ui/core';
 import _ from 'lodash';
-import React, { Fragment, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Field } from 'react-final-form';
 import FormDialog from '../../../Common/Forms/FormDialog';
 import { Cursor } from '../../../Game/Engine/Components/Cursor';
@@ -16,7 +16,7 @@ function LevelEditor(props) {
   const [ModalComponent, setModalComponent] = useState(null);
   const [modalProps, setModalProps] = useState({});
 
-  const { currentGame, currentLevelIndex } = useContext(EditorContext);
+  const { currentGame } = useContext(EditorContext);
 
   // const { data, loading } = useQueryWithError(levelGraphql.QUERY_LEVELS, {
   //   variables: { gameId },
@@ -25,7 +25,7 @@ function LevelEditor(props) {
   // if (loading) return <LoadingContainer />;
 
   return (
-    <Fragment key={currentLevelIndex}>
+    <>
       <Field name='gridItems'>
         {({ input: { value, onChange } }) => (
           <GameEngine
@@ -48,7 +48,7 @@ function LevelEditor(props) {
         )}
       </Field>
       <FormDialog {...modalProps} />
-    </Fragment>
+    </>
   );
 }
 
