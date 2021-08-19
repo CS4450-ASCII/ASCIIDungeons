@@ -15,6 +15,14 @@ module.exports = {
     const games = [
       {
         createdById: 1,
+        title: 'Amazing Game',
+        description: 'What an amazing test game.',
+        isPublished: true,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        createdById: 1,
         title: 'Test Game',
         description: 'What a great test game.',
         isPublished: false,

@@ -6,11 +6,11 @@ import { useCurrentUser } from '../../../helpers/customHooks';
 
 const useStyles = makeStyles({
   mainMenuRoot: {
-    height: '100%'
+    height: '100%',
   },
   navItem: {
-    height: 100
-  }
+    height: 100,
+  },
 });
 
 function MainMenu(props) {
