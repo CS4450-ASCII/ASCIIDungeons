@@ -1,10 +1,10 @@
-import { Button, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import _ from 'lodash';
 import React from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import { gameGraphql } from '../../../graphql/game';
 import { useQueryWithError } from '../../../helpers/customHooks';
 import LoadingContainer from '../../Common/LoadingContainer';
+import Game from '../Profile/Pieces/Game';
 
 const useStyles = makeStyles({
   root: {
@@ -33,25 +33,24 @@ function FilteredGamesContainer(props) {
 }
 function FilteredGameList(props) {
   const classes = useStyles();
-  const { games, value, displayName, dictionary = {} } = props;
-  const { path, url } = useRouteMatch();
-  const history = useHistory();
+  const { games, value } = props;
 
   return games
     .filter((game) => game.title.startsWith(value))
     .map((filteredGame) => {
       return (
         <div className={classes.root}>
-          <Button
+          <Game
+            {...filteredGame}
+            displayName={_.get(filteredGame, 'createdBy.displayName')}
+          />
+          {/* <Button
             className={classes.container}
             value={filteredGame.id}
-            onClick={(e) => {
-              history.push(`/play/${filteredGame.id}`);
-            }}
           >
             {filteredGame.title}
             &nbsp;By:&nbsp;{_.get(filteredGame, 'createdBy.displayName')}
-          </Button>
+          </Button> */}
         </div>
       );
     });
