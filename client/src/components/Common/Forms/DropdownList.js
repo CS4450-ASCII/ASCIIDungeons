@@ -19,11 +19,11 @@ function DropdownList(props) {
 
   return (
     <InputField select {...props}>
-      {options.map((option) => (
-        <MenuItem value={_.get(option, valueColumn)}>
-          {_.get(option, labelColumn)}
-        </MenuItem>
-      ))}
+      {options.map((option) => {
+        const label =
+          _.invoke(props, 'labelColumn', option) || _.get(option, labelColumn);
+        return <MenuItem value={_.get(option, valueColumn)}>{label}</MenuItem>;
+      })}
     </InputField>
   );
 }

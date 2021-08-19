@@ -20,7 +20,14 @@ function StairsDropdownList(props) {
   let options = parseMapData(stairsData);
   return (
     <DropdownList
-      {...{ ...props, options, valueColumn: 'objectId', labelColumn: 'title' }}
+      {...{
+        ...props,
+        options,
+        valueColumn: 'objectId',
+        labelColumn: (option) => {
+          return `${option.title} (${option.objectId})`;
+        },
+      }}
     />
   );
 }
