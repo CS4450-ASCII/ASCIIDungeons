@@ -62,9 +62,32 @@ query User($id: ID!) {
 }
 `;
 
+const USERS = gql`
+query Users {
+  users {
+    id
+    displayName
+  }
+}
+`;
+
+//TODO
+// UPDATE_USER (see CreateUser above)
+const UPDATE_USER = gql`
+  mutation UpdateUser($params: UserUpdateInput!) {
+    updateUser(params: $params) {
+      id
+      displayName
+      email
+    }
+  }
+`;
+
 export const userGraphql = {
   LOGIN_USER,
   CREATE_USER,
   CURRENT_USER,
   USER,
+  USERS,
+  UPDATE_USER,
 };

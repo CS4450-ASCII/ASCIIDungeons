@@ -44,4 +44,10 @@ export class EntityGrid extends GameObject {
     if(!this.grid[y][x]) return [];
     return this.grid[y][x];
   }
+
+  removeEntity(entity) {
+    this.grid[entity.gY][entity.gX] = this.grid[entity.gY][entity.gX].filter(function (el) {
+      return el != entity;
+    });
+  }
 }

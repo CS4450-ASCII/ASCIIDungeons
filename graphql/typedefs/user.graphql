@@ -64,5 +64,7 @@ input UserLoginInput {
 }
 
 input UserUpdateInput {
-  displayName: String!
+  id: ID!
+  displayName: String
+  email: String
 }

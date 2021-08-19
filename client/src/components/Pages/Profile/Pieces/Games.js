@@ -1,5 +1,5 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
+import React from 'react';
 import Game from './Game';
 
 const useStyles = makeStyles({
@@ -16,13 +16,11 @@ const useStyles = makeStyles({
 
 function Games(props){
   const classes = useStyles();
-  const {} = props;
-
-  const arr = ["","","",""]
+  const { displayName, games} = props;
 
   return <div className={classes.root}>
     <div className={classes.line}><h3>Games</h3></div>
-    {arr.map((arr) => <Game />)}
+    {games.map((game) => <Game displayName={displayName} title={game.title} description={game.description}/>)}
   </div>;
 }
 

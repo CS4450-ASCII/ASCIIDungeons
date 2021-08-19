@@ -40,8 +40,8 @@ export class Cursor extends GameObject {
     if (input.wasKeyPressed('e')) Cursor.eraseMode = true;
     if (input.wasKeyPressed('d')) Cursor.eraseMode = false;
 
-    this.bColor = this.eraseMode ? '#FF0000' : '#FFFFFF';
-    this.character = this.eraseMode ? ' ' : Cursor.gameObject.object.character;
+    this.bColor = Cursor.eraseMode ? '#FF0000' : '#FFFFFF';
+    this.character = Cursor.eraseMode ? ' ' : Cursor.gameObject.object.character;
 
     if (!this.MAP) {
       this.MAP = this.GE.getObjectByType(Map);

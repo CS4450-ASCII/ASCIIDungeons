@@ -6,20 +6,16 @@ const useStyles = makeStyles({
   line: {
     width: "100%",
     textAlign: "center"
-  },
-  score: {
-    fontSize: "40px"
   }
 });
 
-function Score(props){
+function SearchedUsername(props){
   const classes = useStyles();
-  const { score } = props;
+  const {} = props;
 
   return <div className={classes.root}>
-    <div className={classes.line}><h3>Score</h3></div>
-    <div className={classes.line}><h1 className={classes.score}>{ score || 0}</h1></div>
+    <div className={classes.line}><h1>{ props.displayName || "" }</h1></div>
   </div>;
 }
 
-export default Score;
+export default SearchedUsername;

@@ -56,9 +56,17 @@ const userMutations = {
     return { user, token };
   },
 
-  updateUser: async (_, args) => {
-    // update user
-    // return newly updated user
+  updateUser: async (
+    obj,
+    { params: { id, ...userParams } },
+    { currentUser },
+    info,
+  ) => {
+    const user = await User.findByPk(id);
+
+    await user.update(userParams);
+
+    return user;
   },
 };
 

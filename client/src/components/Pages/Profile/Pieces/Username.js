@@ -1,20 +1,22 @@
-import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { useCurrentUser } from '../../../../helpers/customHooks';
+import React from 'react';
 
 const useStyles = makeStyles({
-  root: {}
+  root: {},
+  line: {
+    width: "100%",
+    textAlign: "center"
+  }
 });
 
 function Username(props){
   const classes = useStyles();
   const {} = props;
 
-  const { currentUser } = useCurrentUser();
-
-  const { displayName, email } = currentUser || {};
-
-  return <h1>{displayName || email || 'Adventurer'}</h1>;
+  return <div className={classes.root}>
+    <div className={classes.line}><h1>{props.displayName || 'Adventurer'}</h1></div>
+    <div className={classes.line}><h3>{props.email}</h3></div>
+  </div>;
 }
 
 export default Username;
