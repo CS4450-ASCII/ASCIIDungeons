@@ -111,7 +111,11 @@ export class StairsUp extends GameObject {
     if(!exit) return;
     if(!this.GE.mountedGame.getLevel(exit.level)) return false;
 
+    console.log(exit);
+    console.log(this.GE.mountedGame.getLevel(exit.level));
+    
     for (const object of this.GE.mountedGame.getLevel(exit.level).objects) {
+      console.log(object);
       if(object instanceof StairsDown) {
         if(object.x === exit.x && object.y === exit.y) return true;
       }

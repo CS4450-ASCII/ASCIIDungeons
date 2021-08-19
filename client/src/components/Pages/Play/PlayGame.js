@@ -46,7 +46,7 @@ function PlayGame(props) {
         },
         getLevel: function (id) {
           for (const level of this.levels) {
-            if(id = level.id) return level;
+            if(id === level.id) return level;
           }
           return null;
         },

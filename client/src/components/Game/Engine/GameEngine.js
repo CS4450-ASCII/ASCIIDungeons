@@ -105,6 +105,7 @@ class GameEngine extends Component {
     this.objects.push(object);
     this.renderer.addObject(object, object.layer);
     if (object.isTicking) this.behaviour.addObject(object);
+    
     object.init();
   }
 
