@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 
 function Game(props) {
   const classes = useStyles();
-  const { displayName, title, description, id } = props;
+  const { displayName, title, description, id, isPublished } = props;
 
   const history = useHistory();
 
@@ -36,6 +36,8 @@ function Game(props) {
     history.push(`/play/${id}`);
   };
   const rating = Math.ceil(Math.random() * 100);
+
+  if (!isPublished) return null;
 
   return (
     <div className={classes.root} onClick={onClick}>

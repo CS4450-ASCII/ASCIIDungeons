@@ -58,6 +58,7 @@ const USER = gql`
         id
         title
         description
+        isPublished
       }
     }
   }

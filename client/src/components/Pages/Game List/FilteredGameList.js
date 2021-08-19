@@ -23,7 +23,7 @@ function FilteredGamesContainer(props) {
   const { data, loading } = useQueryWithError(gameGraphql.QUERY_GAMES, {
     fetchPolicy: 'cache-first',
     variables: {
-      filter: 'all',
+      filter: 'published',
     },
   });
 
@@ -35,7 +35,7 @@ function FilteredGameList(props) {
   const classes = useStyles();
   const { games, value } = props;
 
-  return games
+  return _.chain(games)
     .filter((game) => game.title.startsWith(value))
     .map((filteredGame) => {
       return (
@@ -53,7 +53,8 @@ function FilteredGameList(props) {
           </Button> */}
         </div>
       );
-    });
+    })
+    .value();
 }
 
 export default FilteredGamesContainer;
