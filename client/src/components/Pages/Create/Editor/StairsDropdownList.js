@@ -27,6 +27,7 @@ function StairsDropdownList(props) {
         labelColumn: (option) => {
           return `${option.title} (${option.objectId})`;
         },
+        noOptionsMessage: 'No stairs found',
       }}
     />
   );

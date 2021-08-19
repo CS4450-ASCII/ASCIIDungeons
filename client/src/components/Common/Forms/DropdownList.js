@@ -15,15 +15,27 @@ import InputField from './InputField';
 
 function DropdownList(props) {
   const classes = useStyles();
-  const { options, labelColumn = 'title', valueColumn = 'id' } = props;
+  const {
+    options,
+    labelColumn = 'title',
+    valueColumn = 'id',
+    noOptionsMessage,
+  } = props;
 
   return (
     <InputField select {...props}>
-      {options.map((option) => {
-        const label =
-          _.invoke(props, 'labelColumn', option) || _.get(option, labelColumn);
-        return <MenuItem value={_.get(option, valueColumn)}>{label}</MenuItem>;
-      })}
+      {options.length > 0 ? (
+        options.map((option) => {
+          const label =
+            _.invoke(props, 'labelColumn', option) ||
+            _.get(option, labelColumn);
+          return (
+            <MenuItem value={_.get(option, valueColumn)}>{label}</MenuItem>
+          );
+        })
+      ) : (
+        <MenuItem>{noOptionsMessage}</MenuItem>
+      )}
     </InputField>
   );
 }

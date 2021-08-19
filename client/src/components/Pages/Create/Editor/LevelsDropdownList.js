@@ -16,7 +16,15 @@ function LevelsDropdownList(props) {
 
   if (loading) return <LoadingContainer />;
 
-  return <DropdownList {...{ ...props, options: _.get(data, 'levels') }} />;
+  return (
+    <DropdownList
+      {...{
+        ...props,
+        options: _.get(data, 'levels'),
+        noOptionsMessage: 'No levels found',
+      }}
+    />
+  );
 }
 
 const useStyles = makeStyles((theme) => ({
