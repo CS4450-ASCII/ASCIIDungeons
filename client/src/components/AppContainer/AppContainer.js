@@ -14,7 +14,7 @@ function AppContainer(props) {
   return (
     <Switch>
       <Route path='/create' component={Create} />
-      {/* <Route exact path='/play' component={Play} /> */}
+      <Route exact path='/play' component={Play} />
       <Route exact path='/users/:id' component={Profile} />
       <Route path='/play/:gameId' component={PlayGame} />
       <Route exact path='/profile' component={Profile} />

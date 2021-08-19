@@ -4,8 +4,9 @@ import GameList from '../Game List/GameList';
 
 const useStyles = makeStyles({
   root: {
-    width: 400,
-    height: 400,
+    width: "100%",
+    height: "100%",
+    display: "flex",
   },
 });
 

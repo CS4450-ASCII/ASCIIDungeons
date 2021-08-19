@@ -6,10 +6,6 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 import FilteredGamesContainer from './FilteredGameList';
-import { userGraphql } from '../../../graphql/user';
-import { useParams } from 'react-router-dom';
-import {useQueryWithError} from '../../../helpers/customHooks';
-
 
 function TabPanel(props) {
   const { children, value, index, games, ...other } = props;
@@ -49,8 +45,13 @@ const useStyles = makeStyles({
     display: 'flex',
     height: 220,
     width: 200,
-    marginLeft: "-250px",
+    marginLeft: "-150px",
     marginTop: "50px"
+  },
+  container: {
+    height: "100%",
+    width: "100%",
+    display: "flex",
   },
 });
 
@@ -63,14 +64,14 @@ export default function VerticalTabs() {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.container}>
       <Tabs
         orientation="vertical"
         variant="scrollable"
         value={value}
         onChange={handleChange}
         aria-label="Vertical tabs example"
-        className={classes.root}
+        className={classes.tabs}
       >
         <Tab label="A" {...a11yProps(0)} />
         <Tab label="B" {...a11yProps(1)} />
@@ -100,7 +101,7 @@ export default function VerticalTabs() {
         <Tab label="Z" {...a11yProps(25)} />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <FilteredGamesContainer value = 'A'/>
+        <FilteredGamesContainer value = 'A' />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <FilteredGamesContainer value = 'B' />
@@ -157,7 +158,7 @@ export default function VerticalTabs() {
       <FilteredGamesContainer value = 'S' />
       </TabPanel>
       <TabPanel value={value} index={19}>
-      <FilteredGamesContainer value = 'T' className={classes.tabs} />
+      <FilteredGamesContainer value = 'T' />
       </TabPanel>
       <TabPanel value={value} index={20}>
       <FilteredGamesContainer value = 'U' />
