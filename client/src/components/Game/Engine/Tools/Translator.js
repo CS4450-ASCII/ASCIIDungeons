@@ -54,7 +54,10 @@ export function translateDBLevelToObjects(level) {
     }
   }
 
+  console.log(level.id);
+
   return {
+    id: parseInt(level.id),
     width: level.width,
     height: level.height,
     objects: [new Map({ gridItems }), new EntityGrid(), ...objects],

@@ -44,6 +44,12 @@ function PlayGame(props) {
         hasNextLevel: function () {
           return !!(this.levels[this.levelIndex + 1]);
         },
+        getLevel: function (id) {
+          for (const level of this.levels) {
+            if(id = level.id) return level;
+          }
+          return null;
+        },
         levels: convertedLevels,
       };
 

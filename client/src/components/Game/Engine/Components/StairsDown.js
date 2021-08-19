@@ -72,7 +72,7 @@ export class StairsDown extends GameObject {
           this.GE.mountedGame.player.y = this.exit.y;
           
           this.GE.mountedGame.levelIndex = this.exit.level;
-          this.GE.loadGameLevel(this.GE.mountedGame.levels[this.exit.level]);
+          this.GE.loadGameLevel(this.GE.mountedGame.getLevel(this.exit.level));
         }
         else if (!this.hasExit && this.timeWaited >= this.timeToWait) {
           if (!this.fakeMessage) {
@@ -97,9 +97,9 @@ export class StairsDown extends GameObject {
 
   confirmExit(exit) {
     if(!exit) return;
-    if(!this.GE.mountedGame.levels[exit.level]) return false;
+    if(!this.GE.mountedGame.getLevel(exit.level)) return false;
 
-    for (const object of this.GE.mountedGame.levels[exit.level].objects) {
+    for (const object of this.GE.mountedGame.getLevel(exit.level).objects) {
       if(object instanceof StairsUp) {
         if(object.x === exit.x && object.y === exit.y) return true;
       }
