@@ -13,6 +13,7 @@ const BASIC_LEVEL_FRAGMENT = gql`
 const FULL_LEVEL_FRAGMENT = gql`
   fragment FullLevel on Level {
     ...BasicLevel
+    stairsData
   }
   ${BASIC_LEVEL_FRAGMENT}
 `;
@@ -38,9 +39,20 @@ const QUERY_LEVEL = gql`
   ${BASIC_LEVEL_FRAGMENT}
 `;
 
+const QUERY_LEVELS = gql`
+  query GetLevels($gameId: ID!) {
+    levels(gameId: $gameId) {
+      id
+      title
+      stairsData
+    }
+  }
+`;
+
 export const levelGraphql = {
   BASIC_LEVEL_FRAGMENT,
   CREATE_LEVEL,
   QUERY_LEVEL,
   FULL_LEVEL_FRAGMENT,
+  QUERY_LEVELS,
 };

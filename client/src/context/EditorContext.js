@@ -7,7 +7,7 @@ const initialState = {
 
 export const EditorContext = createContext(initialState);
 
-function GameProvider({ children }) {
+function EditorProvider({ children }) {
   const [currentGame, setCurrentGame] = useState(null);
   const [currentLevel, setCurrentLevel] = useState(null);
 
@@ -25,4 +25,4 @@ function GameProvider({ children }) {
   );
 }
 
-export default GameProvider;
+export default EditorProvider;

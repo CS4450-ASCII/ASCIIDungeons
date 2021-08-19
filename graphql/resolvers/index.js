@@ -1,4 +1,5 @@
 import fs from 'fs';
+import _ from 'lodash';
 import path from 'path';
 
 const basename = path.basename(__filename);
@@ -45,6 +46,17 @@ const resolvers = {
   Level: {
     mapData: (level, args, context, info) => {
       return JSON.stringify(level.mapData);
+    },
+    stairsData: (level, args, context, info) => {
+      const mapData = level.mapData;
+      // where character is '<' or '>'
+      const stairsData = _.filter(mapData, (datum) => {
+        const character = _.get(datum, 'character');
+        if (character === '<' || character === '>') {
+          return datum;
+        }
+      });
+      return JSON.stringify(stairsData);
     },
   },
   Object: {

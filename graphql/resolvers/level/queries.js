@@ -1,8 +1,11 @@
 import { Level } from '../../../database/models';
 
 const levelQueries = {
-  levels: async (obj, args, { currentUser }, info) => {
-    const levels = await Level.findAll();
+  levels: async (obj, { gameId }, { currentUser }, info) => {
+    const levels = await Level.findAll({
+      where: { gameId },
+      order: [['id', 'asc']],
+    });
     return levels;
   },
 

@@ -7,7 +7,7 @@ type Query {
   user(id: ID!): User
   currentUser: User
 
-  levels: [Level]!
+  levels(gameId: ID!): [Level]!
   level(id: ID!): Level
 
   games(filter: String): [Game]!

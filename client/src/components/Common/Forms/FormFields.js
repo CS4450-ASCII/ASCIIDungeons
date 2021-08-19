@@ -14,7 +14,7 @@ function FormFields(props) {
       alignItems='flex-end'
       {...gridProps}
     >
-      {formFields.map(field => {
+      {formFields.map((field) => {
         const { Component, ...fieldProps } = field;
         return (
           <Grid key={`field-${field.name}`} item xs={12}>

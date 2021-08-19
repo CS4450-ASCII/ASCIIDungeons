@@ -1,12 +1,13 @@
 import { makeStyles, withTheme } from '@material-ui/core';
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Field } from 'react-final-form';
 import FormDialog from '../../../Common/Forms/FormDialog';
-import InputField from '../../../Common/Forms/InputField';
 import { Cursor } from '../../../Game/Engine/Components/Cursor';
 import { Map } from '../../../Game/Engine/Components/Map';
 import GameEngine from '../../../Game/Engine/GameEngine';
+import { displayStairsDialog } from './Dialogs/StairsDialog';
+import { EditorContext } from './Editor';
 
 function LevelEditor(props) {
   const classes = useStyles();
@@ -14,6 +15,14 @@ function LevelEditor(props) {
 
   const [ModalComponent, setModalComponent] = useState(null);
   const [modalProps, setModalProps] = useState({});
+
+  const { currentGame } = useContext(EditorContext);
+
+  // const { data, loading } = useQueryWithError(levelGraphql.QUERY_LEVELS, {
+  //   variables: { gameId },
+  // });
+
+  // if (loading) return <LoadingContainer />;
 
   return (
     <>
@@ -29,55 +38,10 @@ function LevelEditor(props) {
                 },
               }),
               new Cursor({
-                // TODO: Put this method in its own component
-                onLeftClick: (object, x, y, setMapSpace, clearMapSpace) => {
-                  if (!_.get(object, 'dataTemplate')) return;
-                  const objectId = `${x},${y}`;
-                  setModalProps({
-                    key: objectId,
-                    objectId,
-                    initiallyOpen: true,
-                    openButton: <div />,
-                    formFields: [
-                      {
-                        name: 'title',
-                        Component: InputField,
-                        noWrap: true,
-                      },
-                      {
-                        // TODO: Convert to dropdown list
-                        name: 'goToLevelId',
-                        label: 'Go To Level',
-                        Component: InputField,
-                        inputWidth: 140,
-                        noWrap: true,
-                      },
-                      {
-                        // TODO: Convert to dropdown list
-                        name: 'goToStairsId',
-                        label: 'Go To Stairs',
-                        Component: InputField,
-                        inputWidth: 140,
-                        noWrap: true,
-                      },
-                    ],
-                    title: 'Edit Stairs',
-                    initialValues: {
-                      title: object.title,
-                    },
-                    onCancel: () => {
-                      clearMapSpace(x, y);
-                    },
-                    onSubmit: (values, props) => {
-                      const stairAttributes = {
-                        objectId: _.get(props, 'objectId'),
-                        ...object,
-                        ...values,
-                      };
-                      setMapSpace(x, y, stairAttributes);
-                    },
-                  });
-                },
+                onLeftClick: displayStairsDialog(
+                  setModalProps,
+                  _.get(currentGame, 'levels', []),
+                ),
               }),
             ]}
           />

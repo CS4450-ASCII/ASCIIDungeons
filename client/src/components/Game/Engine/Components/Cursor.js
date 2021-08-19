@@ -28,9 +28,9 @@ export class Cursor extends GameObject {
     /** Is background rendering enabled? */
     this.background = true;
     /** The character color hex value. */
-    this.cColor = '#000000';
+    this.cColor = '#FFFFFF';
     /** The background color hex value. */
-    this.bColor = '#FFFFFF';
+    this.bColor = '#000000';
     this.isTicking = true;
     this.MAP = null;
     this.cursorProps = cursorProps;
@@ -40,8 +40,10 @@ export class Cursor extends GameObject {
     if (input.wasKeyPressed('e')) Cursor.eraseMode = true;
     if (input.wasKeyPressed('d')) Cursor.eraseMode = false;
 
-    this.bColor = Cursor.eraseMode ? '#FF0000' : '#FFFFFF';
-    this.character = Cursor.eraseMode ? ' ' : Cursor.gameObject.object.character;
+    this.bColor = Cursor.eraseMode ? '#FF0000' : '#000000';
+    this.character = Cursor.eraseMode
+      ? ' '
+      : Cursor.gameObject.object.character;
 
     if (!this.MAP) {
       this.MAP = this.GE.getObjectByType(Map);

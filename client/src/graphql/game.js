@@ -64,6 +64,7 @@ const EDITOR_CONTEXT = gql`
         levels {
           id
           title
+          stairsData
         }
         gameObjects {
           id
