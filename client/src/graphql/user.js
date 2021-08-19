@@ -48,8 +48,23 @@ const CURRENT_USER = gql`
   ${COMPLETE_USER_FRAGMENT}
 `;
 
+const USER = gql`
+query User($id: ID!) {
+  user(id: $id) {
+    id
+    displayName
+    email
+    games {
+      title
+      description
+    }
+  }
+}
+`;
+
 export const userGraphql = {
   LOGIN_USER,
   CREATE_USER,
   CURRENT_USER,
+  USER,
 };

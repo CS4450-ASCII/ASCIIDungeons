@@ -3,11 +3,10 @@ import _ from 'lodash';
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { gameGraphql } from '../../../graphql/game';
-import {
-  useCurrentUser,
-  useQueryWithError,
-} from '../../../helpers/customHooks';
+import {useQueryWithError} from '../../../helpers/customHooks';
 import LoadingContainer from '../../Common/LoadingContainer';
+import { userGraphql } from '../../../graphql/user';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -30,18 +29,16 @@ function FilteredGamesContainer(props) {
   if (loading) {
     return <LoadingContainer />;
   }
-
+  
   return <FilteredGameList {...props} games={_.get(data, 'games')} />;
 }
+
 
 function FilteredGameList(props) {
   const classes = useStyles();
   const { games, value } = props;
   const { path, url } = useRouteMatch();
   const history = useHistory();
-  const { currentUser } = useCurrentUser();
-
-  const { displayName, email } = currentUser || {};
 
   const onSubmit = () => {
     // Navigates to the play game route with specified id.

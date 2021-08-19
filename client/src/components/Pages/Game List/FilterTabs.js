@@ -6,6 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import React from 'react';
 import FilteredGamesContainer from './FilteredGameList';
+import { userGraphql } from '../../../graphql/user';
+import { useParams } from 'react-router-dom';
+import {useQueryWithError} from '../../../helpers/customHooks';
+
 
 function TabPanel(props) {
   const { children, value, index, games, ...other } = props;
